@@ -1,0 +1,24 @@
+name: Extract project files
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unzip and commit project files
+        run: |
+          unzip -o daofa-ios-github-build.zip
+          cp -R daofa-ios-github-build/. .
+          rm -rf daofa-ios-github-build daofa-ios-github-build.zip README.md .github/workflows/extract.yml
+          git config user.name "xigua0291"
+          git config user.email "1018316746@qq.com"
+          git add -A
+          git status
+          git commit -m "Upload project files from daofa-ios-github-build.zip"
+          git push
