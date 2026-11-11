@@ -5,7 +5,6 @@ on:
 
 permissions:
   contents: write
-  workflows: write
 
 jobs:
   extract:
@@ -15,8 +14,12 @@ jobs:
       - name: Unzip and commit project files
         run: |
           unzip -o daofa-ios-github-build.zip
-          cp -R daofa-ios-github-build/. .
-          rm -rf daofa-ios-github-build daofa-ios-github-build.zip README.md .github/workflows/extract.yml
+          echo "===== build-ipa.yml ====="
+          cat daofa-ios-github-build/.github/workflows/build-ipa.yml
+          echo "===== end build-ipa.yml ====="
+          cp -R daofa-ios-github-build/DaoFa .
+          cp daofa-ios-github-build/project.yml daofa-ios-github-build/dao-fa-suan-ming.html daofa-ios-github-build/README-GITHUB.md .
+          rm -rf daofa-ios-github-build daofa-ios-github-build.zip README.md
           git config user.name "xigua0291"
           git config user.email "1018316746@qq.com"
           git add -A
