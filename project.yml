@@ -1,0 +1,25 @@
+name: DaoFa
+options:
+  bundleIdPrefix: com.ronald
+  deploymentTarget:
+    iOS: "17.0"
+targets:
+  DaoFa:
+    type: application
+    platform: iOS
+    sources:
+      - DaoFa
+    info:
+      path: DaoFa/Info.plist
+      properties:
+        UILaunchStoryboardName: ""
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        CFBundleDisplayName: 道法算命
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ronald.DaoFa
+        CODE_SIGN_STYLE: Manual
+        CODE_SIGNING_ALLOWED: NO

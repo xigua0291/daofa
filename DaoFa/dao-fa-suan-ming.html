@@ -1,0 +1,2260 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>道法算命</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#f5efe0; --paper2:#efe6d0; --card:#fffdf4; --ink:#262219; --ink2:#5c5545;
+  --line:#ddd0ae; --cinnabar:#a1271e; --cinnabar2:#7e1a13; --gold:#a87b23; --goldbg:#f3e7c8;
+  --pine:#2e5747; --pinebg:#e2ecdf; --water:#31586e; --waterbg:#dfe9ee;
+  --bad:#a1271e; --shadow:0 2px 10px rgba(90,70,20,.10);
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#10130f; --paper2:#151a14; --card:#1b201a; --ink:#ece3cb; --ink2:#b3a888;
+    --line:#3a4034; --cinnabar:#e0705f; --cinnabar2:#e0705f; --gold:#d9ab4e; --goldbg:#2c2716;
+    --pine:#8fc3a8; --pinebg:#1d2b23; --water:#93bcd4; --waterbg:#1a2830;
+    --bad:#e0705f; --shadow:0 2px 10px rgba(0,0,0,.4);
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Serif SC","Songti SC","SimSun",serif;font-size:16px;line-height:1.65}
+button,select,input,textarea{font:inherit;color:inherit}
+button,[role="button"],select,summary,input:not([type="checkbox"]){min-height:2.5rem}
+.wrap{max-width:1060px;margin:0 auto;padding:0 16px 64px}
+
+/* ---------- 头部 ---------- */
+header.hero{position:relative;text-align:center;padding:38px 16px 8px;overflow:hidden}
+.taiji{width:92px;height:92px;margin:0 auto 6px;animation:spin 46s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){.taiji{animation:none} html{scroll-behavior:auto}}
+h1.brand{font-family:"Ma Shan Zheng","Noto Serif SC",serif;font-size:52px;margin:0;letter-spacing:.08em;color:var(--ink)}
+h1.brand .fa{color:var(--cinnabar)}
+.hero p.sub{margin:6px auto 0;max-width:640px;color:var(--ink2);font-size:15px}
+.hero .seal{display:inline-block;margin-top:12px;border:2px solid var(--cinnabar);color:var(--cinnabar);
+  border-radius:6px;padding:2px 12px;font-size:13px;letter-spacing:.35em;font-weight:600}
+
+/* 今日黄历条 */
+.today{margin:20px auto 0;max-width:1060px}
+.today-card{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--cinnabar);
+  border-radius:10px;box-shadow:var(--shadow);padding:14px 18px;display:grid;gap:10px}
+.today-top{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:baseline}
+.today-top .d{font-size:22px;font-weight:900}
+.today-top .gz{color:var(--cinnabar);font-weight:900}
+.yiji{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14.5px}
+.yiji b.yi{color:var(--pine)} .yiji b.ji{color:var(--bad)}
+.yiji span{color:var(--ink2)}
+
+/* ---------- 导航 ---------- */
+nav.modules{position:sticky;top:0;z-index:30;background:var(--paper);padding:12px 0 8px;margin-top:14px}
+nav.modules .row{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+nav.modules .row::-webkit-scrollbar{display:none}
+nav.modules a{flex:0 0 auto;text-decoration:none;color:var(--ink);background:var(--card);
+  border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-size:14.5px;min-height:40px;
+  display:inline-flex;align-items:center;font-weight:600}
+nav.modules a:hover{border-color:var(--cinnabar);color:var(--cinnabar)}
+
+/* ---------- 模块 ---------- */
+section.module{background:var(--card);border:1px solid var(--line);border-radius:12px;
+  box-shadow:var(--shadow);padding:22px 20px 24px;margin-top:22px;scroll-margin-top:76px}
+section.module h2{font-family:"Ma Shan Zheng","Noto Serif SC",serif;font-size:30px;margin:0 0 2px;font-weight:400}
+section.module h2 .no{color:var(--gold);font-size:19px;margin-right:8px;font-family:"Noto Serif SC",serif;font-weight:900}
+section.module .desc{color:var(--ink2);font-size:14.5px;margin:0 0 16px}
+.cat{font-size:12.5px;letter-spacing:.25em;color:var(--cinnabar);font-weight:900}
+form.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+label.f{display:block;font-size:13.5px;color:var(--ink2);font-weight:600}
+label.f input,label.f select,label.f textarea{display:block;width:100%;margin-top:5px;background:var(--paper);
+  border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:16px;color:var(--ink)}
+.btn{display:inline-block;background:var(--cinnabar);color:#fff8ea;border:1px solid var(--cinnabar2);
+  border-radius:8px;padding:9px 26px;font-size:16.5px;font-weight:900;cursor:pointer;min-height:44px;letter-spacing:.12em}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--cinnabar);border-color:var(--cinnabar)}
+.btn.small{padding:6px 16px;font-size:14.5px;min-height:40px}
+.btnrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;align-items:center}
+.result{margin-top:18px;border-top:1px dashed var(--line);padding-top:16px;display:none}
+.result.show{display:block}
+.result h3{margin:14px 0 6px;font-size:19px}
+.result h3:first-child{margin-top:0}
+.result p{margin:6px 0}
+.muted{color:var(--ink2);font-size:14px}
+.big{font-size:21px;font-weight:900}
+.hl{color:var(--cinnabar);font-weight:900}
+.good{color:var(--pine);font-weight:700}
+table.tbl{border-collapse:collapse;width:100%;margin:10px 0;font-size:15px}
+table.tbl th,table.tbl td{border:1px solid var(--line);padding:7px 8px;text-align:center;vertical-align:top}
+table.tbl th{background:var(--goldbg);font-weight:900}
+table.tbl td.l,table.tbl th.l{text-align:left}
+.scrollx{overflow-x:auto}
+@media (max-width:560px){ .scrollx table.tbl{min-width:480px} }
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+.pillar{border:1px solid var(--line);border-radius:10px;background:var(--paper);text-align:center;padding:10px 4px}
+.pillar .cap{font-size:13px;color:var(--ink2)}
+.pillar .gz{font-size:30px;font-weight:900;letter-spacing:.15em;margin:2px 0}
+.pillar .gz .tg{color:var(--cinnabar)}
+.pillar .meta{font-size:12.5px;color:var(--ink2);line-height:1.5}
+.wxbar{display:grid;grid-template-columns:34px 1fr 30px;gap:8px;align-items:center;margin:5px 0;font-size:14.5px}
+.wxbar .bar{height:14px;background:var(--paper2);border-radius:7px;overflow:hidden;border:1px solid var(--line)}
+.wxbar .fill{height:100%}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.chip{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:5px 13px;font-size:14px}
+.chip.on{background:var(--cinnabar);color:#fff8ea;border-color:var(--cinnabar2);font-weight:700}
+button.chip{cursor:pointer;min-height:40px}
+.ziwei-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0}
+.zw-cell{border:1px solid var(--line);border-radius:8px;background:var(--paper);min-height:96px;padding:7px 8px;font-size:13.5px;position:relative}
+.zw-cell .stars{font-weight:900;font-size:15.5px;line-height:1.5}
+.zw-cell .pal{position:absolute;bottom:5px;right:8px;color:var(--cinnabar);font-weight:900;font-size:13px}
+.zw-cell .dz{position:absolute;bottom:5px;left:8px;color:var(--ink2);font-size:12.5px}
+.zw-cell.ming{border-color:var(--cinnabar);border-width:2px}
+.zw-center{grid-column:2/4;grid-row:2/4;border:1px solid var(--line);border-radius:8px;background:var(--goldbg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px;font-size:14.5px}
+.qimen-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:12px 0}
+.qm-cell{border:1px solid var(--line);border-radius:8px;background:var(--paper);min-height:104px;padding:7px 9px;font-size:13.5px;position:relative}
+.qm-cell .shen{color:var(--water);font-weight:700}
+.qm-cell .xing{font-weight:900;font-size:15.5px}
+.qm-cell .men{color:var(--cinnabar);font-weight:900}
+.qm-cell .gan{position:absolute;bottom:5px;right:9px;font-size:15px;font-weight:900}
+.qm-cell .gong{position:absolute;bottom:5px;left:9px;color:var(--ink2);font-size:12px}
+.coins{display:flex;gap:14px;justify-content:center;margin:14px 0}
+.coin{width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#e8c96a,#b8862e 70%);
+  border:2px solid #8a6414;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:19px;color:#5c430a;
+  box-shadow:var(--shadow)}
+.coin.back{background:radial-gradient(circle at 35% 30%,#d9d2bd,#a89f83 70%);border-color:#7c745c;color:#57503c;font-size:13px}
+.yao{display:flex;align-items:center;gap:10px;justify-content:center;margin:4px 0;font-size:14px;color:var(--ink2)}
+.yao .line{width:150px;height:14px;position:relative}
+.yao .yang{background:var(--ink);height:14px;border-radius:2px}
+.yao .yin{display:flex;gap:16px}.yao .yin i{flex:1;background:var(--ink);height:14px;border-radius:2px}
+.yao .chg{color:var(--cinnabar);font-weight:900;width:20px}
+.qian-tube{text-align:center;font-size:64px;line-height:1.1}
+details.more{margin-top:10px;border:1px solid var(--line);border-radius:8px;padding:8px 14px;background:var(--paper)}
+details.more summary{cursor:pointer;font-weight:700;padding:6px 0}
+footer{margin-top:34px;text-align:center;color:var(--ink2);font-size:13.5px;line-height:1.9}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:10px 0}
+.kv .cell{border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:9px 12px}
+.kv .cell .k{font-size:13px;color:var(--ink2)} .kv .cell .v{font-size:18px;font-weight:900}
+/* ---------- 白话解读 ---------- */
+.jiedu{margin-top:18px;background:var(--goldbg);border:1px solid var(--line);border-radius:10px;padding:16px 16px 10px}
+.jiedu-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.jiedu-head .t{font-weight:900;font-size:17px;color:var(--cinnabar);letter-spacing:.06em}
+.jiedu-head .tag{font-size:12.5px;font-weight:700;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--ink2)}
+.jiedu p{margin:7px 0;line-height:1.75}
+.jiedu .one{font-size:17.5px;font-weight:900;line-height:1.6}
+.jiedu ul{margin:6px 0 10px;padding-left:20px}
+.jiedu li{margin:4px 0;line-height:1.7}
+.jiedu .do{color:var(--pine);font-weight:900}.jiedu .dont{color:var(--cinnabar);font-weight:900}
+.gua-legend{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.gua-legend span{font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+.howto{margin-top:12px;background:var(--paper);border:1px dashed var(--line);border-radius:8px;padding:10px 14px;font-size:14.5px}
+.howto b{color:var(--cinnabar)}
+input[type="text"],input[type="number"],input[type="date"],input[type="time"]{width:100%}
+textarea{width:100%}
+
+nav.modules a.hot{background:var(--cinnabar);color:#fff8ea;border-color:var(--cinnabar2)}
+section.module.featured{border:2px solid var(--cinnabar);border-top:8px solid var(--cinnabar);background:linear-gradient(180deg,var(--goldbg),var(--card) 220px)}
+section.module.featured h2{font-size:36px}
+.spotlight{margin-top:20px;background:var(--cinnabar);color:#fff8ea;border-radius:12px;padding:18px 20px;box-shadow:var(--shadow)}
+.spotlight .t{font-family:"Ma Shan Zheng","Noto Serif SC",serif;font-size:30px;letter-spacing:.04em}
+.spotlight p{margin:6px 0 12px;font-size:15px;line-height:1.7}
+.spotlight .go{display:inline-block;background:#fff8ea;color:var(--cinnabar2);font-weight:900;border-radius:8px;padding:10px 22px;text-decoration:none;min-height:44px}
+.spotlight .alt{display:inline-block;color:#fff8ea;border:1px solid #fff8ea;border-radius:8px;padding:10px 18px;text-decoration:none;margin-left:8px;min-height:44px}
+.qm-badge{display:inline-block;background:var(--cinnabar);color:#fff8ea;border-radius:999px;padding:3px 12px;font-size:13px;font-weight:900;letter-spacing:.15em;margin-left:10px;vertical-align:middle}
+/* ---------- 算法步骤 / 新增模块 ---------- */
+.steps{margin:12px 0;display:grid;gap:8px}
+.step{display:grid;grid-template-columns:34px 1fr;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:10px 12px;text-align:left}
+.step .n{width:30px;height:30px;border-radius:50%;background:var(--cinnabar);color:#fff8ea;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:15px}
+.step .t{font-weight:900}
+.step .f{color:var(--ink2);font-size:14px}
+.step .r{color:var(--cinnabar);font-weight:900}
+.formula{background:var(--paper2);border:1px dashed var(--line);border-radius:8px;padding:9px 12px;font-size:14.5px;margin:8px 0;overflow-wrap:anywhere}
+.classic{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:16.5px;line-height:1.9;margin:10px 0}
+.classic .src{font-size:13px;color:var(--ink2);letter-spacing:.08em}
+.dd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin:10px 0}
+.dd-grid button{border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:7px 0;cursor:pointer;font-weight:700;min-height:40px}
+.dd-grid button:hover{border-color:var(--cinnabar);color:var(--cinnabar)}
+.dd-grid button.on{background:var(--cinnabar);color:#fff8ea;border-color:var(--cinnabar2)}
+.season-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:10px 0}
+.season-grid .cell{border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:9px 11px}
+.season-grid .cell.on{border-color:var(--cinnabar);border-width:2px}
+.season-grid .k{font-size:13px;color:var(--ink2)} .season-grid .v{font-weight:900;font-size:16px}
+@media (max-width:560px){.step{grid-template-columns:30px 1fr;padding:9px 10px}}
+/* ---------- 说透层 / 六爻装卦 ---------- */
+.jd-deep{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
+.jd-deep .analog{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 12px;margin:8px 0;font-size:15px}
+.jd-deep .analog b{color:var(--cinnabar)}
+.jd-deep ol{margin:6px 0 8px;padding-left:22px}
+.jd-deep ol li{margin:4px 0;line-height:1.7}
+.jd-deep .pit{background:var(--paper);border:1px dashed var(--cinnabar);border-radius:8px;padding:8px 12px;font-size:14.5px;margin-top:8px}
+.jd-deep .pit b{color:var(--cinnabar)}
+.yao-row{display:grid;grid-template-columns:52px 1fr 64px 118px 44px;gap:8px;align-items:center;padding:5px 6px;border-bottom:1px dashed var(--line);font-size:14px}
+.yao-row .shen{color:var(--water);font-weight:700}
+.yao-row .qq{font-weight:900}
+.yao-row .bar{height:13px}
+.yao-row .bar .yang{background:var(--ink);height:13px;border-radius:2px}
+.yao-row .bar .yin{display:flex;gap:14px}.yao-row .bar .yin i{flex:1;background:var(--ink);height:13px;border-radius:2px}
+.yao-row .mark{color:var(--cinnabar);font-weight:900;text-align:center}
+.yao-row.use{background:var(--goldbg);border-radius:6px}
+.yao-row.dong{background:var(--pinebg);border-radius:6px}
+@media (max-width:560px){.yao-row{grid-template-columns:44px 1fr 54px 96px 36px;font-size:12.5px;gap:5px}}
+.meter{height:12px;background:var(--paper2);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin:6px 0}
+.meter i{display:block;height:100%;background:var(--pine)}
+.tagrow{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.tagrow span{font-size:13px;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:3px 10px}
+.tagrow span.good{border-color:var(--pine);color:var(--pine);font-weight:700}
+.tagrow span.bad{border-color:var(--cinnabar);color:var(--cinnabar);font-weight:700}
+.zw-cell .aux{font-size:12px;color:var(--water);line-height:1.45;margin-top:2px}
+.zw-cell .sha{font-size:12px;color:var(--cinnabar);line-height:1.45}
+.zw-cell .hua{color:var(--gold);font-weight:900;font-size:12px}
+</style>
+</head>
+<body>
+<header class="hero">
+  <svg class="taiji" viewBox="0 0 100 100" aria-hidden="true">
+    <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="2.5"/>
+    <path d="M50 3 a47 47 0 0 1 0 94 a23.5 23.5 0 0 1 0-47 a23.5 23.5 0 0 0 0-47" fill="currentColor" opacity=".88"/>
+    <circle cx="50" cy="26.5" r="7" fill="var(--paper)"/><circle cx="50" cy="73.5" r="7" fill="currentColor"/>
+  </svg>
+  <h1 class="brand">道法<span class="fa">算命</span></h1>
+  <p class="sub">八字 · 紫微斗数 · 六爻 · 梅花易数 · 奇门遁甲 · 称骨 · 抽签 · 测字 · 解梦 · 黄历 · 风水 · 相术<br/>另增 <b>黄帝内经 · 五运六气养生推算</b> 与 <b>道德经 · 81 章抽章算法</b>：一个按生日、季节、时辰算体质，一个按日期、按问题抽章断事。<br/><b>十六项全部完整版</b>：八字含藏干、神煞、格局与真起运；紫微含四化、六吉六煞与大限流年；六爻装卦纳甲、定世应六亲六神；梅花体用互变俱全。每个结果后面都跟「白话解读」——先给结论，再打比方、给具体步骤、提醒踩坑，不懂术语也能照着做。</p>
+  <span class="seal">玄 门 占 验</span>
+  <div class="today"><div class="today-card" id="todayCard"><span class="muted">今日黄历推算中…</span></div></div>
+</header>
+
+<div class="wrap">
+<div class="spotlight" role="region" aria-label="重点推荐">
+  <span class="t">十六项 · 全部完整版</span>
+  <p>这一版把所有算法都补齐了：<b>六爻</b>从零补上完整装卦（卦宫、世应、纳甲、六亲、六神、用神、伏神）；<b>紫微</b>补上四化、六吉六煞、大限流年；<b>八字</b>补上全藏干、神煞、格局、合冲刑害与按节气真起运；<b>黄历</b>补上纳音、吉神与财神喜神方位；<b>风水</b>加上 2026 流年飞星。每个结果的白话解读也再往深做了一层——不光给结论，还打比方、给照着做的步骤、提醒最容易踩的坑。</p>
+  <a class="go" href="#qimen">立即起一局 →</a><a class="alt" href="#neijing">黄帝内经养生</a><a class="alt" href="#daodejing">道德经抽章</a>
+</div>
+<nav class="modules" aria-label="算命项目导航">
+  <div class="row">
+    <a href="#bazi">八字算命</a><a href="#ziwei">紫微斗数</a><a href="#chenggu">称骨算命</a>
+    <a href="#shengxiao">生肖运势</a><a href="#xingming">姓名五格</a><a href="#liuyao">周易六爻</a>
+    <a href="#meihua">梅花易数</a><a href="#qimen" class="hot">★ 奇门遁甲 · 完整版</a><a href="#qian">道观抽签</a>
+    <a href="#cezi">测字占卜</a><a href="#jiemeng">周公解梦</a><a href="#huangli">老黄历</a>
+    <a href="#fengshui">八宅风水</a><a href="#xiangshu">面相手相</a>
+    <a href="#neijing">黄帝内经养生</a><a href="#daodejing">道德经抽章</a>
+  </div>
+</nav>
+
+<!-- ============ 八字 ============ -->
+<section class="module" id="bazi">
+  <div class="cat">命理 · 四柱推命</div>
+  <h2><span class="no">壹</span>八字算命</h2>
+  <p class="desc">按出生年月日时排四柱干支，论日主旺衰、五行盈缺、十神格局与大运流年。子时按 23 点换日，立春换年，节气换月。</p>
+  <form class="grid" id="baziForm">
+    <label class="f">出生日期<input type="date" id="bzDate" required value="1995-06-15" /></label>
+    <label class="f">出生时间<input type="time" id="bzTime" required value="10:30" /></label>
+    <label class="f">性别<select id="bzSex"><option value="男">男</option><option value="女">女</option></select></label>
+    <label class="f">出生地（可空）<input type="text" id="bzPlace" placeholder="如：河南洛阳" /></label>
+  </form>
+  <div class="btnrow"><button class="btn" id="bzBtn">排盘批命</button><span class="muted">排盘免费多排几次，换个时辰看差别最明显。</span></div>
+  <div class="result" id="bzResult"></div>
+</section>
+
+<!-- ============ 紫微 ============ -->
+<section class="module" id="ziwei">
+  <div class="cat">命理 · 星曜排盘</div>
+  <h2><span class="no">贰</span>紫微斗数</h2>
+  <p class="desc">按农历生日安命宫、定五行局、布十四主星，再安<b>四化</b>（化禄、化权、化科、化忌）、<b>六吉星</b>（左辅、右弼、文昌、文曲、天魁、天钺）、<b>六煞星</b>（擎羊、陀罗、火星、铃星、地空、地劫），排<b>大限</b>与 <b>2026 流年</b>，合看命宫三方四正——完整排盘，不再是简版。</p>
+  <form class="grid" id="zwForm">
+    <label class="f">出生日期（公历）<input type="date" id="zwDate" required value="1995-06-15" /></label>
+    <label class="f">出生时间<input type="time" id="zwTime" required value="10:30" /></label>
+    <label class="f">性别<select id="zwSex"><option value="男">男</option><option value="女">女</option></select></label>
+  </form>
+  <div class="btnrow"><button class="btn" id="zwBtn">安星排盘</button></div>
+  <div class="result" id="zwResult"></div>
+</section>
+
+<!-- ============ 称骨 ============ -->
+<section class="module" id="chenggu">
+  <div class="cat">命理 · 袁天罡称骨</div>
+  <h2><span class="no">叁</span>称骨算命</h2>
+  <p class="desc">唐朝袁天罡之法：把出生年、月、日、时各按表称重，四数相加得骨重，对照歌诀断一生穷通。</p>
+  <form class="grid">
+    <label class="f">出生日期（公历）<input type="date" id="cgDate" value="1995-06-15" /></label>
+    <label class="f">出生时间<input type="time" id="cgTime" value="10:30" /></label>
+  </form>
+  <div class="btnrow"><button class="btn" id="cgBtn">称一称骨重</button></div>
+  <div class="result" id="cgResult"></div>
+</section>
+
+<!-- ============ 生肖 ============ -->
+<section class="module" id="shengxiao">
+  <div class="cat">命理 · 流年生肖</div>
+  <h2><span class="no">肆</span>生肖运势 · 2026 丙午马年</h2>
+  <p class="desc">选你的属相，看在 2026 火马年的太岁关系：值、冲、刑、害、合，以及事业、财运、感情、健康的流年断语。</p>
+  <form class="grid">
+    <label class="f">出生年份<input type="number" id="sxYear" value="1995" min="1930" max="2026" /></label>
+    <label class="f">或直接选属相
+      <select id="sxAnimal"><option value="">按年份算</option></select>
+    </label>
+  </form>
+  <div class="btnrow"><button class="btn" id="sxBtn">看今年运势</button></div>
+  <div class="result" id="sxResult"></div>
+</section>
+
+<!-- ============ 姓名 ============ -->
+<section class="module" id="xingming">
+  <div class="cat">命理 · 五格剖象</div>
+  <h2><span class="no">伍</span>姓名测试 · 五格数理</h2>
+  <p class="desc">按康熙笔画算天格、人格、地格、外格、总格，对照 81 数理吉凶与三才配置断姓名格局。字典没有的字，可在下方手动补笔画。</p>
+  <form class="grid">
+    <label class="f">姓名（2–4 字）<input type="text" id="xmName" value="" placeholder="如：王小明" maxlength="4" /></label>
+    <label class="f">手动笔画（逗号隔开，可空）<input type="text" id="xmStrokes" placeholder="如：4,7,5" /></label>
+  </form>
+  <div class="btnrow"><button class="btn" id="xmBtn">测姓名吉凶</button></div>
+  <div class="result" id="xmResult"></div>
+</section>
+
+<!-- ============ 六爻 ============ -->
+<section class="module" id="liuyao">
+  <div class="cat">占卜 · 周易铜钱</div>
+  <h2><span class="no">陆</span>周易六爻 · 铜钱占卜</h2>
+  <p class="desc">心里默想一件要问的事，点六次掷钱，从初爻到上爻成卦；老阴老阳为动爻，再看变卦断事情走向。<b>完整装卦</b>：定卦宫、安世应、纳甲装地支、配六亲、起六神，再按你问的类别取用神细断——不是只报个卦名。成卦后有白话解读：先教你认卦图，再把本卦、用神、动爻、变卦逐句翻译成大白话。</p>
+  <form class="grid">
+    <label class="f">所问何事<input type="text" id="lyQuestion" placeholder="如：这次换工作顺不顺" /></label>
+    <label class="f">所问类别（定用神）
+      <select id="lyCat"><option>综合运程</option><option>求财赚钱</option><option>事业仕途</option><option>感情婚姻</option><option>健康疾病</option><option>学业考试</option><option>出行远行</option><option>官司诉讼</option></select>
+    </label>
+    <label class="f">问卦人性别（感情类用）<select id="lySex"><option value="男">男</option><option value="女">女</option></select></label>
+  </form>
+  <div class="coins" id="lyCoins" aria-hidden="true">
+    <div class="coin">字</div><div class="coin">字</div><div class="coin">字</div>
+  </div>
+  <div id="lyStack" style="text-align:center"></div>
+  <div class="btnrow" style="justify-content:center">
+    <button class="btn" id="lyBtn">掷铜钱（第 1 爻）</button>
+    <button class="btn ghost" id="lyReset">重占</button>
+  </div>
+  <div class="result" id="lyResult"></div>
+</section>
+
+<!-- ============ 梅花 ============ -->
+<section class="module" id="meihua">
+  <div class="cat">占卜 · 邵雍梅花易数</div>
+  <h2><span class="no">柒</span>梅花易数</h2>
+  <p class="desc">报两个数起卦（或用当下时间起卦）：先得数成上下卦，再取动爻——<b>完整断法</b>：分体卦用卦、看五行生克、起互卦看中间过程、看变卦定最终结局，再合动爻与卦象类象细断，不是只报个卦名。</p>
+  <form class="grid">
+    <label class="f">第一个数<input type="number" id="mhA" placeholder="随口报一个数" /></label>
+    <label class="f">第二个数<input type="number" id="mhB" placeholder="再报一个数" /></label>
+    <label class="f">所问何事<input type="text" id="mhQ" placeholder="如：这笔生意能成吗" /></label>
+  </form>
+  <div class="btnrow">
+    <button class="btn" id="mhBtn">报数起卦</button>
+    <button class="btn ghost" id="mhTimeBtn">以此刻时间起卦</button>
+  </div>
+  <div class="result" id="mhResult"></div>
+</section>
+
+<!-- ============ 奇门 ============ -->
+<section class="module featured" id="qimen">
+  <div class="cat">占卜 · 三式之首 · 完整版</div>
+  <h2><span class="no">捌</span>奇门遁甲<span class="qm-badge">完整版 · 含格局断定</span></h2>
+  <p class="desc"><b>完整版，不是简排。</b>选好日期、时辰和所问类别，点起局：程序按时家奇门转盘法走完八步——定节气三元、定阴阳遁与局数、布地盘三奇六仪、定旬首值符、飞九星、转八门、布八神、逐宫打分——再拿天盘干加地盘干逐条扫描经典格局（青龙返首、飞鸟跌穴、太白入荧、大格小格、三奇得使、玉女守门……），最后给出总断：这局是吉是凶、用神落在哪、吉门凶门在哪个方位、该做什么不该做什么。每一步怎么算的，都在结果里用白话写清楚。</p>
+  <form class="grid">
+    <label class="f">起局日期<input type="date" id="qmDate" /></label>
+    <label class="f">起局时间<input type="time" id="qmTime" /></label>
+    <label class="f">所问类别
+      <select id="qmCat"><option>综合运势</option><option>求财赚钱</option><option>事业工作</option><option>出行远行</option><option>婚恋感情</option><option>健康求医</option><option>学业考试</option><option>官司纠纷</option></select>
+    </label>
+    <label class="f">所问何事<input type="text" id="qmQ" placeholder="如：出门谈事往哪个方向好" /></label>
+  </form>
+  <div class="btnrow"><button class="btn" id="qmBtn">起局 · 完整排盘断格局</button><span class="muted">默认就是此刻；一局管一个时辰（两小时），过时重起。</span></div>
+  <div class="result" id="qmResult"></div>
+</section>
+
+<!-- ============ 抽签 ============ -->
+<section class="module" id="qian">
+  <div class="cat">占卜 · 灵签</div>
+  <h2><span class="no">玖</span>道观抽签</h2>
+  <p class="desc">观音、关帝、月老、吕祖四种灵签。先默念所问之事，再摇签筒——签落即是天意，解签按你所问的方面来断，并附传统解曰十二方面（家宅、自身、求财、交易、婚姻、六甲、行人、寻人、公讼、失物、疾病、出行）逐项对照。</p>
+  <form class="grid">
+    <label class="f">选签种
+      <select id="qnType"><option>观音灵签</option><option>关帝灵签</option><option>月老灵签</option><option>吕祖灵签</option></select>
+    </label>
+    <label class="f">所问方面
+      <select id="qnCat"><option>综合运程</option><option>事业工作</option><option>财运生意</option><option>姻缘感情</option><option>健康平安</option><option>学业考试</option></select>
+    </label>
+    <label class="f">心里那件事（可空）<input type="text" id="qnQ" placeholder="默念也行，写下来更诚" /></label>
+  </form>
+  <div class="qian-tube" aria-hidden="true">🎋</div>
+  <div class="btnrow" style="justify-content:center"><button class="btn" id="qnBtn">摇 签</button></div>
+  <div class="result" id="qnResult"></div>
+</section>
+
+<!-- ============ 测字 ============ -->
+<section class="module" id="cezi">
+  <div class="cat">占卜 · 拆字</div>
+  <h2><span class="no">拾</span>测字占卜</h2>
+  <p class="desc">想好要问的事，随手写一个字。按偏旁五行、笔画数理、字形结构拆字断事，是道门「测字」一脉的玩法。</p>
+  <form class="grid">
+    <label class="f">写一个字<input type="text" id="czChar" maxlength="1" placeholder="如：问、来、合" /></label>
+    <label class="f">所问何事
+      <select id="czCat"><option>综合运程</option><option>事业工作</option><option>财运生意</option><option>姻缘感情</option><option>健康平安</option><option>出行远行</option></select>
+    </label>
+    <label class="f">字形结构
+      <select id="czStruct"><option value="auto">不确定，帮我看</option><option>独体字</option><option>左右结构</option><option>上下结构</option><option>包围结构</option></select>
+    </label>
+  </form>
+  <div class="btnrow"><button class="btn" id="czBtn">拆字断事</button></div>
+  <div class="result" id="czResult"></div>
+</section>
+
+<!-- ============ 解梦 ============ -->
+<section class="module" id="jiemeng">
+  <div class="cat">占卜 · 周公解梦</div>
+  <h2><span class="no">拾壹</span>周公解梦</h2>
+  <p class="desc">输入梦里最记得清的东西，如「蛇」「水」「飞」「掉牙」「死人」，查传统解梦的断语。点下面的常见梦象也能直接看。</p>
+  <form class="grid">
+    <label class="f">梦象关键词<input type="text" id="jmKey" placeholder="如：蛇" /></label>
+    <label class="f">梦里的感受
+      <select id="jmMood"><option value="">说不清</option><option>害怕惊醒</option><option>开心舒畅</option><option>平静如常</option><option>焦虑着急</option></select>
+    </label>
+  </form>
+  <div class="chips" id="jmChips"></div>
+  <div class="btnrow"><button class="btn" id="jmBtn">解这个梦</button></div>
+  <div class="result" id="jmResult"></div>
+</section>
+
+<!-- ============ 黄历 ============ -->
+<section class="module" id="huangli">
+  <div class="cat">日用 · 择日</div>
+  <h2><span class="no">拾贰</span>老黄历 · 择日</h2>
+  <p class="desc">任选一天，查农历、干支、建除十二神、宜忌、冲煞、彭祖百忌与十二时辰吉凶，出门办事先翻一翻。</p>
+  <form class="grid">
+    <label class="f">选日子<input type="date" id="hlDate" /></label>
+  </form>
+  <div class="btnrow"><button class="btn" id="hlBtn">查这一天</button></div>
+  <div class="result" id="hlResult"></div>
+</section>
+
+<!-- ============ 风水 ============ -->
+<section class="module" id="fengshui">
+  <div class="cat">日用 · 八宅明镜</div>
+  <h2><span class="no">拾叁</span>八宅风水 · 命卦吉凶方</h2>
+  <p class="desc">按出生年与性别推命卦（东四命 / 西四命），排出八方吉凶：生气、天医、延年、伏位四吉方，绝命、五鬼、六煞、祸害四凶方。床头、书桌、灶口照着摆。</p>
+  <form class="grid">
+    <label class="f">出生年份<input type="number" id="fsYear" value="1995" min="1930" max="2026" /></label>
+    <label class="f">性别<select id="fsSex"><option value="男">男</option><option value="女">女</option></select></label>
+  </form>
+  <div class="btnrow"><button class="btn" id="fsBtn">推命卦</button></div>
+  <div class="result" id="fsResult"></div>
+</section>
+
+<!-- ============ 相术 ============ -->
+<section class="module" id="xiangshu">
+  <div class="cat">相术 · 面相手相</div>
+  <h2><span class="no">拾肆</span>面相 · 手相自测</h2>
+  <p class="desc">照镜子挑一挑自己的五官形态，再看看手上三大主线，拼出一份相术小断。选得越像自己，断得越有味道。</p>
+  <h3 style="margin:4px 0 8px">面相五官</h3>
+  <form class="grid">
+    <label class="f">额头<select id="xsFore"><option>宽阔饱满</option><option>窄而低平</option><option>高耸突出</option><option>有川字纹</option></select></label>
+    <label class="f">眉毛<select id="xsBrow"><option>浓而顺长</option><option>淡而稀疏</option><option>眉尾下垂</option><option>一字粗眉</option></select></label>
+    <label class="f">眼睛<select id="xsEye"><option>细长凤眼</option><option>圆大明亮</option><option>眼尾上扬</option><option>目光沉静内敛</option></select></label>
+    <label class="f">鼻子<select id="xsNose"><option>高挺鼻头有肉</option><option>低平小巧</option><option>鼻翼宽厚</option><option>鹰钩鼻</option></select></label>
+    <label class="f">嘴唇<select id="xsMouth"><option>唇厚有棱角</option><option>薄唇</option><option>嘴角上扬</option><option>唇色红润饱满</option></select></label>
+    <label class="f">下巴<select id="xsChin"><option>圆润宽厚</option><option>尖细</option><option>方正有力</option><option>双下巴</option></select></label>
+  </form>
+  <h3 style="margin:18px 0 8px">手相三线</h3>
+  <form class="grid">
+    <label class="f">生命线<select id="xsLife"><option>长而深，弧度大</option><option>短而浅</option><option>中途有断纹</option><option>环绕拇指根部紧</option></select></label>
+    <label class="f">智慧线<select id="xsWisdom"><option>长直伸向小指下方</option><option>向下弯向手腕</option><option>短，只到中指下方</option><option>与生命线起点分开</option></select></label>
+    <label class="f">感情线<select id="xsHeart"><option>止于食指与中指之间</option><option>止于中指下方</option><option>止于食指下方</option><option>链状多碎纹</option></select></label>
+  </form>
+  <div class="btnrow"><button class="btn" id="xsBtn">拼相断命</button></div>
+  <div class="result" id="xsResult"></div>
+</section>
+
+<!-- ============ 黄帝内经 ============ -->
+<section class="module" id="neijing">
+  <div class="cat">医道 · 黄帝内经 · 五运六气</div>
+  <h2><span class="no">拾伍</span>黄帝内经 · 体质与养生推算</h2>
+  <p class="desc">不是只贴原文：输入生日、时辰，再选要查的日期、季节和时辰，程序按《素问》五运六气一步步算——出生年干定岁运、年支定司天在泉、出生季节定先天脏腑、出生时辰定经络根基，再合上当下的运气与节气，给出体质偏向和吃、睡、动、情志的养生建议。每一步怎么算的，都写在结果里。</p>
+  <form class="grid">
+    <label class="f">出生日期<input type="date" id="njBirthDate" value="1995-06-15" /></label>
+    <label class="f">出生时辰<input type="time" id="njBirthTime" value="10:30" /></label>
+    <label class="f">要查的日期<input type="date" id="njQueryDate" /></label>
+    <label class="f">要查的季节
+      <select id="njSeason"><option value="auto">按要查的日期自动定</option><option value="春">春 · 生发</option><option value="夏">夏 · 生长</option><option value="长夏">长夏 · 化育（夏秋之交）</option><option value="秋">秋 · 收敛</option><option value="冬">冬 · 闭藏</option></select>
+    </label>
+    <label class="f">现在 / 要查的时辰<input type="time" id="njQueryTime" /></label>
+  </form>
+  <div class="btnrow"><button class="btn" id="njBtn">按内经算法推算</button><button class="btn ghost" id="njNowBtn">查此刻</button><span class="muted">生日定「先天底子」，要查的日期定「当下天气」，两个合起来才是建议。</span></div>
+  <div class="result" id="njResult"></div>
+</section>
+
+<!-- ============ 道德经 ============ -->
+<section class="module" id="daodejing">
+  <div class="cat">道经 · 老子 · 道德经</div>
+  <h2><span class="no">拾陆</span>道德经 · 81 章抽章与查经</h2>
+  <p class="desc">81 章全文都在下面，可按章号查、按关键词搜；也可按日期抽「今日一章」，或把心里的问题写下来，程序先给问题归类、再用字码种子在对应章池里抽一章。每种抽法都把算法步骤亮出来，抽到哪章，就给哪章的原文、白话解读和「该怎么做」。</p>
+  <form class="grid">
+    <label class="f">按章号查（1–81）<input type="number" id="ddChapter" min="1" max="81" placeholder="如：8" /></label>
+    <label class="f">按关键词搜全文<input type="text" id="ddKeyword" placeholder="如：水、柔弱、不争、知足" /></label>
+    <label class="f">按日期抽今日一章<input type="date" id="ddDate" /></label>
+  </form>
+  <div class="btnrow">
+    <button class="btn small" id="ddLookupBtn">查这一章</button>
+    <button class="btn small ghost" id="ddSearchBtn">搜关键词</button>
+    <button class="btn small ghost" id="ddDateBtn">按日期抽章</button>
+    <button class="btn small ghost" id="ddRandomBtn">随机抽一章</button>
+  </div>
+  <form class="grid" style="margin-top:14px">
+    <label class="f">按问题抽章：你正为什么事发愁？<input type="text" id="ddQuestion" placeholder="如：和同事争得厉害，心里很累" /></label>
+    <label class="f">或先选一类
+      <select id="ddCat"><option value="auto">让程序按问题文字自动归类</option><option>争强好胜 · 人际冲突</option><option>焦虑急躁 · 想静下来</option><option>事业进退 · 要不要争</option><option>钱财得失 · 知足知止</option><option>感情关系 · 柔弱处下</option><option>领导管理 · 无为而治</option><option>低谷受挫 · 反者道之动</option><option>健康养生 · 守柔保身</option></select>
+    </label>
+  </form>
+  <div class="btnrow"><button class="btn" id="ddAskBtn">按我的问题抽一章</button><span class="muted">同一天、同一个问题，抽到的是同一章——不是手气，是算法。</span></div>
+  <details class="more"><summary>翻开 81 章目录（点章号直接读）</summary><div class="dd-grid" id="ddGrid"></div></details>
+  <div class="result" id="ddResult"></div>
+</section>
+
+<footer>
+  道法自然 · 命由天定，运由己造<br/>
+  本页所有排盘、起卦、称骨、数理、五运六气与奇门格局，均为程序按传统规则当场演算，结果供参详娱乐，<br/>大事还请三思而行，莫把卦象当圣旨。
+</footer>
+</div>
+
+<script>
+"use strict";
+/* ================= 基础干支历法 ================= */
+var TG=["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
+var DZ=["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
+var TG_WX=["木","木","火","火","土","土","金","金","水","水"];
+var DZ_WX=["水","土","木","木","土","火","火","土","金","金","土","水"];
+var DZ_CANG=["癸","己","甲","乙","戊","丙","丁","己","庚","辛","戊","壬"];
+var WXN=["木","火","土","金","水"];
+var NAYIN=["海中金","海中金","炉中火","炉中火","大林木","大林木","路旁土","路旁土","剑锋金","剑锋金","山头火","山头火","涧下水","涧下水","城头土","城头土","白蜡金","白蜡金","杨柳木","杨柳木","泉中水","泉中水","屋上土","屋上土","霹雳火","霹雳火","松柏木","松柏木","长流水","长流水","沙中金","沙中金","山下火","山下火","平地木","平地木","壁上土","壁上土","金箔金","金箔金","覆灯火","覆灯火","天河水","天河水","大驿土","大驿土","钗钏金","钗钏金","桑柘木","桑柘木","大溪水","大溪水","沙中土","沙中土","天上火","天上火","石榴木","石榴木","大海水","大海水"];
+var ANIMALS=["鼠","牛","虎","兔","龙","蛇","马","羊","猴","鸡","狗","猪"];
+var SHICHEN=["子时","丑时","寅时","卯时","辰时","巳时","午时","未时","申时","酉时","戌时","亥时"];
+function mod(n,m){return ((n%m)+m)%m;}
+function wxIdx(w){return WXN.indexOf(w);}
+function hourBranch(h){return Math.floor(mod(h+1,24)/2)%12;}
+function dayIndex(date,hour){
+  /* 23 点后按次日（子时换日） */
+  var d=new Date(Date.UTC(date.getFullYear(),date.getMonth(),date.getDate()));
+  if(hour>=23) d=new Date(d.getTime()+86400000);
+  var base=Date.UTC(2000,0,1); /* 2000-01-01 为戊午日，六十甲子序 54 */
+  var diff=Math.round((d-base)/86400000);
+  return mod(54+diff,60);
+}
+/* 节气近似分界：[月,日,进入的月柱序(寅=1)] 用于月柱与黄历月建 */
+var TERM_CUTS=[[1,6,12],[2,4,1],[3,6,2],[4,5,3],[5,5,4],[6,6,5],[7,7,6],[8,7,7],[9,8,8],[10,8,9],[11,7,10],[12,7,11]];
+function monthInfo(date){
+  var m=date.getMonth()+1,d=date.getDate(),order=11,cutY=date.getFullYear();
+  for(var i=0;i<TERM_CUTS.length;i++){
+    var c=TERM_CUTS[i];
+    if(m>c[0]||(m===c[0]&&d>=c[1])){order=c[2];}
+  }
+  if(m===1&&d<6) order=11;
+  var branchIdx=mod(order+1,12); /* 寅=2 */
+  return {order:order,branch:branchIdx};
+}
+function yearPillar(date){
+  var y=date.getFullYear();
+  var beforeLichun=(date.getMonth()===0)||(date.getMonth()===1&&date.getDate()<4);
+  var ey=beforeLichun?y-1:y;
+  return {idx:mod(ey-4,60),effYear:ey};
+}
+function monthPillar(date,yearGan){
+  var mi=monthInfo(date);
+  var startGan=[2,4,6,8,0][yearGan%5]; /* 甲己丙寅、乙庚戊寅、丙辛庚寅、丁壬壬寅、戊癸甲寅 */
+  var gan=mod(startGan+mi.order-1,10);
+  return {gan:gan,branch:mi.branch,order:mi.order};
+}
+function hourPillar(dayGan,hour){
+  var b=hourBranch(hour);
+  var start=[0,2,4,6,8][dayGan%5];
+  return {gan:mod(start+b,10),branch:b};
+}
+function getLunar(date){
+  try{
+    var fmt=new Intl.DateTimeFormat("en-u-ca-chinese",{year:"numeric",month:"numeric",day:"numeric"});
+    var parts=fmt.formatToParts(date),o={};
+    parts.forEach(function(p){o[p.type]=p.value;});
+    var mon=parseInt(o.month,10),day=parseInt(o.day,10);
+    if(isNaN(mon)||isNaN(day)) return null;
+    return {month:mon,day:day,yearStr:o.year||""};
+  }catch(e){return null;}
+}
+function fmtGZ(gan,branch){return TG[gan]+DZ[branch];}
+function tenGod(dayGan,otherGan){
+  var dw=wxIdx(TG_WX[dayGan]),ow=wxIdx(TG_WX[otherGan]);
+  var sameYin=(dayGan%2)===(otherGan%2);
+  if(dw===ow) return sameYin?"比肩":"劫财";
+  if(mod(dw+1,5)===ow) return sameYin?"食神":"伤官";      /* 我生 */
+  if(mod(dw+2,5)===ow) return sameYin?"偏财":"正财";      /* 我克 */
+  if(mod(ow+1,5)===dw) return sameYin?"偏印":"正印";      /* 生我 */
+  return sameYin?"七杀":"正官";                            /* 克我 */
+}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function $(id){return document.getElementById(id);}
+function show(id,html){var el=$(id);el.innerHTML=html;el.classList.add("show");el.scrollIntoView({behavior:"smooth",block:"nearest"});}
+/* 白话解读框：one=一句话结论，body=展开说明（可含 <ul>） */
+function jiedu(one,body,tag){
+  return '<div class="jiedu"><div class="jiedu-head"><span class="t">白话解读</span>'+(tag?'<span class="tag">'+tag+'</span>':'')+'<span class="tag">说人话版 · 不用懂术语</span></div>'+
+  (one?'<p class="one">'+one+'</p>':'')+(body||'')+'</div>';
+}
+function jdDoDont(doTxt,dontTxt){
+  return '<p><span class="do">宜做：</span>'+doTxt+'</p><p><span class="dont">忌做：</span>'+dontTxt+'</p>';
+}
+/* 说透层：比喻 + 具体三步 + 踩坑提醒，让白话落到能照着做的程度 */
+function jdDeep(analogy,steps,pit){
+  var h='<div class="jd-deep"><p style="margin:0"><b style="color:var(--cinnabar)">再说透一点</b></p>';
+  if(analogy)h+='<div class="analog"><b>打个比方：</b>'+analogy+'</div>';
+  if(steps&&steps.length)h+='<p style="margin:4px 0"><b>具体怎么做（照着做就行）：</b></p><ol>'+steps.map(function(s){return '<li>'+s+'</li>';}).join("")+'</ol>';
+  if(pit)h+='<div class="pit"><b>最容易踩的坑：</b>'+pit+'</div>';
+  return h+'</div>';
+}
+function parseDate(v){if(!v)return null;var p=v.split("-");return new Date(+p[0],+p[1]-1,+p[2]);}
+function parseTime(v){if(!v)return[12,0];var p=v.split(":");return[+p[0],+p[1]||0];}
+</script>
+
+<script>
+"use strict";
+/* ================= 黄历共用 ================= */
+var JIANCHU=["建","除","满","平","定","执","破","危","成","收","开","闭"];
+var JC_YI={
+ "建":["出行","上任","会友","上书","见贵"],"除":["治病","扫舍","求医","出行","嫁娶"],
+ "满":["祈福","祭祀","开市","交易","求财"],"平":["涂泥","修补","平整道路","嫁娶"],
+ "定":["订婚","嫁娶","开市","交易","入学"],"执":["捕捉","渔猎","祭祀","纳财"],
+ "破":["拆屋","治病","求医"],"危":["祭祀","祈福","安床","纳财"],
+ "成":["嫁娶","开市","交易","出行","入学"],"收":["纳财","收账","入仓","祭祀"],
+ "开":["开市","出行","嫁娶","入学","求医"],"闭":["安葬","修坟","筑堤","塞穴"]};
+var JC_JI={
+ "建":["开仓","动土","破土","安葬"],"除":["嫁娶","上任","开市"],
+ "满":["动土","栽种","移徙","入宅"],"平":["祈福","祭祀","出行"],
+ "定":["诉讼","出行","移徙"],"执":["开市","出行","移徙"],
+ "破":["诸事不宜","嫁娶","开市","出行"],"危":["动土","登高","行船"],
+ "成":["诉讼","争斗"],"收":["出行","移徙","入宅","嫁娶"],
+ "开":["安葬","破土"],"闭":["开市","出行","嫁娶","动土"]};
+var PENGZU_GAN=["甲不开仓，财物耗散","乙不栽植，千株不长","丙不修灶，必见灾殃","丁不剃头，头必生疮","戊不受田，田主不祥","己不破券，二比并亡","庚不经络，织机虚张","辛不合酱，主人不尝","壬不汲水，更难提防","癸不词讼，理弱敌强"];
+var PENGZU_ZHI=["子不问卜，自惹祸殃","丑不冠带，主不还乡","寅不祭祀，神鬼不尝","卯不穿井，水泉不香","辰不哭泣，必主重丧","巳不远行，财物伏藏","午不苫盖，屋主更张","未不服药，毒气入肠","申不安床，鬼祟入房","酉不宴客，醉坐颠狂","戌不吃犬，作怪上床","亥不嫁娶，不利新郎"];
+function huangliData(date){
+  var hour=12, di=dayIndex(date,hour), dg=Math.floor(di%10), db=di%12;
+  var yp=yearPillar(date), mp=monthPillar(date,yp.idx%10);
+  var jc=JIANCHU[mod(db-mp.branch,12)];
+  var lun=getLunar(date);
+  var chongAnimal=ANIMALS[mod(db+6,12)];
+  /* 黄道时辰：青龙起始地支按日支分组 */
+  var qingStart=[8,10,0,2,4,6,8,10,0,2,4,6][db]; /* 子申、丑戌、寅子、卯寅、辰辰、巳午… */
+  var gods=["青龙","明堂","天刑","朱雀","金匮","天德","白虎","玉堂","天牢","玄武","司命","勾陈"];
+  var huang=["青龙","明堂","金匮","天德","玉堂","司命"];
+  var hours=[];
+  for(var b=0;b<12;b++){
+    var g=gods[mod(b-qingStart,12)];
+    var hp2=hourPillar(dg,b);
+    hours.push({name:SHICHEN[b],god:g,good:huang.indexOf(g)>=0,gz:fmtGZ(hp2.gan,hp2.branch)});
+  }
+  /* 吉神：天德（按月支）、月德（按月支三合）、天赦（按季与日柱） */
+  var mb=mp.branch;
+  var tianDeByMonth={2:"丁",3:"申",4:"壬",5:"辛",6:"亥",7:"甲",8:"癸",9:"寅",10:"丙",11:"乙",0:"巳",1:"庚"};
+  var yueDeByGroup=["壬","庚","丙","甲"]; /* 申子辰→壬, 巳酉丑→庚, 寅午戌→丙, 亥卯未→甲 */
+  var ydGroup=[0,2,3,1,0,2,1,3,0,2,3,1][mb];
+  var tianDe=tianDeByMonth[mb], yueDe=yueDeByGroup[ydGroup];
+  var dayGZstr=TG[dg]+DZ[db];
+  var godsGood=[];
+  if(dayGZstr.indexOf(tianDe)>=0)godsGood.push("天德");
+  if(dayGZstr.indexOf(yueDe)>=0)godsGood.push("月德");
+  var season=(mb>=2&&mb<=4)?"春":(mb>=5&&mb<=7)?"夏":(mb>=8&&mb<=10)?"秋":"冬";
+  var tiansheDay={"春":"戊寅","夏":"甲午","秋":"戊申","冬":"甲子"}[season];
+  if(dayGZstr===tiansheDay)godsGood.push("天赦（百事大吉，宜赦过祈福）");
+  var yuePo=(mod(db+6,12)===mb);
+  var caiShen={"甲":"东北","乙":"东北","丙":"西南","丁":"西南","戊":"正北","己":"正北","庚":"正东","辛":"正东","壬":"正南","癸":"正南"}[TG[dg]];
+  var xiShen={"甲":"东北","乙":"东北","丙":"正南","丁":"正南","戊":"东南","己":"东南","庚":"西北","辛":"西北","壬":"西南","癸":"西南"}[TG[dg]];
+  return {di:di,dg:dg,db:db,yearGZ:fmtGZ(yp.idx%10,yp.idx%12),monthGZ:fmtGZ(mp.gan,mp.branch),
+    dayGZ:TG[dg]+DZ[db],jc:jc,yi:JC_YI[jc],ji:JC_JI[jc],lunar:lun,nayin:NAYIN[di],
+    godsGood:godsGood.filter(Boolean),yuePo:yuePo,caiShen:caiShen,xiShen:xiShen,
+    chong:chongAnimal,sha:["东","南","西","北"][db%4],pengGan:PENGZU_GAN[dg],pengZhi:PENGZU_ZHI[db],hours:hours};
+}
+function todayRender(){
+  var now=new Date(), h=huangliData(now);
+  var wk="日一二三四五六"[now.getDay()];
+  $("todayCard").innerHTML=
+    '<div class="today-top"><span class="d">'+now.getFullYear()+'年'+(now.getMonth()+1)+'月'+now.getDate()+'日 · 星期'+wk+'</span>'+
+    (h.lunar?'<span>农历'+h.lunar.month+'月'+h.lunar.day+'日</span>':"")+
+    '<span class="gz">'+h.yearGZ+'年 '+h.monthGZ+'月 '+h.dayGZ+'日</span>'+
+    '<span>'+h.jc+'日 · 冲'+h.chong+'煞'+h.sha+'</span></div>'+
+    '<div class="yiji"><span><b class="yi">宜</b> '+h.yi.join(" · ")+'</span><span><b class="ji">忌</b> '+h.ji.join(" · ")+'</span></div>'+
+    '<p style="margin:2px 0 0;font-size:14.5px"><b style="color:var(--cinnabar)">今日一句话：</b>今天是「'+h.jc+'」日，适合做 '+h.yi.slice(0,3).join("、")+' 这类事；'+h.ji.slice(0,2).join("、")+' 先缓一缓。属'+h.chong+'的朋友今天多留个心眼，重要事尽量避开正'+h.sha+'方向。</p>';
+}
+todayRender();
+$("hlDate").value=new Date().toISOString().slice(0,10);
+$("hlBtn").addEventListener("click",function(){
+  var date=parseDate($("hlDate").value); if(!date){return;}
+  var h=huangliData(date);
+  var rows=h.hours.map(function(x){return "<tr><td>"+x.name+"</td><td>"+x.gz+"</td><td>"+x.god+"</td><td class='"+(x.good?"good":"hl")+"'>"+(x.good?"黄道吉时":"黑道凶时")+"</td></tr>";}).join("");
+  show("hlResult",
+   '<p><span class="big">'+h.dayGZ+'日</span>　'+(h.lunar?("农历 "+h.lunar.month+" 月 "+h.lunar.day+" 日　"):"")+
+   h.yearGZ+'年 · '+h.monthGZ+'月 · 建除「'+h.jc+'」 · 纳音 '+h.nayin+'</p>'+
+   '<div class="yiji"><span><b class="yi">宜</b> '+h.yi.join(" · ")+'</span></div>'+
+   '<div class="yiji"><span><b class="ji">忌</b> '+h.ji.join(" · ")+'</span></div>'+
+   '<p>冲煞：冲'+h.chong+'，煞'+h.sha+'。这一天属'+h.chong+'的人诸事留三分小心，避开煞方动土出行。</p>'+
+   '<p><b>吉神：</b>'+(h.godsGood.length?('今日逢 '+h.godsGood.join("、")+'——天德月德都是「逢凶化吉」的护身神，日子里带它们，宜忌之外多一层宽宥，办喜事、赦过、和解尤其合。'):'今日无天德、月德、天赦等大吉神临日，按宜忌本分行事即可，不必强求吉日光环。')+(h.yuePo?' <b class="hl">注意：今日是「月破日」（日支冲月支），诸事不宜的底色，大事能避则避。</b>':'')+'</p>'+
+   '<p><b>方位：</b>财神在 <b>'+h.caiShen+'</b> 方（求财、开业、谈生意朝这个方向去谈更合传统）；喜神在 <b>'+h.xiShen+'</b> 方（相亲、见喜、讨吉利朝这个方向）。煞在'+h.sha+'方，与财神喜神冲突时以避煞为先。</p>'+
+   '<p>彭祖百忌：'+h.pengGan+'；'+h.pengZhi+'。</p>'+
+   '<h3>十二时辰吉凶（带时干支）</h3><div class="scrollx"><table class="tbl"><tr><th>时辰</th><th>时干支</th><th>值神</th><th>吉凶</th></tr>'+rows+'</table></div>'+
+   jiedu('这一天，说白了就是：能办 '+h.yi.slice(0,3).join("、")+'，别碰 '+h.ji.slice(0,3).join("、")+'。',
+    '<p><b>「'+h.jc+'日」是什么意思？</b>建除十二神是老黄历给每天贴的标签，「'+h.jc+'」排在当天的性情里——宜忌基本都是跟着它走的，上面列的宜忌就是它的具体说法，照着做就行。</p>'+
+    '<p><b>纳音「'+h.nayin+'」是什么？</b>是这一天的「材质属性」，老辈用来配婚、配事：比如海中金日宜沉潜蓄势，炉中火日宜热闹开张。日常用不上深究，知道这天偏静还是偏动即可。</p>'+
+    '<p><b>冲煞怎么理解？</b>今天冲属'+h.chong+'的人，不是说属'+h.chong+'今天必倒霉，是提醒这一天和你的气场对着干，签字、远行、动土这类大事能改天就改天，实在改不了就加倍细心。煞在'+h.sha+'方，今天装修动土、长途出行尽量别朝正'+h.sha+'使劲。</p>'+
+    '<p><b>时辰怎么用？</b>表里标「黄道吉时」的时辰适合出门、签约、见重要的人；「黑道凶时」不是不能动，是尽量别在那个时辰做最要紧的那一步。时干支是每个时辰自己的「身份证」，择时辰办事的老派师傅还会拿它和你的生辰配，这里给你备查。</p>'+
+    jdDoDont('在黄道吉时里办最重要的事，出门前照宜忌清单核一遍；求财朝财神'+h.caiShen+'方、见喜朝喜神'+h.xiShen+'方。','在忌项上逞强——忌动土非动土、忌出行非远行，出了岔子多半应在这里。')+
+    jdDeep('老黄历好比出门前看的「综合路况播报」：建除是今天的天气，宜忌是封路和畅通的路段，吉神是今天有没有交警护航，冲煞是提醒某类车（属相）今天限行，时辰表是每个小时的红绿灯。它不决定你去不去得了目的地，只决定你怎么走最省心。',
+     ['先定事：把今天要办的事对着宜忌过一遍，在「宜」里的放心办，在「忌」里的能改天就改天。','再定时：最要紧的那一步（签字、出门、动土、见人）排进黄道吉时里，避开黑道时辰。','最后定方向：出门求财朝'+h.caiShen+'、讨喜朝'+h.xiShen+'，避开煞方'+h.sha+'；属'+h.chong+'的今天全程多留一个心眼。'],
+     '把黄历当圣旨、为等一个「黄道吉日」把正事拖黄——黄历管的是节奏和避讳，真正办事靠的还是准备。忌日里办成了的大事多了去了，前提是准备比平时多三分。'),'老黄历完整版 · '+h.dayGZ+'日'));
+});
+
+/* ================= 八字 · 完整版（藏干 / 神煞 / 格局 / 合冲刑害 / 节气起运） ================= */
+var SHISHEN_TXT={"比肩":"与人并肩、重义气，喜独立自主，钱财易被朋友分薄。","劫财":"胆大敢争、行动力强，得财快散财也快，合作要立字据。","食神":"温和有福气、衣食不缺，才艺与口福俱佳，心宽体健。","伤官":"聪明外露、才华横溢，不喜受管束，宜以技艺立身。","正财":"勤俭务实、财来有源，一分耕耘一分收获，忌投机。","偏财":"财路活络、善交际，横财机会多，也主慷慨好施。","正官":"守规矩、重名誉，宜走正途仕途管理，自律得人敬。","七杀":"魄力过人、压力成动力，乱世出英雄，宜以武职、技术、开创立身。","正印":"仁厚好学、得长辈贵人荫庇，心地善良，学问是终身资产。","偏印":"悟性极高、想法独特，偏门学问手艺易出彩，偶显孤高。"};
+var DAYMASTER_TXT={"甲":"甲木如参天大树，正直向上、不喜弯折，有领袖气，宜扎根深耕。","乙":"乙木如藤蔓花草，柔韧善借力，外柔内刚，适应力极强。","丙":"丙火如太阳，热情坦荡、光芒外放，感染力强，忌急躁。","丁":"丁火如灯烛，温润细腻、心思缜密，外静内热，洞察人心。","戊":"戊土如高山城墙，厚重诚信、包容稳当，是天生的定盘星。","己":"己土如田园沃土，温和细腻、善培育人，内秀而多才。","庚":"庚金如刀剑矿石，刚毅果断、讲义气，成事靠一股锐气。","辛":"辛金如珠宝首饰，精致敏锐、重品味，自尊心强、怕粗糙。","壬":"壬水如江河大海，胸怀宽广、智计百出，流动不居、善变通。","癸":"癸水如雨露甘泉，聪慧内敛、润物无声，直觉敏锐、耐性极佳。"};
+var CANG_FULL={"子":["癸"],"丑":["己","癸","辛"],"寅":["甲","丙","戊"],"卯":["乙"],"辰":["戊","乙","癸"],"巳":["丙","庚","戊"],"午":["丁","己"],"未":["己","丁","乙"],"申":["庚","壬","戊"],"酉":["辛"],"戌":["戊","辛","丁"],"亥":["壬","甲"]};
+var GEJU_TXT={"正官格":"月令透正官：走正道、重规则的格局，最宜体制、管理、公职路线，名声就是你的资产，忌违法乱纪自毁长城。","七杀格":"月令七杀当头：压力型格局，无杀不显威——有制化（印、食）就是将才命，杀无制则一生与压力硬扛，宜把压力转成专业壁垒。","正财格":"月令正财：靠勤俭与正业立身的格局，一分耕耘一分收获，财路不求快、求稳，忌投机取巧坏了财格。","偏财格":"月令偏财：财路活、机会多、人缘带财的格局，宜销售、贸易、资源整合；偏财也主慷慨，花钱的手要管住。","食神格":"月令食神：福气与才艺之格，靠手艺、口才、作品吃饭，心宽福厚；忌把福气耗在口腹与懒散上。","伤官格":"月令伤官：才华外露、不服管的格局，宜技术、创作、自由职业自立门户；伤官见官易惹是非，与体制打交道要收锋芒。","正印格":"月令正印：靠山与学问之格，得长辈、平台、文凭之助，宜教育、文化、研究；忌依赖心重、光学不用。","偏印格":"月令偏印：悟性偏才之格，冷门学问、玄学医卜、精密手艺易出彩；忌想法太多落地太少。","建禄格":"月令建禄（日主临官）：自立自强、白手起家的格局，靠自己双手挣天下，宜实业与技能，忌与人合伙分权不清。","月刃格":"月令羊刃：刚猛果决之格，行动力与爆发力极强，宜武职、竞技、外科、开创；刃无制则易冲动破财，凡事留三分余地。"};
+var SANHE_GROUP={"申":0,"子":0,"辰":0,"寅":1,"午":1,"戌":1,"巳":2,"酉":2,"丑":2,"亥":3,"卯":3,"未":3};
+$("bzBtn").addEventListener("click",function(){
+  var date=parseDate($("bzDate").value); if(!date){return;}
+  var t=parseTime($("bzTime").value), hour=t[0], sex=$("bzSex").value;
+  var yp=yearPillar(date), yg=yp.idx%10, yb=yp.idx%12;
+  var mp=monthPillar(date,yg);
+  var di=dayIndex(date,hour), dg=di%10, db=di%12;
+  var hp=hourPillar(dg,hour);
+  var pillars=[
+    {cap:"年柱 · 根基祖上",gan:yg,branch:yb},
+    {cap:"月柱 · 父母事业",gan:mp.gan,branch:mp.branch},
+    {cap:"日柱 · 自身配偶",gan:dg,branch:db},
+    {cap:"时柱 · 子女晚年",gan:hp.gan,branch:hp.branch}];
+  function nayinOf(gan,branch){for(var i=0;i<60;i++){if(i%10===gan&&i%12===branch)return NAYIN[i];}return "";}
+  var cangOf=function(br){return CANG_FULL[DZ[br]].map(function(g){return {gan:g,wx:TG_WX[TG.indexOf(g)],god:tenGod(dg,TG.indexOf(g))};});};
+  var html='<div class="pillars">'+pillars.map(function(p,i){
+    var god=i===2?"日主":tenGod(dg,p.gan);
+    var cang=cangOf(p.branch).map(function(c,j){return c.gan+"·"+c.god+(j===0?"（本气）":j===1?"（中气）":"（余气）");}).join("，");
+    return '<div class="pillar"><div class="cap">'+p.cap+'</div><div class="gz"><span class="tg">'+TG[p.gan]+'</span>'+DZ[p.branch]+'</div>'+
+    '<div class="meta">十神 '+god+' · 纳音 '+nayinOf(p.gan,p.branch)+'<br/>藏干：'+cang+'</div></div>';}).join("")+'</div>';
+  html+='<p>命主属<span class="hl">'+ANIMALS[yb]+'</span>，日主为<span class="big">'+TG[dg]+TG_WX[dg]+'</span>。'+DAYMASTER_TXT[TG[dg]]+'</p>';
+  /* 五行计数（含藏干权重） */
+  var wxCount={"木":0,"火":0,"土":0,"金":0,"水":0};
+  pillars.forEach(function(p){wxCount[TG_WX[p.gan]]++;wxCount[DZ_WX[p.branch]]++;});
+  html+='<h3>五行分布（按八个字计）</h3>'+WXN.map(function(w){
+    var pct=Math.round(wxCount[w]/8*100);
+    var col={"木":"#4a7c59","火":"#b03a2e","土":"#a87b23","金":"#8a8f6a","水":"#31586e"}[w];
+    return '<div class="wxbar"><span>'+w+'</span><div class="bar"><div class="fill" style="width:'+pct+'%;background:'+col+'"></div></div><span>'+wxCount[w]+' 个</span></div>';}).join("");
+  var missing=WXN.filter(function(w){return wxCount[w]===0;});
+  html+='<p>'+(missing.length?('命局缺 <span class="hl">'+missing.join("、")+'</span>：缺不等于坏，往往正是命主一辈子主动去补、去靠近的方向。'):'五行俱全，流通有情，性情多平和少偏激。')+'</p>';
+  /* 旺衰：含藏干加权评分 */
+  var dayWx=TG_WX[dg], dwx=wxIdx(dayWx), supScore=0, totScore=0;
+  function addScore(wx,w){
+    totScore+=w;
+    if(wx===dayWx||mod(wxIdx(wx)+1,5)===dwx)supScore+=w;
+  }
+  pillars.forEach(function(p){
+    addScore(TG_WX[p.gan],1);
+    cangOf(p.branch).forEach(function(c,j){addScore(c.wx,j===0?1:(j===1?0.5:0.3));});
+  });
+  var supRatio=supScore/totScore;
+  var strength=supRatio>=0.5?"身强":(supRatio<0.35?"身弱":"中和");
+  var xiYong = strength==="身强" ? "喜用：克我之官杀、我生之食伤、我克之财星——宜泄宜耗，走动中求财。"
+    : strength==="身弱" ? "喜用：生我之印星、同我之比劫——宜扶宜帮，靠平台、贵人与团队借力。"
+    : "命局中和，喜忌不偏，顺其自然、随运而转，忌走极端。";
+  html+='<h3>旺衰与喜用（完整评分）</h3><p>日主 <span class="hl">'+strength+'</span>。扶身力量 '+supScore.toFixed(1)+' / '+totScore.toFixed(1)+' 分（天干每个 1 分，地支藏干本气 1 分、中气 0.5、余气 0.3；帮身占一半以上为身强，不足三成半为身弱）。'+xiYong+'</p>';
+  /* 格局：月令本气十神定格 */
+  var monthMain=cangOf(mp.branch)[0];
+  var gejuName=monthMain.god==="比肩"?"建禄格":monthMain.god==="劫财"?"月刃格":monthMain.god+"格";
+  html+='<h3>格局 · '+gejuName+'</h3><p>'+GEJU_TXT[gejuName]+'</p>';
+  /* 十神点评 */
+  html+='<h3>十神点评</h3><p><b>月柱 '+tenGod(dg,mp.gan)+'（事业宫）：</b>'+SHISHEN_TXT[tenGod(dg,mp.gan)]+'</p>'+
+        '<p><b>时柱 '+tenGod(dg,hp.gan)+'（晚景宫）：</b>'+SHISHEN_TXT[tenGod(dg,hp.gan)]+'</p>';
+  /* 神煞 */
+  var shaList=[];
+  function shaCheck(name,targets,txt){
+    var hits=[];
+    pillars.forEach(function(p,i){if(targets.indexOf(DZ[p.branch])>=0)hits.push(["年","月","日","时"][i]+"柱"+DZ[p.branch]);});
+    if(hits.length)shaList.push('<span class="good">'+name+'</span> 在 '+hits.join("、")+'：'+txt);
+  }
+  var guiByDay={"甲":["丑","未"],"戊":["丑","未"],"庚":["丑","未"],"乙":["子","申"],"己":["子","申"],"丙":["亥","酉"],"丁":["亥","酉"],"壬":["卯","巳"],"癸":["卯","巳"],"辛":["午","寅"]};
+  shaCheck("天乙贵人",guiByDay[TG[dg]],"最大的贵人星——逢难有人拉一把，遇事多求助长辈与有身份的人，别硬扛。");
+  var wenByDay={"甲":"巳","乙":"午","丙":"申","丁":"酉","戊":"申","己":"酉","庚":"亥","辛":"子","壬":"寅","癸":"卯"};
+  shaCheck("文昌贵人",[wenByDay[TG[dg]]],"主聪明好学、考试文书运佳，读书、考证、写东西是你一辈子的加分项。");
+  var grp=SANHE_GROUP[DZ[yb]];
+  var taohua=["酉","卯","午","子"][grp], yima=["寅","申","亥","巳"][grp], huagai=["辰","戌","丑","未"][grp];
+  shaCheck("桃花（咸池）",[taohua],"主魅力与人缘，异性缘、观众缘旺；用在正道是人气，用偏了是纠葛，分寸在自己。");
+  shaCheck("驿马",[yima],"主走动、迁移、奔波——异地、出差、搬迁里藏着你的机会，越动越活，忌困守一地。");
+  shaCheck("华盖",[huagai],"主孤高与悟性，宜艺术、宗教、技术钻研；享受孤独的人能把它过成宝库。");
+  var renByDay={"甲":"卯","丙":"午","戊":"午","庚":"酉","壬":"子","乙":"辰","丁":"未","己":"未","辛":"戌","癸":"丑"};
+  shaCheck("羊刃",[renByDay[TG[dg]]],"主刚猛与爆发力，利开创与竞技；刃是双刃剑，冲动投资、冲动决定是它最大的坑。");
+  /* 空亡：日柱旬 */
+  var hsIdx=-1; for(var s2=0;s2<60;s2++){if(s2%10===dg&&s2%12===db)hsIdx=s2;}
+  var xunStart=hsIdx-mod(hsIdx,10);
+  var kongBr=[DZ[mod(xunStart+10,12)],DZ[mod(xunStart+11,12)]];
+  var kongHits=[];
+  pillars.forEach(function(p,i){if(kongBr.indexOf(DZ[p.branch])>=0)kongHits.push(["年","月","日","时"][i]+"柱");});
+  html+='<h3>神煞</h3>'+(shaList.length?shaList.map(function(x){return '<p>'+x+'</p>';}).join(""):'<p>常用神煞（天乙、文昌、桃花、驿马、华盖、羊刃）此盘皆不逢——命不靠星耀加持，全凭格局与行运，属踏实无花哨的一盘。</p>')+
+   '<p><b>空亡：</b>日柱在「甲'+DZ[xunStart%12]+'旬」，空亡 '+kongBr.join("、")+(kongHits.length?('，恰落在 '+kongHits.join("、")+'——那根柱子所主的人事（年看祖上、月看父母事业、日看配偶、时看子女）力量虚浮，宜务实勿贪虚名。'):'，四柱不逢空亡——四柱所主的人事都落实，不虚浮。')+'</p>';
+  /* 合冲刑害 */
+  var relFound=[];
+  var HE6={"子":"丑","丑":"子","寅":"亥","亥":"寅","卯":"戌","戌":"卯","辰":"酉","酉":"辰","巳":"申","申":"巳","午":"未","未":"午"};
+  var HAI6={"子":"未","未":"子","丑":"午","午":"丑","寅":"巳","巳":"寅","卯":"辰","辰":"卯","申":"亥","亥":"申","酉":"戌","戌":"酉"};
+  for(var a=0;a<4;a++)for(var b2=a+1;b2<4;b2++){
+    var za=DZ[pillars[a].branch], zb=DZ[pillars[b2].branch], na=["年","月","日","时"][a]+"支"+za, nb=["年","月","日","时"][b2]+"支"+zb;
+    if(mod(pillars[a].branch+6,12)===pillars[b2].branch)relFound.push(na+" 与 "+nb+" <b>六冲</b>：这两处人事易动荡、分离，逢之多主那方面的变动，冲不一定坏，主动求变可化。");
+    else if(HE6[za]===zb)relFound.push(na+" 与 "+nb+" <b>六合</b>：这两处人事互相牵合、彼此成就，合主和、主成。");
+    else if(HAI6[za]===zb)relFound.push(na+" 与 "+nb+" <b>六害</b>：暗地里的不合，表面没事、内里别扭，宜把话摊开说。");
+    var isXing=(za==="子"&&zb==="卯")||(za==="卯"&&zb==="子")||(["寅","巳","申"].indexOf(za)>=0&&["寅","巳","申"].indexOf(zb)>=0&&za!==zb)||(["丑","戌","未"].indexOf(za)>=0&&["丑","戌","未"].indexOf(zb)>=0&&za!==zb);
+    if(isXing)relFound.push(na+" 与 "+nb+" <b>相刑</b>：这两处人事易有刑伤、纠葛与别扭，行事留痕、说话留余地可解。");
+    if(za===zb&&["辰","午","酉","亥"].indexOf(za)>=0)relFound.push(na+" 与 "+nb+" <b>自刑</b>：自己跟自己较劲之象，那方面事易钻牛角尖，想开即解。");
+  }
+  html+='<h3>地支合冲刑害</h3>'+(relFound.length?relFound.map(function(x){return '<p>'+x+'</p>';}).join(""):'<p>四柱地支之间无冲、无合、无刑、无害——六亲与各阶段之间少有硬碰硬的拉扯，属安顿平顺的组合。</p>');
+  /* 胎元 */
+  html+='<p><b>胎元：</b>'+fmtGZ(mod(mp.gan+1,10),mod(mp.branch+1,12))+'（月柱干进一位、支进一位，为受胎之月，看先天禀赋与母系根基）。</p>';
+  /* 大运：真实起运（数节气天数 ÷3） */
+  var yangYear=(yg%2===0);
+  var shun=(yangYear&&sex==="男")||(!yangYear&&sex==="女");
+  var bounds=[];
+  [-1,0,1].forEach(function(yo){
+    TERM_CUTS.forEach(function(c){bounds.push(new Date(date.getFullYear()+yo,c[0]-1,c[1]));});
+  });
+  bounds.sort(function(x,y){return x-y;});
+  var birth0=new Date(date.getFullYear(),date.getMonth(),date.getDate());
+  var target=null;
+  if(shun){for(var bi=0;bi<bounds.length;bi++){if(bounds[bi]>birth0){target=bounds[bi];break;}}}
+  else{for(var bj=bounds.length-1;bj>=0;bj--){if(bounds[bj]<=birth0){target=bounds[bj];break;}}}
+  var daysTo=Math.round(Math.abs(target-birth0)/86400000);
+  var startAgeY=Math.floor(daysTo/3), startAgeM=Math.round((daysTo%3)*4);
+  var rows="";
+  for(var k=0;k<8;k++){
+    var step=shun?k+1:-(k+1);
+    var g=mod(mp.gan+step,10), br2=mod(mp.branch+step,12);
+    var ageY=startAgeY+k*10, ageTxt=ageY+" 岁"+(startAgeM?" "+startAgeM+" 个月":"");
+    var brMain=CANG_FULL[DZ[br2]][0];
+    rows+="<tr><td>"+ageTxt+" 起</td><td>"+fmtGZ(g,br2)+"</td><td>干 "+tenGod(dg,g)+" / 支 "+tenGod(dg,TG.indexOf(brMain))+"</td><td class='l'>"+SHISHEN_TXT[tenGod(dg,g)]+"</td></tr>";
+  }
+  html+='<h3>大运（'+(shun?"顺排":"逆排")+'）</h3><p>起运算法：'+(shun?"顺排数到下一个节气":"逆排数到上一个节气")+'，共 '+daysTo+' 天，三天折一岁，得 <b>约 '+startAgeY+' 岁 '+startAgeM+' 个月起运</b>，十年一换。</p><div class="scrollx"><table class="tbl"><tr><th>起运年龄</th><th>大运</th><th>十神（干/支本气）</th><th class="l">断语</th></tr>'+rows+'</table></div>';
+  /* 流年 2026 */
+  var ly26="丙", ly26God=tenGod(dg,2);
+  var dbName=DZ[db];
+  var lyRel=dbName==="子"?"流年午与日支子六冲：今年配偶宫、住所、合作关系易有大动，宜主动求变忌被动挨冲。":dbName==="午"?"流年午与日支午自刑：今年最防自己跟自己较劲，决定前先睡一觉。":dbName==="未"?"流年午与日支未六合：今年配偶、合作方面有牵合之力，利定关系、签长约。":dbName==="寅"||dbName==="戌"?"流年午与日支"+dbName+"半合火局：今年火势得助，行动力与表现欲都强，利推进与亮相。":"流年午与日支"+dbName+"无直接合冲：今年的动静主要看流年十神本身。";
+  html+='<h3>流年 · 2026 丙午</h3><p>流年天干「丙」对日主为 <b>'+ly26God+'</b>：'+SHISHEN_TXT[ly26God]+'</p><p>'+lyRel+'</p>';
+  var bzOne = strength==="身强" ? '你这个命，说白了是「自身能量足」的人：主意正、扛得住事，顺着自己的劲儿往外使——去做事、去赚钱、去担责任，反而越忙越旺。'
+    : strength==="身弱" ? '你这个命，说白了是「自身能量偏弱」的人：不是没本事，是单打独斗容易累，靠平台、靠贵人、靠团队借力，你反而走得远、走得稳。'
+    : '你这个命，说白了是「能量刚好平衡」的人：不偏不倚，适应力最强，环境好你就上，环境差你能守，一辈子贵在一个稳字。';
+  html+=jiedu(bzOne,
+   '<div class="howto"><b>先教你看懂这张盘：</b>四根柱子从左到右是年、月、日、时。<b>年柱</b>看祖上和早年，<b>月柱</b>看父母和事业（最重要，它定格局），<b>日柱</b>就是你自己——上面那个字叫「日主」，是你这个人的内核；下面是配偶宫。<b>时柱</b>看子女和晚年。每根柱子下面还藏着「藏干」：地支不是一块纯铁，里面还掖着一到三个天干，本气最强、中气次之、余气最弱——很多细断都藏在这里。所谓「十神」，就是其他字和日主的关系：生我的叫印（像靠山），我生的叫食伤（像才华），克我的叫官杀（像压力和规矩），我克的叫财（像钱和目标），和我一样的叫比劫（像兄弟朋友）。</div>'+
+   '<p><b>日主 '+TG[dg]+dayWx+' 是什么意思？</b>它就是你的底色：'+DAYMASTER_TXT[TG[dg]]+'别人第一眼感受到的你，多半就是这个气质。</p>'+
+   '<p><b>格局「'+gejuName+'」用人话说：</b>'+GEJU_TXT[gejuName]+'</p>'+
+   '<p><b>「'+strength+'」怎么理解？</b>'+(strength==="身强"?'帮你、捧你的力量比消耗你的多，所以你不怕事找你，就怕闲着没事干。适合主动争取、创业挑担、把才华变现。':strength==="身弱"?'消耗你、压你的力量比帮你的多，所以你最忌硬撑和单干。找个好平台、好领导、好搭档，就是你最好的风水，学历证书和贵人缘是你一辈子的本钱。':'帮你的和消耗你的差不多，所以你没有明显的短板，也没有明显的捷径，顺势而为、别走极端就是最好的策略。')+'</p>'+
+   '<p><b>五行缺'+(missing.length?missing.join("、"):"——五行不缺")+'要不要紧？</b>'+(missing.length?'不用慌。缺的那个五行，往往就是你一辈子会主动去靠近的东西：比如缺金的人做事爱讲规则、缺水的人向往流动和远方。把它当成性格提示就行，不用刻意戴什么补什么，真想补，多接触那个五行对应的行业、颜色、方位即可。':'五行全的人性情少偏激，遇事能转弯，这是你的长处，保持流通别钻牛角尖就行。')+'</p>'+
+   jdDoDont(strength==="身强"?'主动揽事、把手艺和想法变现、适度花钱投资自己和事业。':strength==="身弱"?'抱团做事、先拿证书和口碑、重要决定拉上信得过的人商量。':'顺势布局、保持节奏、好运时推进、差运时守成。',
+             strength==="身强"?'闲散躺平、意气用事硬碰硬、为朋友义气盲目担保。':strength==="身弱"?'裸辞单干、熬夜硬撑、没靠山就下重注。':'墙头草两边倒、看别人发财就推翻自己原计划。')+
+   jdDeep('八字好比看一个人的「出厂配置单」：日主是发动机型号，旺衰是油量够不够，格局是这台车适合跑高速还是越野，神煞是选装包，大运流年是每十年换一段的路况。配置没有绝对好坏，车和路配上了，就是好命。',
+    ['第一步只看三样：日主是什么（你的底色）、旺还是弱（你的续航）、格局是什么（你的赛道）——这三样定了，别的都是细枝末节。',
+     '第二步对着大运表找到你现在这步运，看它的十神断语：走财运就重心放赚钱，走官杀运就重心放职位与规矩，走印运就去读书拿证。顺着运走，比逆着运使劲省一半力。',
+     '第三步看今年：2026 流年对你是「'+ly26God+'」，'+lyRel+'今年的大动作都围绕这一条安排。'],
+    '拿八字去和人「合婚成败」「断生死祸福」式的吓自己——八字看的是倾向和节奏，不是判决书。同一张盘，选对赛道和选错赛道，过出的是两种人生。'),'八字完整版 · '+gejuName+' · 日主'+TG[dg]+dayWx+' · '+strength);
+  show("bzResult",html);
+});
+
+</script>
+
+<script>
+"use strict";
+/* ================= 紫微斗数 · 完整版（四化 / 六吉 / 六煞 / 大限 / 流年） ================= */
+var STAR_TXT={"紫微":"帝星坐守，气度自成，有领导欲也担得起责任，喜众星拱照。","天机":"智星，脑子转得快、善谋略，宜动中求成，心思多则易累。","太阳":"光明星，热情慷慨、利他出名，男命得志、女命能干。","武曲":"财星兼将星，刚毅果决、理财有方，行动胜于言语。","天同":"福星，心性温和、知足懂享受，逢凶能化，宜慢工出细活。","廉贞":"次桃花兼官星，个性鲜明、爱憎分明，宜公职、电气、精密之业。","天府":"库星，稳重保守、能聚财守成，天生有「仓廪实」的安全感。","太阴":"月亮之星，细腻浪漫、利不动产与夜间财，情绪是晴雨表。","贪狼":"桃花兼欲望之星，多才多艺、交际手腕高，人生舞台大。","巨门":"暗星，主口舌与研究，靠嘴吃饭、宜律师教师分析之业，慎是非。","天相":"印星，忠厚辅佐、形象体面，是天生的二把手与和事佬。","天梁":"荫星，老成持重、逢难有救，宜医、教、监察等荫人之业。","七杀":"将星，独当一面、敢闯敢拼，人生多起伏，成败皆轰烈。","破军":"耗星，破旧立新、不破不立，宜开创、变革、异地发展。"};
+var SIHUA_TABLE=[{"廉贞":"禄","破军":"权","武曲":"科","太阳":"忌"},{"天机":"禄","天梁":"权","紫微":"科","太阴":"忌"},{"天同":"禄","天机":"权","文昌":"科","廉贞":"忌"},{"太阴":"禄","天同":"权","天机":"科","巨门":"忌"},{"贪狼":"禄","太阴":"权","右弼":"科","天机":"忌"},{"武曲":"禄","贪狼":"权","天梁":"科","文曲":"忌"},{"太阳":"禄","武曲":"权","太阴":"科","天同":"忌"},{"巨门":"禄","太阳":"权","文曲":"科","文昌":"忌"},{"天梁":"禄","紫微":"权","左辅":"科","武曲":"忌"},{"破军":"禄","巨门":"权","太阴":"科","贪狼":"忌"}];
+var HUA_PLAIN={"禄":"化禄：福气、钱财、缘分的开关——这颗星管的领域是你这辈子最容易有收获、最顺手的地方。","权":"化权：权力、掌控、话语权——这颗星管的领域你说了算，但也要防太强势招人忌。","科":"化科：名声、贵人、考试文凭——这颗星管的领域容易出名声、遇贵人，利读书扬名。","忌":"化忌：卡点、执念、麻烦眼——这颗星管的领域是你一辈子的功课：容易在这上面钻牛角尖、遇波折，认清它就是解一半。"};
+var AUX_PLAIN={"左辅":"左辅：得力的左手，贵人助力实在、做事有人帮衬。","右弼":"右弼：得力的右手，人缘与暗助俱佳。","文昌":"文昌：文采、考试、文书运强，利读书功名。","文曲":"文曲：口才、才艺、桃花皆旺，表达就是你的武器。","天魁":"天魁：阳贵人，遇事有明面上的大人物拉一把。","天钺":"天钺：阴贵人，暗处有人相助，逢凶能化。"};
+var SHA_PLAIN={"擎羊":"擎羊：刑伤、果断、竞争——所在宫位易有伤痛、手术、硬碰硬的事，也主魄力。","陀罗":"陀罗：拖延、纠缠、暗伤——所在宫位的事容易拖、容易磨，忌藕断丝连。","火星":"火星：突发、火爆、急惊——所在宫位易有突发事件，脾气与意外都要防。","铃星":"铃星：暗火、郁结、惊扰——所在宫位易有说不出口的烦与暗耗。","地空":"地空：落空、想象、破财——所在宫位宜务实，防画饼与空欢喜。","地劫":"地劫：劫夺、半途生变——所在宫位防被人截胡、计划被打断。"};
+$("zwBtn").addEventListener("click",function(){
+  var date=parseDate($("zwDate").value); if(!date)return;
+  var t=parseTime($("zwTime").value), hb=hourBranch(t[0]);
+  var sex=$("zwSex").value;
+  var lun=getLunar(date);
+  if(!lun){show("zwResult","<p>这台设备的浏览器读不出农历，请换个日期再试。</p>");return;}
+  var yp=yearPillar(date), yb=yp.idx%12, yg=yp.idx%10;
+  var ming=mod(2+(lun.month-1)-hb,12);
+  var shen=mod(2+(lun.month-1)+hb,12);
+  var startGan=[2,4,6,8,0][yg%5];
+  var mingGan=mod(startGan+mod(ming-2,12),10);
+  var nayin=""; for(var i=0;i<60;i++){if(i%10===mingGan&&i%12===ming)nayin=NAYIN[i];}
+  var juEl=nayin.slice(-1);
+  var ju={"水":2,"木":3,"金":4,"土":5,"火":6}[juEl];
+  var q=Math.ceil(lun.day/ju), r=q*ju-lun.day;
+  var zwPos=mod(2+(q-1)+(r%2===0?r:-r),12);
+  var tfPos=mod(4-zwPos,12);
+  var starAt={}, auxAt={}, shaAt={};
+  function put(pos,name){(starAt[pos]=starAt[pos]||[]).push(name);}
+  function putAux(pos,name){(auxAt[pos]=auxAt[pos]||[]).push(name);}
+  function putSha(pos,name){(shaAt[pos]=shaAt[pos]||[]).push(name);}
+  [["紫微",0],["天机",-1],["太阳",-3],["武曲",-4],["天同",-5],["廉贞",-8]].forEach(function(s){put(mod(zwPos+s[1],12),s[0]);});
+  [["天府",0],["太阴",1],["贪狼",2],["巨门",3],["天相",4],["天梁",5],["七杀",6],["破军",10]].forEach(function(s){put(mod(tfPos+s[1],12),s[0]);});
+  /* 六吉 */
+  putAux(mod(4+(lun.month-1),12),"左辅");
+  putAux(mod(10-(lun.month-1),12),"右弼");
+  putAux(mod(10-hb,12),"文昌");
+  putAux(mod(4+hb,12),"文曲");
+  var kuiPos=[1,0,11,11,1,0,1,6,3,3][yg], yuePos=[7,8,9,9,7,8,7,2,5,5][yg];
+  putAux(kuiPos,"天魁"); putAux(yuePos,"天钺");
+  /* 六煞 */
+  putSha(mod(yb+1,12),"擎羊"); putSha(mod(yb-1,12),"陀罗");
+  var huoStart=([2,6,10].indexOf(yb)>=0)?1:([8,0,4].indexOf(yb)>=0)?2:([5,9,1].indexOf(yb)>=0)?3:9;
+  putSha(mod(huoStart+hb,12),"火星");
+  putSha(mod(10+hb,12),"铃星");
+  putSha(mod(11-hb,12),"地空"); putSha(mod(11+hb,12),"地劫");
+  /* 四化 */
+  var hua=SIHUA_TABLE[yg], starPalace={};
+  function locateAll(){
+    for(var b=0;b<12;b++){
+      (starAt[b]||[]).forEach(function(s){starPalace[s]=b;});
+      (auxAt[b]||[]).forEach(function(s){starPalace[s]=b;});
+    }
+  }
+  locateAll();
+  var PALNAMES=["命宫","兄弟","夫妻","子女","财帛","疾厄","迁移","交友","官禄","田宅","福德","父母"];
+  var palAt={};
+  for(var k=0;k<12;k++){palAt[mod(ming-k,12)]=PALNAMES[k];}
+  function cellHtml(b){
+    var main=(starAt[b]||[]).map(function(s){return s+(hua[s]?'<span class="hua">化'+hua[s]+'</span>':"");}).join(" ");
+    var aux=(auxAt[b]||[]).map(function(s){return s+(hua[s]?'<span class="hua">化'+hua[s]+'</span>':"");}).join(" ");
+    var sha=(shaAt[b]||[]).join(" ");
+    return '<div class="zw-cell'+(b===ming?" ming":"")+'"><div class="stars">'+(main||"·")+'</div>'+(aux?'<div class="aux">'+aux+'</div>':"")+(sha?'<div class="sha">'+sha+'</div>':"")+'<span class="dz">'+DZ[b]+'宫</span><span class="pal">'+palAt[b]+(b===shen?" ·身":"")+'</span></div>';
+  }
+  var posMap={5:0,6:1,7:2,8:3,4:4,9:5,3:6,10:7,2:8,1:9,0:10,11:11};
+  var cellArr=new Array(12);
+  for(var bb=0;bb<12;bb++)cellArr[posMap[bb]]=cellHtml(bb);
+  var center='<div class="zw-center"><div><b>'+ANIMALS[yb]+'年 · '+TG[yg]+DZ[yb]+'</b></div><div>农历 '+lun.month+' 月 '+lun.day+' 日 · '+SHICHEN[hb]+'</div><div>命宫在'+DZ[ming]+' · '+juEl+ju+'局</div><div>身宫在'+DZ[shen]+'（'+palAt[shen]+'）</div></div>';
+  var gridHtml='<div class="ziwei-grid">'+cellArr[0]+cellArr[1]+cellArr[2]+cellArr[3]+cellArr[4]+center+cellArr[5]+cellArr[6]+cellArr[7]+cellArr[8]+cellArr[9]+cellArr[10]+cellArr[11]+'</div>';
+  function palStars(palName){for(var b=0;b<12;b++){if(palAt[b]===palName)return starAt[b]||[];}return [];}
+  function palBranch(palName){for(var b=0;b<12;b++){if(palAt[b]===palName)return b;}return 0;}
+  function palText(palName){
+    var ss=palStars(palName);
+    if(!ss.length) return "<p><b>"+palName+"：</b>无主星坐守，借对宫星曜参看，此宫宜随缘借力，不必强求。</p>";
+    return "<p><b>"+palName+"（"+ss.join("、")+"）：</b>"+ss.map(function(s){return STAR_TXT[s];}).join("")+"</p>";
+  }
+  var mingStars=palStars("命宫"), caiStars=palStars("财帛"), guanStars=palStars("官禄"), fuStars=palStars("夫妻");
+  var starPlain={"紫微":"天生的主心骨，像团队里的老大，别人愿意听你的，你也爱拿主意","天机":"脑子最灵的军师型，点子多、学东西快，靠动脑吃饭","太阳":"自带光芒的热心肠，爱出头也爱帮人，名气比闷声发财更旺你","武曲":"实干派财星，不爱说漂亮话，靠执行力和手艺赚钱","天同":"知足常乐的福气型，脾气好、人缘好，适合细水长流的活法","廉贞":"个性鲜明、爱憎分明，有点野，适合需要魄力和技术含量的行当","天府":"天生的管家，能存钱能守业，安全感是你做事的底气","太阴":"温柔细腻型，心思细、审美好，靠不动产、夜间经济或细心活赚钱","贪狼":"多才多艺的社交高手，欲望强、舞台大，人生玩法多","巨门":"靠嘴和脑子吃饭的研究型，适合讲课、咨询、分析，但要防口舌是非","天相":"靠谱的二把手和和事佬，形象好、会辅佐人，合作运强","天梁":"老成持重的贵人型，爱照顾人、能扛事，适合医生老师这类帮人的行当","七杀":"敢闯敢拼的将军型，人生起伏大，越是难啃的骨头越能显出你","破军":"不破不立的改革派，旧的不去新的不来，适合开创新局、异地发展"};
+  function plainOf(ss){return ss.length?ss.map(function(s){return starPlain[s]||STAR_TXT[s];}).join("；"):"这一宫没有主星，不是说这方面没戏，是说这方面你比较随缘、要借别人的力，别在这上面死磕";}
+  /* 四化落宫说明 */
+  var huaHtml=Object.keys(hua).map(function(s){
+    var b=starPalace[s];
+    return '<p><b>'+s+'化'+hua[s]+' → 落在'+(b!=null?palAt[b]:"（未定位）")+'：</b>'+HUA_PLAIN[hua[s]]+'</p>';
+  }).join("");
+  /* 命宫吉煞 */
+  var mingAux=auxAt[ming]||[], mingSha=shaAt[ming]||[];
+  var auxShaTxt='<p><b>命宫的帮手与麻烦：</b>'+(mingAux.length?('吉星有 '+mingAux.map(function(s){return s;}).join("、")+'——'+mingAux.map(function(s){return AUX_PLAIN[s];}).join("")):'命宫无吉星拱照，助力要去三方四正里找。')+(mingSha.length?(' 煞星有 '+mingSha.join("、")+'——'+mingSha.map(function(s){return SHA_PLAIN[s];}).join("")):' 命宫无煞星直冲，性情少些棱角。')+'</p>';
+  /* 大限 */
+  var yangNian=(yg%2===0);
+  var dxShun=(yangNian&&sex==="男")||(!yangNian&&sex==="女");
+  var age=new Date().getFullYear()-date.getFullYear()+1;
+  var dxIdx=age<ju?0:Math.floor((age-ju)/10);
+  var dxBranch=dxShun?mod(ming-dxIdx,12):mod(ming+dxIdx,12);
+  var dxPal=palAt[dxBranch], dxStart=ju+dxIdx*10;
+  var dxStars=(starAt[dxBranch]||[]).join("、")||"无主星";
+  /* 流年 2026 */
+  var lnBranch=6, lnPal=palAt[lnBranch], lnStars=(starAt[lnBranch]||[]).join("、")||"无主星";
+  /* 三方四正 */
+  var mb=palBranch("命宫");
+  var sfsz=["命宫","财帛","官禄","迁移"].map(function(pn){return pn+"（"+(palStars(pn).join("、")||"无主星")+"）";}).join("、");
+  show("zwResult",gridHtml+
+    '<p>命宫主星：<span class="hl">'+(mingStars.join("、")||"无主星")+'</span>，'+juEl+ju+'局起紫微，紫微星落'+DZ[zwPos]+'宫。此为<b>完整盘</b>：主星之外，蓝字是六吉星、红字是六煞星，金字「化○」是生年四化。</p>'+
+    palText("命宫")+palText("财帛")+palText("官禄")+palText("夫妻")+
+    '<h3>生年四化 · 一辈子的四个开关</h3>'+huaHtml+
+    auxShaTxt+
+    '<h3>三方四正（命宫的支援圈）</h3><p>'+sfsz+'。断命不单看命宫一格，要合这四宫同看：财官迁三宫强，命宫弱也能借势；三宫弱，命宫再强也独木难支。</p>'+
+    '<h3>大限与流年</h3><p><b>大限（十年一步）：</b>'+ju+' 岁起运，'+(dxShun?"顺行":"逆行")+'。你今年虚岁 '+age+'，正走 <b>'+dxStart+'–'+(dxStart+9)+' 岁大限，落在'+dxPal+'</b>（'+dxStars+'坐守）——这十年的人生主题词就是这个宫：'+({"命宫":"自我突破与立业","兄弟":"同辈合伙与手足","夫妻":"婚姻感情定盘","子女":"子女与下属、作品","财帛":"赚钱模式成型","疾厄":"健康与身体管理","迁移":"异地发展与出外机遇","交友":"人脉圈子重组","官禄":"事业冲刺与职位","田宅":"置产与家业根基","福德":"心境、兴趣与福分","父母":"长辈、文书与靠山"})[dxPal]+'。</p>'+
+    '<p><b>2026 流年：</b>流年命宫落在你的<b>'+lnPal+'</b>（'+lnStars+'坐守）——今年的大小事，多半围绕这个宫的主题发生，安排年度计划时先把它当主线。</p>'+
+    jiedu('你这个人，说白了是：'+plainOf(mingStars)+'。',
+     '<div class="howto"><b>先教你看懂这张图：</b>中间是你本人和出生信息，外圈 12 个格子是你人生的 12 个房间——<b>命宫</b>是你这个人，<b>财帛</b>是钱，<b>官禄</b>是事业，<b>夫妻</b>是感情，余下类推。每个格子里的大字是「主星」，星的脾气就是你这方面的脾气；小蓝字是帮手（吉星），小红字是麻烦（煞星），金色的「化禄/化权/化科/化忌」是四个总开关，落到哪个房间，哪个房间就被点亮或卡住。红框是命宫，先看它，再看财帛、官禄、夫妻，再看四化落点，基本就够用了。</div>'+
+     '<ul><li><b>你这个人（命宫）：</b>'+plainOf(mingStars)+'。</li>'+
+     '<li><b>你怎么赚钱（财帛宫'+(caiStars.length?" · "+caiStars.join("、"):"")+'）：</b>'+plainOf(caiStars)+'。</li>'+
+     '<li><b>你适合干什么（官禄宫'+(guanStars.length?" · "+guanStars.join("、"):"")+'）：</b>'+plainOf(guanStars)+'。</li>'+
+     '<li><b>你的感情（夫妻宫'+(fuStars.length?" · "+fuStars.join("、"):"")+'）：</b>'+plainOf(fuStars)+'。</li></ul>'+
+     '<p><b>四化怎么用？</b>化禄落的宫是你这辈子最顺手的领域，资源往那儿投；化忌落的宫是你反复栽跟头的地方——不是躲开它，是提前给它上保险：那方面的事多留证据、多备方案、多给时间。身宫落在'+palAt[shen]+'，意思是你后半生实际过日子的重心会慢慢偏向那方面。</p>'+
+     '<p><b>这十年和今年：</b>大限在'+dxPal+'、流年在'+lnPal+'——十年定主题、一年定事件，今年做计划先顺着这两个宫的事排优先级。</p>'+
+     jdDeep('紫微盘好比一张人生的「房间平面图」：主星是每个房间的家具风格，吉星是请来的帮手，煞星是房间里的隐患，四化是四个电闸——禄是送电、权是增压、科是装了招牌、忌是那路电线老跳闸。看盘就是先看你住在什么风格的房子里，再看电闸都通向哪。',
+      ['先看命宫主星定性格底色，再看化禄落宫——那是你最容易出成绩的地方，今年的资源优先往那投。',
+       '再看化忌落宫——那是你最容易反复吃亏的地方，那方面的事今年全部「慢一拍、多一手」：合同多看一遍、钱多留一成、话多想三秒。',
+       '最后看大限宫：这十年的人生主题就在那里，逆着主题使劲最累，顺着主题布局，十年后回头看全是伏笔。'],
+      '看到煞星就慌、看到吉星就飘——煞星坐命的人往往成就不低（羊陀火铃主魄力与手腕），吉星满盘的人也可能一生平庸。星无绝对吉凶，看你把它用在什么事上。'),'紫微完整版 · 命宫 '+(mingStars.join("、")||"无主星")+' · 大限'+dxPal));
+});
+
+/* ================= 称骨 ================= */
+/* ================= 称骨 ================= */
+var CG_YEAR=[1.2,0.9,0.6,0.7,1.5,0.5,0.9,0.8,0.7,0.8,1.5,0.6,1.6,0.7,1.5,1.9,0.6,1.8,0.7,1.5,1.2,0.6,1.9,0.7,1.5,0.6,1.7,0.5,0.9,1.5,0.8,1.7,0.6,1.5,0.9,1.7,0.5,1.5,0.8,0.6,1.5,0.8,1.5,0.6,1.9,0.6,1.5,0.7,1.5,0.6,1.5,0.8,0.7,1.5,0.6,1.7,0.5,1.5,0.8,0.6];
+var CG_MONTH=[0.6,0.7,1.8,0.9,0.5,1.6,0.9,1.5,1.8,0.8,0.9,0.5];
+var CG_DAY=[0.5,1.0,0.8,1.5,1.6,1.5,0.8,1.6,0.8,1.6,1.5,1.7,0.8,1.5,1.0,1.5,0.9,1.8,0.5,1.5,1.0,1.5,0.9,1.5,1.8,0.5,0.9,1.6,0.9,1.5];
+var CG_HOUR=[1.6,0.6,0.7,1.0,0.9,1.6,1.0,0.8,0.8,0.9,0.6,0.6];
+function chengguVerse(total){
+  if(total<3.0) return {lv:"骨轻 · 苦中作乐格",txt:"歌诀大意：一生辛劳多于安逸，凡事要靠自己双手挣。骨轻不是命贱，是起步无人扶——早年吃的苦，后来多半换成过日子的本事，忌怨天尤人，宜学一门扎实手艺傍身。"};
+  if(total<3.6) return {lv:"骨平 · 衣食不缺格",txt:"歌诀大意：衣食不缺、平稳是福。财不求大富，心不求大名，守成安分反而长久；中年后家道渐稳，晚年有子孙之福。"};
+  if(total<4.2) return {lv:"骨渐重 · 先难后易格",txt:"歌诀大意：早年波折、中年转运的格局。三十岁前多试错，三十五后遇贵人或行业风口，一步一个台阶往上走，家业在中年立住。"};
+  if(total<5.0) return {lv:"骨重 · 福禄双全格",txt:"歌诀大意：名利双收之命。做事有章法、得人望，事业财帛两不缺；唯忌贪多嚼不烂，守住一摊做精，比铺开十摊更旺。"};
+  if(total<6.0) return {lv:"骨甚重 · 富贵显达格",txt:"歌诀大意：大富大贵之相，走到哪里都有人抬举。少年得志、中年成名，财禄自来；骨重更要修德，德不配位时，好运也会打折。"};
+  return {lv:"骨极重 · 王侯将相格",txt:"歌诀大意：七两以上，古诀称「做事无难、百事通达」的顶格。此等命格重在担当：舞台越大越如鱼得水，平生忌的只有一件事——有本事而无定性。"};
+}
+$("cgBtn").addEventListener("click",function(){
+  var date=parseDate($("cgDate").value); if(!date)return;
+  var t=parseTime($("cgTime").value), hb=hourBranch(t[0]);
+  var lun=getLunar(date);
+  if(!lun){show("cgResult","<p>读不出农历，换个日期再试。</p>");return;}
+  var yp=yearPillar(date);
+  var yw=CG_YEAR[yp.idx], mw=CG_MONTH[lun.month-1], dw=CG_DAY[lun.day-1], hw=CG_HOUR[hb];
+  var total=Math.round((yw+mw+dw+hw)*10)/10;
+  var liang=Math.floor(total), qian=Math.round((total-liang)*10);
+  var v=chengguVerse(total);
+  show("cgResult",
+   '<div class="kv"><div class="cell"><div class="k">出生年 '+fmtGZ(yp.idx%10,yp.idx%12)+'</div><div class="v">'+yw.toFixed(1)+' 两</div></div>'+
+   '<div class="cell"><div class="k">农历 '+lun.month+' 月</div><div class="v">'+mw.toFixed(1)+' 两</div></div>'+
+   '<div class="cell"><div class="k">农历 '+lun.day+' 日</div><div class="v">'+dw.toFixed(1)+' 两</div></div>'+
+   '<div class="cell"><div class="k">'+SHICHEN[hb]+'</div><div class="v">'+hw.toFixed(1)+' 两</div></div></div>'+
+   '<p>骨重总计：<span class="big hl">'+liang+' 两 '+qian+' 钱</span>（'+total.toFixed(1)+' 两）</p>'+
+   '<h3>'+v.lv+'</h3><p>'+v.txt+'</p>'+
+   '<p class="muted">袁天罡原诀以诗断命，此处取其大意白话转述；骨重只论格局高低，行运还得看后天行持。</p>'+
+   jiedu(total<3.0?'你的骨重 '+total.toFixed(1)+' 两，偏轻——说白了就是「起步没人扶、全靠自己挣」的命，苦是真苦，但本事也是真练出来了。':total<4.2?'你的骨重 '+total.toFixed(1)+' 两，中等——说白了就是「普通人的踏实命」，不求大富大贵，衣食不缺、越过越稳。':total<5.0?'你的骨重 '+total.toFixed(1)+' 两，偏重——说白了就是「有福有禄」的命，做事容易得到认可，名和利都能沾上。':'你的骨重 '+total.toFixed(1)+' 两，很重——说白了就是「走到哪都有人抬举」的命，舞台越大你越如鱼得水。',
+    '<p><b>先说清一件事：骨轻不等于命差。</b>称骨称的是「格局和起步条件」，不是给人判死刑。骨轻的人像白手起家的，骨重的人像含着金钥匙的，但最后过成什么样，还看几十年的行运和选择。历史上骨轻后来发迹的，歌诀里写的全是靠一门手艺、一股不服输的劲翻的身。</p>'+
+    '<p><b>这 '+total.toFixed(1)+' 两是怎么来的？</b>就是上面四项加起来的：出生年占 '+yw.toFixed(1)+' 两、农历月占 '+mw.toFixed(1)+' 两、农历日占 '+dw.toFixed(1)+' 两、时辰占 '+hw.toFixed(1)+' 两。哪一项轻，哪一段就是你相对费力的地方，可以对着歌诀大意自己体会。</p>'+
+    jdDoDont(total<3.6?'学一门能傍身的手艺、攒口碑、晚发力不着急。':'守住自己最擅长的那一摊做精、德行和本事一起修。',total<3.6?'怨天尤人、和人攀比起步、频繁换赛道。':'贪多铺大摊子、有点成绩就飘、德不配位硬撑场面。')+
+    jdDeep('称骨好比给人生称「出厂重量」：骨重的人是满载的车，骨轻的人是空车。满载的车跑起来稳、拉得多，但上坡费油；空车起步快、转向灵，装多少货全靠自己一程程往上装。重量不是终点，装什么、往哪开，才是这一生。',
+     ['先认自己的起步盘：四项里哪项最轻（年/月/日/时），哪一段就是你相对费力的地方——年上轻是祖荫薄，月上轻是青年费劲，日上轻是中年要自挣，时上轻是晚年靠自己安排。',
+      total<3.6?'你的路子是「手艺翻身」：选一门能吃十年饭的技能，三年内不换道，把它练到本地叫得出名号，骨轻的账就翻过来了。':'你的路子是「守成增值」：把现在最值钱的那摊事（事业、口碑、资产）列出来，每年只做加法不做减法，骨重的福要靠守才留得住。',
+      '每年称一次「后天的骨」：今年新学了什么、攒下什么、帮过谁——这些才是你给自己加的重量，年年加，命就年年重。'],
+     '拿骨重跟人攀比、或骨轻就认命躺平——袁天罡的歌诀最后都落在一句「行运」上：称的是先天，断的是提醒，后天不行运，再重的骨也只是一张旧秤单。'),'称骨 · '+liang+'两'+qian+'钱'));
+});
+
+/* ================= 生肖 2026 · 完整版（十二属相逐个断） ================= */
+var SX_HE={"鼠":"牛","牛":"鼠","虎":"猪","兔":"狗","龙":"鸡","蛇":"猴","马":"羊","羊":"马","猴":"蛇","鸡":"龙","狗":"兔","猪":"虎"};
+var SX2026={
+ "鼠":{rel:"chong",relName:"冲太岁",score:55,txt:"子午正冲，冲者动也：这一年必有大的挪动——换工作、搬家、远行、换城市至少占一样。与其被动挨冲，不如主动求变：想跳的槽今年跳、想搬的家今年搬，把「冲」用在自己选的方向上，就是冲喜。忌的是硬碰硬、借贷担保和冲动签约。",
+   work:"动中求位：跳槽、转岗、外派反而顺，被动留守易被边缘化",money:"财来财去，防大额冲动消费与担保，留足半年备用金",love:"聚少离多之年，异地与变动考验感情，先稳情绪再谈去留",health:"注意心肾与睡眠，出行守规矩，冲年最忌逞强驾车",lucky:"幸运方位正北（本位）宜静守，贵人属牛"},
+ "牛":{rel:"hai",relName:"害太岁",score:64,txt:"丑午相害，害在暗处：这一年大事上没什么坎，烦的是小人、暗箭和钱财小漏。合作先小人后君子，合同逐条看，钱不露白、话不说满。把「防」字做到位，害太岁也就是个提醒太岁的年份。",
+   work:"防功劳被抢、锅从天降：凡事留痕，重要沟通落文字",money:"防漏财与被借钱，捂紧钱包，忌替人担保",love:"易有第三者影子或误会，沟通先行，别冷战憋着",health:"脾胃与旧疾留意，体检别拖，少熬夜",lucky:"幸运方位东北，贵人属鼠"},
+ "虎":{rel:"he3",relName:"三合太岁（半合火局）",score:84,txt:"寅午半合火局，太岁是你局中人：今年做事有股顺风火，利创业、利扩张、利在团队里挑大梁。火旺之年最忌急躁冒进与熬夜上火，把节奏控住，这就是你借势起飞的一年。",
+   work:"利挑大梁、带队攻坚，贵人在团队与长辈中",money:"正财旺，偏财有机会但忌贪，火旺忌冲动投资",love:"魅力上升，单身者宜主动，有伴者忌脾气压人",health:"心火与血压留意，少辛辣，运动泄火但别过量",lucky:"幸运方位正南，贵人属猪、属狗"},
+ "兔":{rel:"po",relName:"破太岁",score:66,txt:"卯午相破，破在小处：计划常被小事打断，钱上有零碎漏损，关系里有小裂小缝。破太岁不怕大事怕细节：清单列细、备份做好、话说圆满，破而不败，反而能把旧毛病一次修完。",
+   work:"防项目中途生变，关键节点多备一手方案",money:"小破小耗不断，大钱反而稳，记账节流是正解",love:"小吵小闹多，别把小事攒成大爆发，当天话当天说清",health:"肝胆与眼睛留意，少生闷气，多户外走走",lucky:"幸运方位正东，贵人属狗"},
+ "龙":{rel:"base",relName:"平顺 · 无冲无合",score:76,txt:"辰与午无冲无合，太岁不帮你也不难为你，是典型的「种瓜得瓜年」：肯下功夫就有收获，不肯下就平平淡淡。辰土遇午火，火生土，你的根基今年在悄悄变厚，宜深耕一门、攒厚本钱。",
+   work:"深耕本行最划算，跳来跳去反而丢积累",money:"正财稳进，宜长线布局，忌跟风短炒",love:"平稳温和，宜把关系往定下来推进",health:"脾胃为重，规律饮食，防湿气困身",lucky:"幸运方位东南，贵人属鸡"},
+ "蛇":{rel:"base2",relName:"平顺 · 同气相求",score:79,txt:"巳午同为火，同气相求：今年你和太岁一个频道，做事的热度、曝光度都容易上来，利出头、利表达、利把名气变现。火上加火，唯一要防的是过热——急躁、炎症、口舌，都是火太旺的账。",
+   work:"利亮相与表达，演讲、谈判、做内容都吃香",money:"名气带财，宜把影响力变现，忌为面子消费",love:"热情主动易得回应，有伴者忌翻旧账点火",health:"心火、口腔、眼睛留意，清淡饮食早睡觉",lucky:"幸运方位正南，贵人属猴"},
+ "马":{rel:"tai",relName:"值太岁（本命年）· 兼自刑",score:58,txt:"午午值太岁又自刑，本命年坐太岁头上：一年里变动多、心绪易浮，还容易自己跟自己较劲。宜静不宜动，大事缓行；传统上穿红、佩太岁牌求个心安，行事低调则波折自小。今年最大的敌人不是别人，是冲动的自己。",
+   work:"守成为上，忌裸辞与硬刚领导，大项目先缓一缓",money:"忌大额投资与借贷，守住本金，下半年再看",love:"情绪易波动，忌在本命年冲动分手或闪婚",health:"心脑血管与睡眠重点留意，忌熬夜与过劳",lucky:"幸运方位正南宜低调，贵人属羊"},
+ "羊":{rel:"he",relName:"六合太岁",score:92,txt:"午未六合，太岁跟你最合得来：这是你的贵人年，容易遇到愿意拉你一把的人，合作、签约、谈婚论嫁都顺风。合则和气生财——把人缘用在正事上、把合作谈在明处，今年胜过单打独斗三年。",
+   work:"贵人提携，宜合作进取、主动谈项目签约",money:"正财旺，偏财亦有惊喜，见好就收别贪尾巴",love:"桃花合运，单身宜相亲，有伴宜定终身",health:"整体平顺，注意脾胃与甜食，忌过逸生懒",lucky:"幸运方位西南，贵人属马"},
+ "猴":{rel:"base",relName:"平顺 · 无冲无合",score:74,txt:"申与午无冲无合，平顺年：你的聪明今年要用在「选赛道」上——选对了，火年炼金（申金遇午火，火炼真金），能把本事炼成招牌；选错了，再机灵也是空转。忌耍小聪明占小便宜，因小失大。",
+   work:"宜打造个人招牌与专业壁垒，忌频繁换道",money:"偏财有小机会，正财靠本事，忌投机过头",love:"桃花平平，宜先立业，烂桃花今年尤其要躲",health:"呼吸道与筋骨留意，运动前热身，忌逞强",lucky:"幸运方位西北，贵人属蛇"},
+ "鸡":{rel:"base",relName:"平顺 · 无冲无合",score:77,txt:"酉与午无冲无合，平顺偏稳：酉金在火年受炼，今年是「打磨年」——把手艺、作品、口碑打磨到发光，下半年容易被看见。忌的是嘴快得罪人，你的锋芒在作品上使，别在嘴上使。",
+   work:"宜打磨作品与口碑，利评职称、拿资质",money:"正财稳，宜靠专业溢价赚钱，忌口舌招损",love:"宜收心定性，烂桃花与口舌是非一起躲",health:"肺与咽喉留意，少辛辣烟酒，早睡养金",lucky:"幸运方位正西，贵人属龙"},
+ "狗":{rel:"he3",relName:"三合太岁（半合火局）",score:85,txt:"戌午半合火局，你和属虎的都是太岁局中人：今年义气与机会并存，利合作、利加入有势的团队、利把旧关系盘活。火局也主名声，宜把做过的事说出来、亮出来。忌为朋友义气盲目兜底。",
+   work:"利抱团成事、加入强团队，贵人多在旧相识里",money:"合作生财，账目要清，义气归义气、合同归合同",love:"旧缘易回头，新缘多经朋友介绍，宜慎选",health:"心火与关节留意，忌久坐，动起来泄火",lucky:"幸运方位西北，贵人属虎、属兔"},
+ "猪":{rel:"base",relName:"平顺 · 无冲无合",score:73,txt:"亥与午无冲无合，平顺年，但水火暗济：你今年外表平静、内里有戏——暗财、暗机会、暗贵人都不在明面上，宜低调布局、水下做事。忌贪杯误事与心软借钱，你的平顺最容易坏在这两处。",
+   work:"宜幕后布局、攒资源，忌抢风头站前排",money:"暗财可期，正财稳，忌心软借钱与担保",love:"桃花在暗处，朋友局里多留意，心定再表态",health:"肾水与睡眠留意，忌贪杯，冬病夏治正当时",lucky:"幸运方位正北，贵人属虎"}};
+$("sxAnimal").innerHTML='<option value="">按年份算</option>'+ANIMALS.map(function(a){return "<option>"+a+"</option>";}).join("");
+$("sxBtn").addEventListener("click",function(){
+  var animal=$("sxAnimal").value;
+  var year=parseInt($("sxYear").value,10);
+  if(!animal&&year) animal=ANIMALS[mod(year-4,12)];
+  if(!animal){show("sxResult","<p>先填出生年份或选个属相。</p>");return;}
+  var d=SX2026[animal];
+  var stars="★".repeat(Math.round(d.score/20))+"☆".repeat(5-Math.round(d.score/20));
+  show("sxResult",
+   '<p>属<span class="big hl">'+animal+'</span> · 2026 丙午火马年 —— <b>'+d.relName+'</b>　综合运程 '+stars+'（'+d.score+' 分）</p>'+
+   '<p>'+d.txt+'</p>'+
+   '<div class="kv"><div class="cell"><div class="k">事业</div><div class="v" style="font-size:15px">'+d.work+'</div></div>'+
+   '<div class="cell"><div class="k">财运</div><div class="v" style="font-size:15px">'+d.money+'</div></div>'+
+   '<div class="cell"><div class="k">感情</div><div class="v" style="font-size:15px">'+d.love+'</div></div>'+
+   '<div class="cell"><div class="k">健康</div><div class="v" style="font-size:15px">'+d.health+'</div></div></div>'+
+   '<p><b>全年参看：</b>'+d.lucky+'。六合贵人是属'+SX_HE[animal]+'，遇事多找这位属相的人搭把手；今年太岁在午（正南），岁破在子（正北），动土装修避开这两个方位更稳妥。</p>'+
+   '<p class="muted">丙午年火旺：所有属相今年都忌心浮气躁，火命、木命人尤甚；多近水、多静心，是全年通用的解法。</p>'+
+   jiedu(d.score>=84?'属'+animal+'今年是十二属相里最顺的一档：太岁跟你一伙的——说白了就是今年「上面有人、身边有伴」，该出手时别缩手，好年份是用来拉开差距的。':d.score>=73?'属'+animal+'今年是平顺偏上的一年：太岁不帮你也不难为你——说白了就是「种瓜得瓜」，今年的收成和你下的功夫成正比，别等运气、自己造运气。':d.score>=60?'属'+animal+'今年是「小心驾驶」的一年：大事上没坎，坑都在暗处和小处——防小人、防漏财、防细节翻车，把「防」字做好，这一年照样安稳过。':'属'+animal+'今年是十二属相里最需要收着的一年：太岁正对着你——说白了就是今年「动不如静」，大事缓行、守住本钱和身体，熬过这一年就是赢。',
+    '<p><b>「太岁」到底是什么？</b>你可以把太岁理解成今年的值班主管：你属相和他合得来（合、三合），今年就有人罩；和他对着干（冲），今年就多变动；正好轮到你值班（值），今年就格外引人注目、也格外累；在暗处使绊（害、破），今年就得防小处翻车。分数 '+d.score+' 分就是这个关系的亲疏，不是考试成绩，低分年份守好本分照样过得好。</p>'+
+    '<ul><li><b>事业：</b>'+d.work+'。</li><li><b>钱：</b>'+d.money+'。</li><li><b>感情：</b>'+d.love+'。</li><li><b>身体：</b>'+d.health+'。</li></ul>'+
+    jdDeep('流年运势好比每年的「天气」：属相是你的体质，太岁关系是今年的气候。合太岁是顺风年，冲太岁是逆风年——顺风年要敢出门做事，逆风年要会挑没风的时段走。天气决定不了你能不能到目的地，只决定你该穿什么、走哪条路、带不带伞。',
+     ['年初先定调：你今年是「'+d.relName+'」，按上面总论把全年大动作（跳槽、投资、婚嫁、搬家）分成「今年宜办」和「今年缓办」两堆，缓办的写进明年清单，别老惦记。',
+      '把贵人用起来：你的六合贵人是属'+SX_HE[animal]+'的人——今年重要的决定，先过一遍贵人的耳朵再拍板。',
+      '健康那条别当耳旁风：'+d.health+'——今年就把这一项做成习惯，比什么转运饰品都管用。'],
+     '犯太岁就吓得整年不动、或花钱买一堆「化太岁」用品求安心——太岁年份真正要化的是自己的冲动和侥幸。低调做人、留足现金、睡好觉，就是最好的化太岁。'),'生肖完整版 · 2026 '+d.relName));
+});
+
+/* ================= 姓名五格 ================= */
+/* ================= 姓名五格 ================= */
+var STROKES={"欧":15,"司":5,"官":8,"诸":16,"葛":15,"皇":9,"甫":7,"令":5,"狐":9,"公":4,"慕":15,"容":10,"徒":10,"独":17,"孤":8,"里":7,"尉":11,"迟":19,"辕":17,"淳":12,"申":5,"屠":12,"门":8,"左":5,"丘":5,"端":14,"漆":15,"雕":16,"拓":9,"跋":12,"干":3,"谷":7,"上":3,"王":4,"李":7,"张":11,"刘":15,"陈":16,"杨":13,"黄":12,"周":8,"吴":7,"徐":10,"孙":10,"胡":11,"朱":6,"高":10,"林":8,"何":7,"郭":15,"马":10,"罗":19,"梁":11,"宋":7,"郑":19,"谢":17,"韩":17,"唐":10,"冯":12,"于":3,"董":15,"萧":19,"程":12,"曹":11,"袁":10,"邓":19,"许":11,"傅":12,"沈":8,"曾":12,"彭":12,"吕":7,"苏":22,"卢":16,"蒋":17,"蔡":17,"贾":13,"丁":2,"魏":18,"薛":19,"叶":15,"阎":16,"余":7,"潘":16,"杜":7,"戴":18,"夏":10,"钟":17,"汪":8,"田":5,"任":6,"姜":9,"范":15,"方":4,"石":5,"姚":9,"谭":19,"廖":14,"邹":17,"熊":14,"金":8,"陆":16,"郝":14,"孔":4,"白":5,"崔":11,"康":11,"毛":4,"邱":12,"秦":10,"江":7,"史":5,"顾":21,"侯":9,"邵":12,"孟":8,"龙":16,"万":15,"段":9,"漕":14,"钱":16,"汤":13,"尹":4,"黎":15,"易":8,"常":11,"武":8,"莫":13,"贺":12,"赖":16,"龚":22,"文":4,"明":8,"小":3,"大":3,"子":3,"天":4,"海":11,"山":3,"水":4,"云":12,"飞":9,"龙2":16,"华":14,"国":17,"建":9,"军":9,"伟":11,"强":12,"磊":15,"洋":10,"艳":24,"娜":10,"静":16,"敏":11,"婷":12,"雪":11,"慧":15,"玲":10,"佳":8,"倩":10,"秀":7,"英":11,"芳":10,"萍":14,"红":9,"玉":5,"梅":11,"兰":23,"竹":6,"菊":14,"春":9,"秋":9,"冬":5,"夏2":10,"东":8,"南":9,"西":6,"北":5,"中":4,"正":5,"志":14,"勇":9,"杰":12,"涛":18,"超":12,"鹏":19,"博":12,"宇":6,"浩":11,"鑫":24,"淼":12,"森":12,"焱":12,"磊2":15,"晶":12,"晨":11,"曦":20,"阳":17,"光":6,"辉":15,"亮":9,"鑫2":24,"怡":9,"欣":8,"悦":11,"涵":12,"萱":15,"梓":11,"琪":13,"瑶":15,"璐":18,"璇":16,"彤":7,"丹":4,"青":8,"雨":8,"若":11,"梦":13,"诗":13,"语":14,"思":9,"念":8,"安":6,"宁":14,"乐":15,"笑":10,"心":4,"月":4,"星":9,"辰":7,"昊":8,"轩":10,"睿":14,"哲":10,"翰":16,"霖":16,"泽":17,"润":16,"峰":10,"岭":17,"岩":8,"松":18,"柏":9,"枫":13,"桐":10,"彬":11,"斌":12,"翔":12,"航":10,"帆":6,"凯":12,"旋":11,"旭":6,"晖":13,"晗":11,"萌":14,"蕊":18,"薇":19,"蕾":19,"菲":14,"菡":14,"蓉":16,"莲":17,"荷":13,"萍2":14,"莎":13,"莉":13,"茜":12,"茹":12,"荟":19,"莹":15,"莺":21,"燕":16,"妮":8,"娅":11,"媛":12,"嫣":14,"妍":7,"妙":7,"妤":7,"姝":9,"婕":11,"婧":11,"婵":15,"娟":10,"娴":15,"婉":11,"婷2":12,"娉":10,"娜2":10,"姿":9,"娇":15,"妹":8,"姐":8,"姑":9,"姨":9,"娃":9,"姓":8,"始":8,"委":8,"姜2":9,"姚2":9,"姬":10,"媛2":12,"威":9,"一":1,"二":2,"三":3,"四":5,"五":6,"六":4,"七":2,"八":2,"九":2,"十":2,"百":6,"千":3,"万2":15,"亿":15,"兆":6,"京":8,"元":4,"亨":7,"利":7,"贞":9,"仁":4,"义":13,"礼":18,"智":12,"信":9,"忠":8,"孝":7,"廉":13,"耻":10,"温":13,"良":7,"恭":10,"俭":14,"让":24,"诚":14,"谦":17,"逊":17,"贤":15,"德":15,"福":14,"禄":13,"寿":14,"喜":12,"贵":12,"荣":14,"华2":14,"富":12,"祥":11,"瑞":14,"吉":6,"祥2":11,"如":6,"意":13,"顺":12,"和":8,"平":5,"康2":11,"泰":9,"安2":6,"定":8,"宝":20,"珠":11,"珍":10,"珠2":11,"翠":14,"翡翠":29,"银":14,"铜":14,"铁":21,"钢":16,"锋":15,"剑":15,"刀":2,"枪":14,"盾":9,"矛":5,"弓":3,"箭":15,"旗":14,"鼓":13,"钟2":17,"铃":13,"琴":13,"棋":12,"书":10,"画":12,"诗2":13,"词":13,"歌":14,"舞":14,"戏":17,"影":15,"声":17,"乐2":15,"音":9,"韵":19,"调":15};
+var NUM_LUCK={};
+(function(){var ji=[1,3,5,6,7,8,11,13,15,16,17,18,21,23,24,25,29,31,32,33,35,37,39,41,45,47,48,52,57,61,63,65,67,68];
+var xiong=[2,4,9,10,12,14,19,20,22,26,28,30,34,36,40,42,43,44,46,49,50,51,53,54,55,56,58,59,60,62,64,66,69,70,71,72,73,74,75,76,77,78,79,80,81];
+for(var i=1;i<=81;i++){NUM_LUCK[i]=ji.indexOf(i)>=0?"大吉":(xiong.indexOf(i)>=0?"凶":"半吉");}})();
+function numWx(n){var t=n%10;if(t===1||t===2)return"木";if(t===3||t===4)return"火";if(t===5||t===6)return"土";if(t===7||t===8)return"金";return"水";}
+function sanCai(tian,ren,di){
+  var a=numWx(tian),b=numWx(ren),c=numWx(di);
+  function sheng(x,y){return mod(wxIdx(x)+1,5)===wxIdx(y);}
+  function ke(x,y){return mod(wxIdx(x)+2,5)===wxIdx(y);}
+  var good=0,bad=0;
+  [[a,b],[b,c]].forEach(function(p){if(sheng(p[0],p[1])||p[0]===p[1])good++;if(ke(p[0],p[1]))bad++;});
+  var judge=bad===0?"三才相生，根基稳固，一生得上下之助，运势顺遂。":(good>0?"三才半通，有生有克：得一处之助也受一处之制，宜在受制之处多下功夫。":"三才相克，根基多磨：一生易感上下不顺，宜修心养性、以柔化刚，晚景自开。");
+  return {txt:a+" · "+b+" · "+c,judge:judge};
+}
+$("xmBtn").addEventListener("click",function(){
+  var name=$("xmName").value.trim().replace(/\s/g,"");
+  var manual=$("xmStrokes").value.trim();
+  var strokes=[];
+  if(manual){strokes=manual.split(/[,，、\s]+/).map(function(x){return parseInt(x,10);}).filter(function(x){return !isNaN(x);});}
+  else{
+    for(var i=0;i<name.length;i++){
+      var ch=name[i];
+      if(STROKES[ch]!=null) strokes.push(STROKES[ch]);
+      else if(STROKES[ch+"2"]!=null) strokes.push(STROKES[ch+"2"]);
+      else {show("xmResult","<p>「"+esc(ch)+"」不在内置康熙字典里。请在「手动笔画」里按顺序填上每个字的康熙笔画（查字典或数笔画+偏旁修正），再测一次。</p>");return;}
+    }
+  }
+  if(name.length<2||strokes.length<2||strokes.length!==name.length){show("xmResult","<p>请填 2–4 字的姓名，并让笔画数与字数对上。</p>");return;}
+  var FUXING=["欧阳","司马","上官","诸葛","东方","皇甫","令狐","公孙","慕容","长孙","宇文","司徒","司空","夏侯","独孤","南宫","万俟","百里","尉迟","轩辕","淳于","太史","申屠","钟离","东郭","西门","左丘","端木","公西","漆雕","拓跋","段干","谷梁"];
+  var surnameLen=FUXING.indexOf(name.slice(0,2))>=0?2:1;
+  var s=strokes;
+  var tian=surnameLen===1?s[0]+1:s[0]+s[1];
+  var ren=s[surnameLen-1]+s[surnameLen];
+  var givenRest=s.slice(surnameLen);
+  var di=givenRest.length===1?givenRest[0]+1:givenRest[0]+givenRest[1];
+  var total=s.reduce(function(a,b){return a+b;},0);
+  var wai=total-ren+1;
+  function cell(label,num){return '<div class="cell"><div class="k">'+label+' '+num+' 画 · '+numWx(num)+'</div><div class="v">'+NUM_LUCK[mod(num-1,81)+1]+'</div></div>';}
+  var sc=sanCai(tian,ren,di);
+  var luckNums=[tian,ren,di,wai,total].map(function(n){return NUM_LUCK[mod(n-1,81)+1];});
+  var jiCount=luckNums.filter(function(x){return x==="大吉";}).length;
+  var verdict=jiCount>=4?"五格多吉，此名格局开阔，与人相合、做事得势，是难得的好名。":jiCount>=2?"五格吉多于凶，名字整体可用，个别格的短板靠后天行运去补即可。":jiCount>=1?"五格吉凶参半：名字不拖后腿也不太助力，一生贵在自修。":"五格多凶数，此名易招波折；若已成年不必急着改名，艺名、网名、字号用吉数补之，亦是道门常用的解法。";
+  show("xmResult",
+   '<p><span class="big">'+esc(name)+'</span>　笔画：'+strokes.join(" · ")+'（康熙）</p>'+
+   '<div class="kv">'+cell("天格（祖上）",tian)+cell("人格（主运）",ren)+cell("地格（前运）",di)+cell("外格（人缘）",wai)+cell("总格（后运）",total)+'</div>'+
+   '<p><b>三才配置：</b>'+sc.txt+' —— '+sc.judge+'</p><p>'+verdict+'</p>'+
+   '<h3>五格逐格详解</h3>'+
+   '<p><b>天格 '+tian+'（'+NUM_LUCK[mod(tian-1,81)+1]+'）：</b>祖上与出身的「底盘」——它不是你能选的，吉凶只作背景参看，不必纠结。</p>'+
+   '<p><b>人格 '+ren+'（'+NUM_LUCK[mod(ren-1,81)+1]+'）：</b>五格的核心，管你一生的性格与主运。'+(NUM_LUCK[mod(ren-1,81)+1]==="大吉"?'人格得大吉是好名字的门槛，你这关过了。':NUM_LUCK[mod(ren-1,81)+1]==="凶"?'人格逢凶数是这名最短的板：成年改名成本高，常用解法是取个吉数的人格搭法作艺名、笔名、店名长期使用。':'人格半吉，不拖后腿，靠总格与三才补强即可。')+'</p>'+
+   '<p><b>地格 '+di+'（'+NUM_LUCK[mod(di-1,81)+1]+'）：</b>管前运（约 36 岁前）与家庭、子女根基，年轻人看名字先看它。</p>'+
+   '<p><b>外格 '+wai+'（'+NUM_LUCK[mod(wai-1,81)+1]+'）：</b>管人缘与社交格局——外格吉的人，贵人缘和社会运明显占便宜。</p>'+
+   '<p><b>总格 '+total+'（'+NUM_LUCK[mod(total-1,81)+1]+'）：</b>管中晚年总收成，是五格里「最后看」的一个，与人格同吉，人生后半程最稳。</p>'+
+   '<p class="muted">已按'+(surnameLen===2?'复姓':'单姓')+'公式计算（复姓天格为姓两字之和）。人格是主运：'+ren+' 数'+NUM_LUCK[mod(ren-1,81)+1]+'，'+numWx(ren)+'行当令，性情行事多带'+numWx(ren)+'气，可重点参看。</p>'+
+   jiedu(jiCount>=4?'「'+esc(name)+'」是个难得的好名字：五格里 '+jiCount+' 格是大吉，说白了就是这个名字不拖后腿，还给你助力，走到哪都容易得人缘、得势。':jiCount>=2?'「'+esc(name)+'」整体是个能用的好名字：'+jiCount+' 格大吉，说白了就是名字不拖后腿，个别短板靠你后天的努力就能补上，不用改名。':jiCount>=1?'「'+esc(name)+'」是个中平名字：吉凶参半，说白了就是名字帮不上大忙、也不使大坏，你过成什么样全看自己怎么修。':'「'+esc(name)+'」数理偏弱：说白了就是名字容易给你添点波折，但成年人真不用慌着改户口本上的名——用个吉数的艺名、网名、店名补一补，是道门里常用的办法。',
+    '<div class="howto"><b>五格到底在看什么？一句话讲清：</b><b>天格</b>是老天和祖辈给的底子（自己改不了，看个出身气氛）；<b>人格</b>是你本人，最重要，管你一生的性格和主运；<b>地格</b>管你年轻时和家庭、子女；<b>外格</b>管你的人缘和社交吃不吃得开；<b>总格</b>管你中晚年的总收成。先看人格吉不吉，再看总格，最后看三才顺不顺，就够用了。</div>'+
+    '<p><b>你的核心是人格 '+ren+'（'+NUM_LUCK[mod(ren-1,81)+1]+'）：</b>它属'+numWx(ren)+'行，意味着你行事带'+numWx(ren)+'的气质——'+({"木":"像树一样要向上长、讲原则","火":"热情外放、要被看见","土":"踏实厚重、讲信用","金":"干脆利落、讲规则","水":"灵活通透、讲变通"})[numWx(ren)]+'。三才「'+sc.txt+'」'+(sc.judge)+'</p>'+
+    '<p>最后一句实话：名字的影响是慢性的、氛围式的，不是戴个符就改命。名字顺口、寓意好、你自己喜欢，叫着自信，本身就是它最大的作用。</p>'+
+    jdDeep('名字好比一件穿一辈子的衣服：合身（数理顺、读着顺口）的人，自己自信，别人看着也舒服；不合身的，天天别扭，自己先矮三分。它改变不了你的身材（命底），但天天影响你的姿态——这就是名字的作用方式：慢、持久、无声无息。',
+     ['先看人格：它是主运。人格'+ren+'数是「'+NUM_LUCK[mod(ren-1,81)+1]+'」，这一格顺，名字的底盘就稳，其余格都是锦上添花或小修小补。',
+      '再看三才：你这名的三才「'+sc.txt+'」——'+(sc.judge)+'三才是名字的「电路」，通了，数理的电才送得到。',
+      jiCount>=2?'最后放心用：这名整体可用，把心思放回做事上，名字这笔账你已经不亏了。':'最后给个实在建议：成年改名成本高，先用一个按吉数配好的常用名（艺名、网名、店名）长期使用，是道门里流传已久的平价解法。'],
+     '为了一个凶数把户口本、学历证、社保卡全套改掉，折腾半年、人际全乱——改名的成本常比那个凶数本身更凶。名字七分看数理，三分看你怎么把自己活成这个名字。'),'姓名 · 人格 '+ren+' 数'));
+});
+
+/* ================= 测字 ================= */
+var RADICAL_WX={"氵":"水","水":"水","雨":"水","冫":"水","木":"木","艹":"木","竹":"木","禾":"木","米":"米".length?"木":"木","火":"火","日":"火","灬":"火","光":"火","土":"土","山":"土","石":"土","王":"土","金":"金","钅":"金","刀":"金","刂":"金","贝":"金","言":"金","讠":"金","口":"土","心":"火","忄":"火","人":"土","亻":"土","手":"金","扌":"金","足":"土","马":"火","鸟":"火","鱼":"水","虫":"火","月":"水","女":"土","子":"水","大":"火","小":"金","广":"木","门":"木","户":"木","斤":"金","戈":"金","弓":"金","车":"金","辶":"火","阝":"土","页":"金","风":"木","饣":"金","食":"金","衣":"金","衤":"金","示":"火","礻":"火","糸":"金","纟":"金"};
+var CHAR_STROKE={"问":11,"来":8,"合":6,"天":4,"人":2,"心":4,"事":8,"成":7,"财":10,"爱":13,"情":12,"想":13,"梦":13,"家":10,"安":6,"康":11,"福":14,"禄":13,"喜":12,"愁":13,"难":19,"易":8,"开":12,"关":14,"明":8,"暗":13,"春":9,"秋":9,"行":6,"走":7,"飞":9,"马":10,"龙":16,"凤":14,"鱼":11,"鸟":11,"花":10,"月":4,"日":4,"山":3,"水":4,"田":5,"土":3,"金":8,"木":4,"火":4,"大":3,"小":3,"王":4,"玉":5,"宝":20,"钱":16,"利":7,"名":6,"利2":7,"得":11,"失":5,"有":6,"无":12,"去":5,"回":6,"出":5,"入":2,"上":3,"下":3,"中":4,"正":5,"好":6,"坏":19,"吉":6,"凶":4,"乐":15,"苦":11,"笑":10,"哭":10,"生":5,"死":6,"病":17,"药":21,"医":18,"婚":11,"姻":9,"缘":15,"分":4,"离":19,"散":12,"聚":14,"贵":12,"富":12,"穷":15,"通":14,"达":16,"顺":12,"逆":12,"变":23,"化":4,"新":13,"旧":18,"长":8,"远":17,"近":11,"高":10,"低":7,"深":12,"浅":12,"多":6,"少":4,"真":10,"假":11,"虚":12,"实":14,"空":8,"满":15,"圆":10,"方":4,"正2":5};
+$("czBtn").addListener ? null : null;
+$("czBtn").addEventListener("click",function(){
+  var ch=$("czChar").value.trim().slice(0,1);
+  if(!ch){show("czResult","<p>先写一个字，就一个，脱口而出的那个最准。</p>");return;}
+  var cat=$("czCat").value, struct=$("czStruct").value;
+  var strokes=CHAR_STROKE[ch]||CHAR_STROKE[ch+"2"]||STROKES[ch]||null;
+  /* 偏旁推测：按常见偏旁字表粗分 */
+  var radWx=null, radName="";
+  var RAD_GUESS={"氵":["江","河","湖","海","洋","清","流","深","浅","润","泽","浩","泪","汗","波","浪","满"],"木":["林","森","松","柏","枫","桐","梅","桃","李","枝","根","桥","梦","相","查"],"艹":["花","草","若","荣","药","莲","荷","菊","兰","萌","萱","蓉","菲","落"],"火":["炎","热","光","辉","明","照","暖","然","熊","焦"],"土":["地","城","堂","增","望","圣","坐","坚"],"金":["钱","银","铜","铁","钢","锋","锦","钟","铃","锐"],"日":["明","春","晖","晶","晨","暖","晴","晗"],"心":["想","情","愁","思","念","意","感","愿","慧","慈"],"口":["问","合","吉","告","周","唱","喜","吾","君","命"],"人":["人","仁","今","令","会","余","众","化"],"扌":["打","扶","招","招2","持","推","排","接","探"],"辶":["远","近","通","达","进","退","送","迎","追","逃"],"女":["好","婚","姻","妙","娇","媛","嫣","妍","姿","娃"]};
+  for(var r in RAD_GUESS){if(RAD_GUESS[r].indexOf(ch)>=0){radWx=RADICAL_WX[r];radName=r;break;}}
+  var wxTxt=radWx?('此字带「'+radName+'」旁，五行偏 <b>'+radWx+'</b>。'):'此字偏旁不显，五行以笔画尾数断。';
+  var strokeWx=strokes?numWx(strokes):null;
+  var luck=strokes?NUM_LUCK[mod(strokes-1,81)+1]:null;
+  var catTxt={"综合运程":"问的是整体运程","事业工作":"问的是事业","财运生意":"问的是财运","姻缘感情":"问的是姻缘","健康平安":"问的是健康","出行远行":"问的是出行"}[cat];
+  var structTxt=struct==="auto"?"字形以整体气象断：字站得稳，则事有根基；字头重脚轻，则先难后稳。":
+    (struct==="独体字"?"独体字无偏旁可拆，全靠一股整气：此事成败在一念之间，没有中间地带，宜果断。":
+    struct==="左右结构"?"左右结构，左为先、右为后：先看左旁定起因，右旁定结果，两旁相生则事顺，相克则先成后散。":
+    struct==="上下结构"?"上下结构，上为天、下为地：上部定名分，下部定根基，上轻下重者根基稳，上重下轻者防头重脚轻。":
+    "包围结构，外框为局、内藏为心：局能护心则事有庇护，框破一角则防泄漏与口舌。");
+  var verdict="";
+  if(luck==="大吉") verdict="笔画数理得吉数，此字气足——"+catTxt+"，断为<b class='good'>顺势可为</b>，宜趁热打铁。";
+  else if(luck==="凶") verdict="笔画数理逢凶数，此字气泄——"+catTxt+"，断为<b class='hl'>暂缓一步</b>，先补短板、避锋芒，待时机再动。";
+  else if(luck) verdict="笔画数理半吉，此字气平——"+catTxt+"，断为<b>可成可败在人为</b>，功夫下到七分，事成七分。";
+  else verdict="此字不在常用字表，笔画未详——"+catTxt+"，单以字形气象断：字出随心，多主<b>心诚则灵、随缘推进</b>。";
+  show("czResult",
+   '<p style="text-align:center"><span style="font-size:64px;font-weight:900" class="hl">'+esc(ch)+'</span></p>'+
+   '<p>'+wxTxt+(strokes?(' 全字 '+strokes+' 画，数理属'+strokeWx+'行，81 数理评「'+luck+'」。'):'')+'</p>'+
+   '<p>'+structTxt+'</p><p>'+verdict+'</p>'+
+   (strokes?'<p><b>应期（事情见分晓的时间）：</b>测字以笔画定应期——此字 '+strokes+' 画，尾数 '+mod(strokes,10)+'。急问近事以「日」计：约在 '+((strokes%9)+1)+' 日前后见动静；缓问大事以「月」计：约在 '+((strokes%6)+1)+' 个月内定局。应期是提醒你何时复盘，不是催你坐等。</p>':'')+
+   '<p><b>拆字细法：</b>'+(radWx?('这个字可拆出「'+radName+'」旁——字旁即事旁：问事带'+radWx+'气，往'+({"水":"流动、钱财周转、远行、感情","木":"生长、文教、植物、新生事物","火":"急速、名声、红火、电子光热","土":"田产、房子、稳定、脾胃","金":"钱财金属、规矩、决断、官非"})[radWx]+'的方向去联想，往往就是这件事的题眼。余下部件定细节，整体站得稳不稳，定这件事的根基硬不硬。'):'此字无显旁可拆，走的是「整字取象」一路：看它整体的气势——开口的字主事情外露、收口的字主事情内敛，有头重脚轻之态的，先难后稳。')+'</p>'+
+   '<p class="muted">测字讲究「字由心生」：同一个字，不同的人在不同的心境下写出来断法不同，此断取的是你此刻报出的这一念。</p>'+
+   jiedu('你随手写的这个「'+esc(ch)+'」字，说白了就是在替你回答「'+cat+'」这件事：'+(luck==="大吉"?'字的气是足的、向上的，这件事可以放心去推进，趁热打铁最好。':luck==="凶"?'字的气是泄的、往下的，这件事先别硬上，缓一步、补好短板再动。':luck?'字的气不强不弱，这件事成不成不在字上、在你下多少功夫，七分努力七分结果。':'这个字不在常用表里，单看你报它时的那一念，心诚、随缘推进就是它给的答案。'),
+    '<p><b>为什么一个字能断事？</b>测字看的不是字本身有魔力，是你心里装着那件事时，脱口而出的字往往带着你的潜意识——就像让你随口说个颜色，多半和当下心情有关。偏旁告诉我们这件事的「属性」（带水旁多和流动、感情、钱财有关，带火旁多和急躁、名声、速度有关），笔画数理告诉我们这件事的「运势强弱」，字形结构告诉我们这件事的「局面稳不稳」，三样拼起来就是上面的断语。</p>'+
+    jdDoDont(luck==="凶"?'先把最明显的短板补上、把话和人沟通好，再启动。':'带着这个字给的方向，尽快把第一步迈出去，别光想不做。',luck==="大吉"?'得意忘形、一口气把摊子铺太大。':'在气泄的时候硬赌、硬借钱、硬签长约。')+
+    jdDeep('测字好比看一个人脱口而出的口头禅：你装着心事时随手写下的字，就像紧张时先摸的那只口袋——它暴露的不是命运，是你潜意识里对这件事的真实态度：想进还是想退，怕什么、盼什么。字是镜子，照的是心。',
+     ['把这个「'+esc(ch)+'」字拆开再看一遍：偏旁说的是这件事的属性，笔画说的是运势强弱，结构说的是局面稳不稳——三样里哪样最扎眼，哪样就是这件事的题眼。',
+      '对照应期安排复盘：近事看 '+((strokes?strokes%9:0)+1)+' 日、大事看 '+((strokes?strokes%6:0)+1)+' 个月，到点回头看这字断得准不准，比再测十个字长进快。',
+      luck==="凶"?'气泄之时先补后动：把最明显的短板（钱、人、时间、证据）补上一项，再启动，凶字也能走出吉局。':'趁字气正顺：今天就把这件事的第一步做了——测字的答案，最终要靠行动来验。'],
+     '一个字问完不满意，换个字再测，直到测出吉字为止——那不叫测字，叫许愿。随手第一个字才是心里那个字，后来的都是挑出来的安慰。'),'测字 · 「'+esc(ch)+'」问'+cat));
+});
+</script>
+
+<script>
+"use strict";
+/* ================= 奇门遁甲 · 完整版（格局断定） ================= */
+var QM_TERMS=[
+[1,6,"小寒",2,8,5,1],[1,20,"大寒",3,9,6,1],[2,4,"立春",8,5,2,1],[2,19,"雨水",9,6,3,1],
+[3,6,"惊蛰",1,7,4,1],[3,20,"春分",3,9,6,1],[4,5,"清明",4,1,7,1],[4,20,"谷雨",5,2,8,1],
+[5,5,"立夏",4,1,7,1],[5,21,"小满",5,2,8,1],[6,6,"芒种",6,3,9,1],[6,21,"夏至",9,3,6,0],
+[7,7,"小暑",8,2,5,0],[7,23,"大暑",7,1,4,0],[8,7,"立秋",2,5,8,0],[8,23,"处暑",1,4,7,0],
+[9,8,"白露",9,3,6,0],[9,23,"秋分",7,1,4,0],[10,8,"寒露",6,9,3,0],[10,23,"霜降",5,8,2,0],
+[11,7,"立冬",6,9,3,0],[11,22,"小雪",5,8,2,0],[12,7,"大雪",4,7,1,0],[12,22,"冬至",1,7,4,1]];
+var QM_YI=["戊","己","庚","辛","壬","癸","丁","丙","乙"];
+var QM_STAR0={1:"天蓬",2:"天芮",3:"天冲",4:"天辅",5:"天禽",6:"天心",7:"天柱",8:"天任",9:"天英"};
+var QM_MEN0={1:"休门",2:"死门",3:"伤门",4:"杜门",6:"开门",7:"惊门",8:"生门",9:"景门"};
+var QM_RING=[1,8,3,4,9,2,7,6];
+var QM_MEN_GOOD={"开门":"大吉 · 利求职、开业、远行、见贵","休门":"吉 · 利见贵、求财、婚嫁、休养","生门":"大吉 · 利求财、置产、创业、谋事","景门":"半吉 · 利文书、宣传、考试、献策","杜门":"平 · 利躲藏、守秘、修技术，不利出头","伤门":"凶 · 防损伤、争斗、破财、赌斗","惊门":"凶 · 防惊吓、官非、口舌、虚惊","死门":"凶 · 只宜吊丧、收尾，不宜谋新事"};
+var QM_MEN_WX={"开门":"金","休门":"水","生门":"土","景门":"火","杜门":"木","伤门":"木","惊门":"金","死门":"土"};
+var QM_GONG_WX={1:"水",2:"土",3:"木",4:"木",5:"土",6:"金",7:"金",8:"土",9:"火"};
+var QM_GONG_DIR={1:"正北",2:"西南",3:"正东",4:"东南",5:"中央",6:"西北",7:"正西",8:"东北",9:"正南"};
+var QM_GONG_NAME={1:"坎一宫",2:"坤二宫",3:"震三宫",4:"巽四宫",5:"中五宫",6:"乾六宫",7:"兑七宫",8:"艮八宫",9:"离九宫"};
+var QM_STAR_NAT={"天蓬":[-1,"凶星 · 主盗贼、破财、奔波，利水边与流动之事"],"天芮":[-2,"凶星 · 主疾病、学生、小人，逢之防病防错信人"],"天冲":[1,"半吉 · 主行动、冲劲、武事，动则吉、莽则伤"],"天辅":[2,"吉星 · 主文教、贵人、谋划，利考试与拜师"],"天禽":[2,"吉星 · 中正之星，主公正、得中、百事可为"],"天心":[2,"吉星 · 主医药、心机、领导，利求医与决断"],"天柱":[-1,"半凶 · 主口舌、破败、顶撞，利守不利争"],"天任":[1,"吉星 · 主田土、任事、稳重，利置产与农事"],"天英":[-1,"半凶 · 主火光、文名、血光，利名不利实"]};
+var QM_SHEN_NAT={"值符":[2,"大吉 · 总指挥亲自坐镇，此宫最得势"],"腾蛇":[-1,"半凶 · 主虚惊、缠绕、梦魇，防被假象绕住"],"太阴":[1,"吉 · 主暗中庇护、贵人私下相助，利密谋"],"六合":[2,"吉 · 主和合、婚姻、中介，利谈合作谈感情"],"白虎":[-2,"凶 · 主伤灾、凶险、孝服，防意外与硬碰硬"],"玄武":[-1,"半凶 · 主盗失、暧昧、被骗，防丢东西防暗算"],"九地":[1,"半吉 · 主坚守、长久、藏伏，利守成与屯积"],"九天":[1,"半吉 · 主扬名、高远、声势，利出名与远行"],"—":[0,"中五宫不单独置神"]};
+var nowQ=new Date();
+$("qmDate").value=nowQ.toISOString().slice(0,10);
+$("qmTime").value=("0"+nowQ.getHours()).slice(-2)+":"+("0"+nowQ.getMinutes()).slice(-2);
+function qmStemPalace(tianPan,diPan,stem){
+for(var g=1;g<=9;g++){if(tianPan[g]===stem)return g;}
+for(var g2=1;g2<=9;g2++){if(diPan[g2]===stem)return g2;}
+return null;
+}
+$("qmBtn").addEventListener("click",function(){
+var date=parseDate($("qmDate").value)||new Date();
+var t=parseTime($("qmTime").value), hour=t[0];
+var cat=($("qmCat")?$("qmCat").value:"综合运势");
+var q=$("qmQ").value.trim();
+/* 第1-2步：节气、三元、阴阳遁、局数 */
+var m=date.getMonth()+1,d=date.getDate(),term=QM_TERMS[QM_TERMS.length-1];
+for(var i=0;i<QM_TERMS.length;i++){var c=QM_TERMS[i];if(m>c[0]||(m===c[0]&&d>=c[1]))term=c;}
+if(m===1&&d<6) term=QM_TERMS[QM_TERMS.length-1];
+var di=dayIndex(date,hour);
+var yuan=Math.floor(mod(di,15)/5);
+var ju=term[3+yuan], yang=term[6]===1;
+/* 第3步：地盘 */
+var diPan={};
+for(var k=0;k<9;k++){var gong=yang?mod(ju-1+k,9)+1:mod(ju-1-k,9)+1;diPan[gong]=QM_YI[k];}
+/* 第4步：旬首、值符 */
+var hp=hourPillar(di%10,hour), ganIdx=hp.gan, zhiIdx=hp.branch;
+var hsIdx=-1; for(var s=0;s<60;s++){if(s%10===ganIdx&&s%12===zhiIdx){hsIdx=s;break;}}
+var xunStart=hsIdx-mod(hsIdx,10);
+var xunYi={0:"戊",10:"己",20:"庚",30:"辛",40:"壬",50:"癸"}[xunStart];
+var xunName="甲"+DZ[xunStart%12]+"旬";
+var xunGong=null; for(var g2=1;g2<=9;g2++){if(diPan[g2]===xunYi)xunGong=g2;}
+var effXunGong=xunGong===5?2:xunGong;
+var zhiFuStar=QM_STAR0[effXunGong];
+/* 空亡：本旬未排到的两个地支 */
+var kongZhi=[DZ[mod(xunStart+10,12)],DZ[mod(xunStart+11,12)]];
+var ZHI_GONG={"子":1,"丑":8,"寅":8,"卯":3,"辰":4,"巳":4,"午":9,"未":2,"申":2,"酉":7,"戌":6,"亥":6};
+var kongGong={}; kongZhi.forEach(function(z){kongGong[ZHI_GONG[z]]=true;});
+/* 驿马：按日支三合局定 */
+var dayBranch=di%12;
+var maZhi={[2]:8,[6]:8,[10]:8,[8]:2,[0]:2,[4]:2,[5]:11,[9]:11,[1]:11,[11]:5,[3]:5,[7]:5}[dayBranch];
+var maGong=ZHI_GONG[DZ[maZhi]];
+/* 第5步：飞九星（天盘） */
+var shiGong=qmStemPalace(diPan,diPan,TG[ganIdx]);
+if(shiGong===null) shiGong=effXunGong;
+var effShiGong=shiGong===5?2:shiGong;
+function ringShift(from,to){return mod(QM_RING.indexOf(to)-QM_RING.indexOf(from),8);}
+var starShift=ringShift(effXunGong,effShiGong);
+var tianPan={}, starAtGong={};
+QM_RING.forEach(function(gg){var src=QM_RING[mod(QM_RING.indexOf(gg)-starShift,8)];starAtGong[gg]=QM_STAR0[src];tianPan[gg]=diPan[src];});
+starAtGong[5]="天禽"; tianPan[5]=diPan[5];
+/* 第6步：转八门、值使 */
+var stepsInXun=mod(hsIdx-xunStart,10);
+var menShift=yang?stepsInXun:-stepsInXun;
+var menAtGong={};
+QM_RING.forEach(function(gg){var src=QM_RING[mod(QM_RING.indexOf(gg)-menShift,8)];menAtGong[gg]=QM_MEN0[src];});
+var zhiShiMen=menAtGong[effShiGong];
+/* 第7步：布八神 */
+var SHEN=["值符","腾蛇","太阴","六合","白虎","玄武","九地","九天"];
+var shenAtGong={};
+QM_RING.forEach(function(gg){var off=mod(QM_RING.indexOf(gg)-QM_RING.indexOf(effShiGong),8);shenAtGong[gg]=SHEN[yang?off:mod(-off,8)];});
+shenAtGong[5]="—";
+/* 第8步：逐宫评分（门+星+神+门迫+击刑+空亡） */
+var JIXING={"戊":3,"己":2,"庚":8,"辛":9,"壬":4,"癸":4};
+function wxKe(a,b){return mod(wxIdx(a)+2,5)===wxIdx(b);}
+var palScore={}, palNotes={};
+for(var g=1;g<=9;g++){
+var sc=0, notes=[];
+var men=menAtGong[g];
+if(g!==5&&men){var ms={"开门":2,"休门":1,"生门":2,"景门":0,"杜门":0,"伤门":-2,"惊门":-2,"死门":-2}[men];sc+=ms;notes.push(men+(ms>0?"（吉门 +"+ms+"）":ms<0?"（凶门 "+ms+"）":"（平门 0）"));}
+var st=starAtGong[g]; if(st&&QM_STAR_NAT[st]){sc+=QM_STAR_NAT[st][0];notes.push(st+" "+(QM_STAR_NAT[st][0]>=0?"+":"")+QM_STAR_NAT[st][0]);}
+var sh=shenAtGong[g]; if(sh&&QM_SHEN_NAT[sh]){sc+=QM_SHEN_NAT[sh][0];notes.push(sh+" "+(QM_SHEN_NAT[sh][0]>=0?"+":"")+QM_SHEN_NAT[sh][0]);}
+if(g!==5&&men&&wxKe(QM_MEN_WX[men],QM_GONG_WX[g])){sc-=1;notes.push("门迫："+men+"（"+QM_MEN_WX[men]+"）克本宫（"+QM_GONG_WX[g]+"），好门也打折 −1");}
+if(JIXING[diPan[g]]===g){sc-=2;notes.push("击刑：六仪「"+diPan[g]+"」落本宫受刑，防刑伤、罚单、别扭 −2");}
+if(kongGong[g]){sc-=1;notes.push("空亡：此宫落空，力量虚浮、容易落空 −1");}
+if(g===maGong){notes.push("驿马在此：主走动、变动、出差搬迁");}
+palScore[g]=sc; palNotes[g]=notes;
+}
+function palLevel(sc){return sc>=4?"大吉":sc>=2?"吉":sc>=0?"平":sc>=-2?"凶":"大凶";}
+/* 第9步：格局扫描（硬条件逐条对盘） */
+var pats=[];
+function pat(name,good,score,desc,g){pats.push({name:name,good:good,score:score,desc:desc,g:g});}
+for(var pg=1;pg<=9;pg++){
+var tp=tianPan[pg], dp=diPan[pg];
+if(tp==="戊"&&dp==="丙")pat("青龙返首",true,3,"天盘戊加地盘丙：如青龙回头，贵人回护，利求官、求贵、扭转局面。",pg);
+if(tp==="丙"&&dp==="戊")pat("飞鸟跌穴",true,3,"天盘丙加地盘戊：机会如飞鸟投林自己送上门，利速决、利抓现成机会。",pg);
+if(tp==="庚"&&dp==="丙")pat("太白入荧",false,-3,"天盘庚加地盘丙：贼来、火克金，主被抢、被算计、文书生变，防盗防骗。",pg);
+if(tp==="丙"&&dp==="庚")pat("荧入太白",false,-2,"天盘丙加地盘庚：我去犯贼，主主动招惹是非、火爆冲突，先降温。",pg);
+if(tp==="庚"&&dp==="癸")pat("大格",false,-3,"庚加癸为大格：事多阻隔、出行不利、谈判易僵，宜缓不宜赶。",pg);
+if(tp==="庚"&&dp==="壬")pat("小格",false,-2,"庚加壬为小格：小阻小隔，多为细节卡壳、消息迟到，耐心补齐即可。",pg);
+if(tp==="庚"&&dp==="己")pat("官符刑格",false,-2,"庚加己：防官非、罚单、合同刑伤，白纸黑字逐条看。",pg);
+if(tp==="乙"&&dp==="辛")pat("青龙逃走",false,-2,"乙加辛：贵人、助力跑掉之象，谈好的事防变卦，重要约定落纸。",pg);
+if(tp==="辛"&&dp==="乙")pat("白虎猖狂",false,-2,"辛加乙：白虎逞凶，防伤灾、争斗、破财，忌冲动硬刚。",pg);
+if(tp==="丁"&&dp==="癸")pat("朱雀投江",false,-2,"丁加癸：文书、消息出岔，防说错话、发错件、谣言中伤。",pg);
+if(tp==="癸"&&dp==="丁")pat("螣蛇夭矫",false,-2,"癸加丁：虚惊缠绕、文书反复，防被绕进圈套，核实再核实。",pg);
+if(tp==="癸"&&dp==="癸"&&pg===1)pat("天网四张",false,-2,"癸加癸落坎宫：如落天网，进退两难，此宫之事宜低调收着办。",pg);
+if(tp==="庚"&&dp==="乙")pat("太白同宫",false,-1,"庚加乙：金木相战，合作、夫妻易生摩擦，先讲规矩再讲情面。",pg);
+if((tp==="乙"&&pg===3)||(tp==="丙"&&pg===9)||(tp==="丁"&&pg===7))pat("三奇升殿",true,2,"三奇回到自己的宝座宫（乙在震、丙在离、丁在兑）：奇门得位，才华与机会都站对了地方。",pg);
+if((tp==="乙"||tp==="丙"||tp==="丁")&&(menAtGong[pg]==="开门"||menAtGong[pg]==="休门"||menAtGong[pg]==="生门"))pat("三奇得使",true,2,"天盘三奇「"+tp+"」落到吉门「"+menAtGong[pg]+"」上：好星配好门，此宫办事最顺。",pg);
+}
+var dingGong=qmStemPalace(tianPan,diPan,"丁");
+if(dingGong&&menAtGong[dingGong]===zhiShiMen)pat("玉女守门",true,2,"丁奇正守在值使门（当班之门）宫里：利密谈、利求人办事、利感情，低调行事有人暗中开门。",dingGong);
+var patScore=pats.reduce(function(a,p){return a+p.score;},0);
+var goodDoors=[], badDoors=[];
+for(var gd=1;gd<=9;gd++){
+if(menAtGong[gd]==="开门"||menAtGong[gd]==="休门"||menAtGong[gd]==="生门")goodDoors.push(menAtGong[gd]+"在"+QM_GONG_NAME[gd]+"（"+QM_GONG_DIR[gd]+"）");
+if(menAtGong[gd]==="伤门"||menAtGong[gd]==="惊门"||menAtGong[gd]==="死门")badDoors.push(menAtGong[gd]+"在"+QM_GONG_NAME[gd]+"（"+QM_GONG_DIR[gd]+"）");
+}
+/* 用神 */
+var useMap={
+"综合运势":[["值符（大势）",null,"star",zhiFuStar],["时干（你问的事）",null,"gong",effShiGong]],
+"求财赚钱":[["生门（财源）",null,"men","生门"],["戊（本钱）",null,"stem","戊"]],
+"事业工作":[["开门（工作与官位）",null,"men","开门"],["值符（领导与大势）",null,"star",zhiFuStar]],
+"出行远行":[["驿马（走动）",null,"gong",maGong],["开门（出行之门）",null,"men","开门"]],
+"婚恋感情":[["六合（姻缘媒介）",null,"shen","六合"],["乙奇（柔情一方）",null,"stem","乙"]],
+"健康求医":[["天芮（病星）",null,"star","天芮"],["天心（医星）",null,"star","天心"]],
+"学业考试":[["景门（考卷文书）",null,"men","景门"],["丁奇（文章灵感）",null,"stem","丁"]],
+"官司纠纷":[["惊门（官非口舌）",null,"men","惊门"],["庚（对方与阻力）",null,"stem","庚"]]};
+var uses=(useMap[cat]||useMap["综合运势"]).map(function(u){
+var g=null;
+if(u[2]==="gong")g=u[3];
+else if(u[2]==="men"){for(var a=1;a<=9;a++)if(menAtGong[a]===u[3])g=a;}
+else if(u[2]==="star"){for(var b=1;b<=9;b++)if(starAtGong[b]===u[3])g=b;}
+else if(u[2]==="shen"){for(var cc=1;cc<=9;cc++)if(shenAtGong[cc]===u[3])g=cc;}
+else if(u[2]==="stem")g=qmStemPalace(tianPan,diPan,u[3]);
+return {label:u[0],g:g};
+});
+var useScore=uses.reduce(function(a,u){return a+(u.g?palScore[u.g]:0);},0);
+var totalScore=patScore+useScore+({"开门":2,"休门":1,"生门":2,"景门":0,"杜门":0,"伤门":-2,"惊门":-2,"死门":-2}[zhiShiMen]||0);
+var verdict=totalScore>=7?"大吉局":totalScore>=3?"吉局":totalScore>=-2?"平局 · 有吉有凶":totalScore>=-6?"凶局 · 宜守不宜攻":"大凶局 · 诸事缓行";
+var verdictPlain=totalScore>=7?"这一局是难得的好局：好格局扎堆、用神又得力，想办的事可以放手推进，趁这两个小时把关键一步落地。":totalScore>=3?"这一局整体向好：有吉格撑腰、用神不弱，按吉门方向推进就能成，凶门方向绕开即可。":totalScore>=-2?"这一局好坏参半：没有一边倒的吉凶，成败全看你走哪扇门——走吉门、用神宫，事可为；走凶门，事多磨。":totalScore>=-6?"这一局偏凶：凶格和受压的用神占了上风，不是不能办，是硬办代价大。能缓就缓到下个时辰，非办不可就只走吉门、只做最小一步。":"这一局凶气重：多个凶格同时出现，先停一停。这两个小时最适合收尾、守成、查漏补缺，新事、大事、重注都往后放。";
+/* 九宫格 HTML */
+var layout=[4,9,2,3,5,7,8,1,6];
+var grid='<div class="qimen-grid">'+layout.map(function(g){
+var lv=palLevel(palScore[g]);
+var col=(lv==="大吉"||lv==="吉")?"var(--pine)":(lv==="凶"||lv==="大凶")?"var(--cinnabar)":"var(--ink2)";
+return '<div class="qm-cell"><div class="shen">'+(shenAtGong[g]||"")+' · '+(starAtGong[g]||"")+'</div>'+
+'<div class="men" style="font-size:17px">'+(menAtGong[g]||(g===5?"天禽寄坤":""))+'</div>'+
+'<div style="font-size:12.5px;color:var(--ink2)">天盘 '+tianPan[g]+' · 地盘 '+diPan[g]+'<br/>'+QM_GONG_DIR[g]+' · <b style="color:'+col+'">'+lv+'（'+(palScore[g]>=0?"+":"")+palScore[g]+'）</b></div>'+
+'<span class="gong">'+QM_GONG_NAME[g]+'</span></div>';
+}).join("")+'</div>';
+var stepsHtml='<h3>起局算法 · 一步一步算给你看</h3><div class="steps">'+
+'<div class="step"><span class="n">1</span><div><span class="t">先定节气和三元。</span> <span class="f">起局日落在「'+term[2]+'」节气里；再数日干支在十五日一轮里走到哪五日，定出是</span> <span class="r">'+["上元","中元","下元"][yuan]+'</span><span class="f">。白话：节气管大气候，三元管这一旬的小气候。</span></div></div>'+
+'<div class="step"><span class="n">2</span><div><span class="t">再定阴阳遁和局数。</span> <span class="f">口诀「冬至后用阳遁、夏至后用阴遁」，查局表：'+term[2]+["上元","中元","下元"][yuan]+'用</span> <span class="r">'+(yang?"阳遁":"阴遁")+ju+'局</span><span class="f">。局数就是地盘从几宫起步的编号。</span></div></div>'+
+'<div class="step"><span class="n">3</span><div><span class="t">布地盘三奇六仪。</span> <span class="f">把九个符号 戊己庚辛壬癸丁丙乙，从 '+ju+' 宫起，'+(yang?"按宫数往大里顺排":"按宫数往小里逆排")+'，一宫一个，铺满九宫——这是固定不动的「地盘」：</span> <span class="r">'+layout.map(function(g){return QM_GONG_NAME[g].slice(0,1)+diPan[g];}).join(" · ")+'</span></div></div>'+
+'<div class="step"><span class="n">4</span><div><span class="t">找旬首，定值符。</span> <span class="f">时柱是 '+fmtGZ(ganIdx,zhiIdx)+'，它属于 '+xunName+'，旬首仪是「'+xunYi+'」，它在地盘落 '+QM_GONG_NAME[xunGong]+'，那一宫的星</span> <span class="r">'+zhiFuStar+' 就是值符</span><span class="f">（本局总指挥）。本旬空亡在 '+kongZhi.join("、")+'，对应宫位力量虚浮。</span></div></div>'+
+'<div class="step"><span class="n">5</span><div><span class="t">值符随时干，飞九星成天盘。</span> <span class="f">时干「'+TG[ganIdx]+'」在地盘落 '+QM_GONG_NAME[shiGong]+'，值符带着整圈九星转过去，天盘就成了。现在值符 '+zhiFuStar+' 坐在 '+QM_GONG_NAME[effShiGong]+'（'+QM_GONG_DIR[effShiGong]+'）。</span></div></div>'+
+'<div class="step"><span class="n">6</span><div><span class="t">值使随时支，转八门。</span> <span class="f">本时辰是这一旬里的第 '+(stepsInXun+1)+' 个时辰，八门从值符宫起'+(yang?"顺":"逆")+'转 '+stepsInXun+' 步，落定的当班门就是值使：</span> <span class="r">'+zhiShiMen+'</span><span class="f">（在 '+QM_GONG_NAME[effShiGong]+'）。你问的事顺不顺，先看这扇门。</span></div></div>'+
+'<div class="step"><span class="n">7</span><div><span class="t">布八神。</span> <span class="f">值符神落在值符宫，其余七神（腾蛇、太阴、六合、白虎、玄武、九地、九天）按'+(yang?"顺时针":"逆时针")+'一宫一个排开。神看的是「暗处的气氛」：太阴六合是暗助，白虎玄武是暗坑。</span></div></div>'+
+'<div class="step"><span class="n">8</span><div><span class="t">逐宫打分，再扫格局。</span> <span class="f">每宫按 门（吉+2/凶−2）＋星＋神 相加，再扣门迫（−1）、击刑（−2）、空亡（−1）；最后拿天盘干加地盘干逐条对格局表（青龙返首、太白入荧……），命中一条记一条。九宫分、用神分、格局分相加，就是下面的总断。</span></div></div></div>';
+var patHtml=pats.length?('<h3>格局断定 · 命中 '+pats.length+' 条</h3>'+pats.map(function(p){return '<p>'+(p.good?'<span class="good"></span>':'<span class="hl"></span>')+'<b>'+p.name+'</b>（'+QM_GONG_NAME[p.g]+' · '+QM_GONG_DIR[p.g]+'，'+(p.score>=0?"+":"")+p.score+' 分）—— '+p.desc+'</p>';}).join("")):'<h3>格局断定</h3><p>这一局没有命中经典吉凶格局——天盘干和地盘干没有凑成青龙返首、太白入荧那类特殊组合。没有格局加持也没有格局拖累，吉凶全看九宫分和用神，这反而是最好读的一局：哪宫分高往哪走。</p>';
+var rows=[1,2,3,4,5,6,7,8,9].map(function(g){
+return "<tr><td>"+QM_GONG_NAME[g]+"<br/>"+QM_GONG_DIR[g]+"</td><td>"+(menAtGong[g]||"—")+"</td><td>"+starAtGong[g]+"</td><td>"+shenAtGong[g]+"</td><td>"+tianPan[g]+" / "+diPan[g]+"</td><td><b>"+palLevel(palScore[g])+"</b>（"+(palScore[g]>=0?"+":"")+palScore[g]+"）</td><td class='l'>"+palNotes[g].join("；")+"</td></tr>";
+}).join("");
+var useHtml=uses.map(function(u){
+if(!u.g)return "";
+return '<p><b>'+u.label+' 落 '+QM_GONG_NAME[u.g]+'（'+QM_GONG_DIR[u.g]+'）：</b>那宫是 '+palLevel(palScore[u.g])+'（'+(palScore[u.g]>=0?"+":"")+palScore[u.g]+' 分），坐 '+(menAtGong[u.g]||"无门")+'、'+starAtGong[u.g]+'、'+shenAtGong[u.g]+'。'+(palScore[u.g]>=2?"这块力量足，你问的事在这上面有底气，可以主动推进。":palScore[u.g]>=0?"这块力量平平，能办但别指望顺风，靠细致和耐心补。":"这块力量受压，你问的事正卡在这里——先避其锋、补其弱，或换个时辰再办。")+'</p>';
+}).join("");
+show("qmResult",
+'<p><span class="big">'+term[2]+' · '+["上元","中元","下元"][yuan]+'</span>　<span class="hl big">'+(yang?"阳遁":"阴遁")+ju+'局</span>　时柱 '+fmtGZ(ganIdx,zhiIdx)+'（'+SHICHEN[zhiIdx]+'）</p>'+
+'<p>总断：<span class="big '+(totalScore>=3?"good":"hl")+'">'+verdict+'</span>（总分 '+(totalScore>=0?"+":"")+totalScore+' = 格局 '+(patScore>=0?"+":"")+patScore+' ＋ 用神 '+(useScore>=0?"+":"")+useScore+' ＋ 值使门 '+(zhiShiMen)+'）</p>'+
+grid+stepsHtml+patHtml+
+'<h3>九宫吉凶总表</h3><div class="scrollx"><table class="tbl"><tr><th>宫位方位</th><th>八门</th><th>九星</th><th>八神</th><th>天/地盘</th><th>吉凶</th><th class="l">为什么</th></tr>'+rows+'</table></div>'+
+'<h3>值符 · 值使 · 用神（问「'+esc(cat)+'」）</h3>'+
+'<p><b>值符 '+zhiFuStar+'</b> 落 '+QM_GONG_NAME[effShiGong]+'（'+QM_GONG_DIR[effShiGong]+'）：'+QM_STAR_NAT[zhiFuStar][1]+'。它是全局重心，重心宫是 '+palLevel(palScore[effShiGong])+'。</p>'+
+'<p><b>值使 '+zhiShiMen+'</b>：'+QM_MEN_GOOD[zhiShiMen]+'。当班的门就是办你这件事要走的门，它吉，事有六成底气；它凶，先缓。</p>'+useHtml+
+'<h3>方位吉凶</h3><p><span class="good"><b>吉方：</b></span>'+goodDoors.join("；")+'。</p>'+
+'<p><span class="hl"><b>凶方：</b></span>'+(badDoors.length?badDoors.join("；")+"。":"本局三凶门没有单独成势，按九宫总表避开负分宫即可。")+'</p>'+
+'<p>驿马在 '+QM_GONG_NAME[maGong]+'（'+QM_GONG_DIR[maGong]+'）：要出门、搬动、调动，往这个方向动最有气。空亡在 '+kongZhi.join("、")+' 对应的宫位：那两个方向的事容易落空，签约、交接别只在那宫上办。</p>'+
+(q?'<p>所问：「'+esc(q)+'」—— 对照上面用神宫的吉凶和总断参看。</p>':"")+
+'<p class="muted">完整版说明：本局已含阴阳遁局数、地/天盘、九星八门八神、值符值使、空亡驿马、逐宫评分与经典格局扫描。节气交接日、三元划分各家有活盘/飞盘等流派差异，本页用时家转盘奇门通行法；一局管一个时辰（两小时），过时请重新起局。</p>'+
+jiedu(verdictPlain,
+'<div class="howto"><b>先教你看懂这九宫格：</b>它按老地图排——<b>上南、下北、左东、右西</b>（和现代地图上下相反，别看错）。每格先看<b>门</b>：开、休、生是吉门，伤、惊、死是凶门；再看<b>星</b>管这块地的性质，<b>神</b>管暗处气氛。格子右下角的分数就是三者加总再扣门迫、击刑、空亡后的结果，分高往那走，分低绕开。</div>'+
+'<p><b>格局是什么？</b>就是天盘干和地盘干凑出的「特殊组合」，像扑克里的对子和顺子：'+(pats.length?('这局命中了 '+pats.map(function(p){return p.name;}).join("、")+'，吉格是顺风加成，凶格是明确的警告，上面格局断定里逐条写了在哪宫、什么意思。'):'这局没凑出特殊组合，按九宫分老老实实走，就是最稳的打法。')+'</p>'+
+'<p><b>你问的「'+esc(cat)+'」，落点看用神：</b>'+uses.map(function(u){return u.g?(u.label.split("（")[0]+"在"+QM_GONG_DIR[u.g]+"、"+palLevel(palScore[u.g])):"";}).filter(Boolean).join("；")+'。用神宫吉，这件事就有根；用神宫凶或落空亡，先补那一块再谈推进。</p>'+
+jdDoDont('在吉门时辰、朝吉方（'+goodDoors.slice(0,2).join("、")+'）办关键一步；重要决定趁本局两小时内定下来。','朝凶方（'+(badDoors[0]||"负分宫")+'）硬闯、在凶格宫位上签长约下重注、过时还拿旧局说事。'),'奇门完整版 · '+(yang?"阳遁":"阴遁")+ju+'局 · '+verdict));
+});
+
+</script>
+
+<script>
+"use strict";
+/* ================= 抽签 ================= */
+var QIAN_LEVELS=["上上签","中平签","上吉签","下签","中吉签","上上签","中下签","中吉签","中平签","上吉签","下下签","中吉签","上吉签","中平签","下签","上上签","中吉签","中下签","上吉签","中平签"];
+var QIAN_TIER={"上上签":5,"上吉签":4,"中吉签":3,"中平签":2,"中下签":1,"下签":1,"下下签":0};
+var QIAN_CAT_TXT={
+ "综合运程":["时来运转，云开月见，所谋皆有着落，只管放手去做。","大势向好，稳步推进，贵人在不远处，宜主动结交。","运程平稳，无大起大落，守得住就是赢，忌心浮气躁。","时运平平，宜守不宜攻，把手头事做扎实，自有转机。","阻力当前，事多反复，先避锋芒、养精蓄锐，忌硬闯。","时运低迷，诸事不宜冒进，退守反省，等风来再起帆。"],
+ "事业工作":["升迁在望，功名有望，宜大胆表现、主动请缨。","进展顺利，得上司赏识，把眼下的项目做漂亮就是敲门砖。","按部就班，不出错就是功劳，人际上少说话多做事。","变动之象萌芽，先稳住岗位，暗中准备，别裸辞。","小人挡道、功劳易被抢，凡事留痕，签约看清条款。","阻滞重重，宜蛰伏学习，此刻跳槽多半从一个坑到另一个坑。"],
+ "财运生意":["财源广进，正偏财皆旺，可适度扩张，但忌贪最后一口。","正财稳进，偏财小有，宜见好就收，落袋为安。","收支平衡，财来财去，宜记账节流，别做担保人。","进账慢、出账快，捂紧钱包，非必要不消费不投资。","有破财之象，防被骗、防冲动消费，大额支出缓一缓。","财运极弱，忌一切投机借贷，守住本金就是赚。"],
+ "姻缘感情":["天作之合，姻缘已到，单身者宜出门、宜相亲；有伴者宜谈婚论嫁。","桃花正旺，心意相通，主动一点，窗户纸一捅就破。","感情平稳，宜经营日常，浪漫不在大小，在用心。","缘分未熟，不必强求，先把自己过精彩，对的人在路上。","易有误会与第三者影子，沟通先行，忌冷战与翻旧账。","情路多阻，此签主「等」，强摘的瓜不甜，放手也是成全。"],
+ "健康平安":["身康体泰，灾病自消，保持作息就是最好的药。","小恙无碍，注意脾胃与睡眠，调理即愈。","平安无事，宜体检排查，防患于未然。","操劳过度之象，宜休整，熬夜与酒局先停一停。","注意旧疾复发与意外磕碰，出行守规矩，及早就医别拖。","健康亮红灯之象，速去检查，莫信偏方，正规诊疗为上。"],
+ "学业考试":["金榜题名之象，正常发挥即是超常，稳住心态上考场。","学运上扬，临场不慌，重点复习错题本，收获与付出成正比。","平稳发挥，宜查漏补缺，押题不如过课本。","状态起伏，宜调整作息，考前忌突击到深夜。","易粗心丢分，答完必检一遍，简单的题最容易翻船。","此签主积累不足，宜把目标放长，下一次才是你的主场。"]};
+$("qnBtn").addEventListener("click",function(){
+  var type=$("qnType").value, cat=$("qnCat").value;
+  var num=1+Math.floor(Math.random()*100);
+  var level=QIAN_LEVELS[num%QIAN_LEVELS.length];
+  var tier=QIAN_TIER[level];
+  var poem=["云开雾散见青天，所求皆遂称心田","月在中天光皎洁，照人前路步步宽","春到枝头花自发，时来运转莫迟疑","舟行江上逢顺风，一日千里到金岸","守得云开见月明，苦尽甘来福自生","山重水复疑无路，静候柳暗又一村","风波未定心先定，退步原来是向前","花开堪折直须折，莫待无花空折枝"][num%8];
+  var jie=QIAN_CAT_TXT[cat][5-tier];
+  var ASPECTS=[["家宅","家宅平安，人口无扰","家宅安稳，宜修整门户","家宅平顺，少生事端","家宅多口舌，宜忍让","家宅不宁，宜安神祭祖缓图"],
+   ["自身","自身大吉，行事顺遂","自身平安，心宽体健","自身平平，守分则安","自身多阻，宜低调避险","自身欠安，宜休养忌远行"],
+   ["求财","求财大利，正偏皆可图","求财顺遂，量力扩张","求财平平，守成为上","求财费力，忌合伙担保","求财不利，捂紧本金"],
+   ["交易","交易即成，利市三倍","交易可成，爽快成交","交易慢成，多谈几轮","交易多变，防中途生枝","交易难成，缓议为上"],
+   ["婚姻","婚姻天成，宜速定亲","婚姻可成，诚意即通","婚姻平顺，慢慢经营","婚姻多磨，忌急定终身","婚姻暂阻，强求无益"],
+   ["六甲","六甲生男，母子平安","孕事安稳，静养即可","孕事平顺，忌劳累","孕事多虑，宜就医检查","孕事宜慎，忌远行动土"],
+   ["行人","行人即至，喜讯在途","行人将至，再等数日","行人平平，音信稍迟","行人受阻，改期而行","行人未动，宜另约时间"],
+   ["寻人","寻人可遇，往热闹处找","寻人有信，托朋友打听","寻人费力，多问几处","寻人难逢，先报警备案","寻人无信，宜广发消息"],
+   ["公讼","公讼得理，和解亦胜","公讼占先，据理可争","公讼宜和，退步为赢","公讼多缠，防耗时耗财","公讼不利，能避则避"],
+   ["失物","失物可寻，就在近处","失物有望，翻找旧处","失物平平，急则难觅","失物难寻，防已离手","失物已远，宜放下止损"],
+   ["疾病","疾病即愈，喜遇良医","疾病渐好，按方调养","疾病平平，耐心调理","疾病缠绵，宜换医详查","疾病宜慎，速入正规医院"],
+   ["出行","出行大利，一路顺风","出行平安，按计划走","出行平平，备好雨具后手","出行多阻，能改期则改","出行不利，缓行为上"]];
+  var aspIdx=tier>=4?0:tier===3?1:tier===2?2:tier===1?3:4;
+  var aspHtml='<h3>传统解曰 · 十二方面逐项断</h3><div class="kv">'+ASPECTS.map(function(a){return '<div class="cell"><div class="k">'+a[0]+'</div><div class="v" style="font-size:14.5px">'+a[aspIdx+1]+'</div></div>';}).join("")+'</div>';
+  show("qnResult",
+   '<p style="text-align:center"><span class="big">'+type+'</span>　第 <span class="big hl">'+num+'</span> 签　<span class="big">'+level+'</span></p>'+
+   '<p style="text-align:center;font-size:19px;letter-spacing:.1em">「'+poem+'」</p>'+
+   '<p><b>解签（'+cat+'）：</b>'+jie+'</p>'+aspHtml+
+   ($("qnQ").value.trim()?'<p>所问：「'+esc($("qnQ").value.trim())+'」—— 签意如此，成与不成，三分天意七分人为。</p>':"")+
+   '<p class="muted">签诗为此签等级的意象句，解签按签等与所问方面推断；同号签在不同庙宇签本文字略有出入，断意以签等为准。</p>'+
+   jiedu(tier>=4?'你抽到的是 '+level+'，上等签——说白了就是「绿灯」：你问的'+cat+'这件事，天时站在你这边，放手去做，别犹豫到错过。':tier===3?'你抽到的是 '+level+'——说白了就是「黄灯偏绿」：'+cat+'这件事大方向是好的，稳稳推进就能成，急不得也懒不得。':tier===2?'你抽到的是 '+level+'——说白了就是「黄灯」：'+cat+'这件事不好不坏，结果全看你怎么做，守住本分、别作妖，就是最好的解法。':tier===1?'你抽到的是 '+level+'，偏下——说白了就是「黄灯偏红」：'+cat+'这件事现在阻力不小，先缓一缓、把准备做足，硬上容易吃亏。':'你抽到的是 '+level+'，下等签——说白了就是「红灯」：'+cat+'这件事此刻万万急不得，停下来、守住、等风过去，比硬闯明智得多。',
+    '<p><b>签诗「'+poem+'」在说什么？</b>签诗都是用风景打比方：云开、月明、春到、顺风，说的都是「熬过去了、要顺了」；山重水复、风波未定，说的是「还在难处里、先稳住心」。对着你问的事翻译过来，就是上面解签那一段的意思——'+jie+'</p>'+
+    '<p><b>抽到下签怎么办？</b>老规矩是：下签不是判死刑，是提醒你换时间、换方法、换心态。把这件事放一放、补补短板，过段时间再问，签意常常就变了。千万别连着摇到上签为止——那不叫求签，叫不服气，越摇越不准。</p>'+
+    jdDoDont(tier>=3?'趁签意顺的时候，把这件事最关键的第一步在本周内落地。':'把这件事先降速，列出最怕出岔子的三处，逐个补好再动。',tier>=3?'签好就飘、一口气把赌注下满。':'签不好就慌、病急乱投医、找人乱花钱改运。')+
+    jdDeep('求签好比出门前问一句「今天这条路顺不顺」：签是路况提示，不是导航指令。上签是绿灯——绿灯也要看路；下签是红灯——红灯停一下，天不会塌。真正决定你到不到的，是开车的人。',
+     [tier>=3?'趁签意顺：本周内把这件事的第一步落地，顺风的时候最忌光说不练。':'先降速：把这件事拆成小步，先走最稳的那一小步，边走边看。',
+      '把解签十二方面里和你这件事最相关的两三项（'+cat+'之外，再看家宅、自身、求财）对照读一遍，互相印证才算读全了这支签。',
+      '给这支签设个复盘日：'+(tier>=3?'顺的时候在第 7 天复盘一次，看有没有乐极生悲的苗头。':'签意不佳时在第 14 天复盘一次，短板补上了，局势多半已经变了。')],
+     '摇到下签就连摇十次直到上签——那一刻起你问的就不是天意，是自己的不甘心。签只能问一次，事可以改很多次，改事比改签有用得多。'),'抽签 · 第'+num+'签 '+level));
+});
+
+/* ================= 周公解梦 ================= */
+var DREAMS={
+ "蛇":"梦蛇多主财与欲：蛇入怀主得贵子或得财；蛇咬人主得大财；蛇随人去主有口舌。心态上多是潜意识在提醒你——有件事一直盘在心里没解决。",
+ "水":"水主财源与情绪：大水浩荡主大财将至；清水主吉，浊水主忧；落水被救主逢凶化吉。近日情绪起伏之事，多半与此梦相应。",
+ "飞":"飞翔主志向得展：飞得高远主升迁有望；飞不起来主受制于现实压力；与人同飞主得助力。醒后心轻者，是好兆头。",
+ "掉牙":"掉牙主家事与根基：多主家中长辈健康需留意，或自身根基（工作、住处）有变动。不痛无血多为虚惊，痛而出血宜多关心家人。",
+ "死人":"梦死人多主消灾与重启：死人复活主旧事重提或失而复得；与死人交谈主有讯息将至。此梦多不主凶，反主旧阶段结束。",
+ "结婚":"梦婚主合与变：自己结婚主将有新合作或生活转段；看人结婚主人际有喜事将近。已婚者梦此，多主家庭有新计划。",
+ "钱":"梦钱主得失心：拾钱主小财或机会；丢钱主近期花销大、宜节流；钱被抢主有人与你争利，合同先行。",
+ "考试":"梦考主现实压力：题目不会主对眼下任务没底；考得好主准备已足。此梦多是白天焦虑的回声，列个清单比解梦更解忧。",
+ "追赶":"被追主逃避：心里有件事在躲——债、约、难开口的话；追上你主躲不过，不如主动面对。自己追人主目标心切，宜放缓节奏。",
+ "狗":"狗主朋友与忠信：友善之狗主得朋友助；狗吠咬人主有口舌是非，防熟人背后议论；喂狗主人缘转好。",
+ "猫":"猫主柔情与暗涌：猫亲近主有温柔的人际；猫抓咬主防女性口舌或小人暗算，财物看紧些。",
+ "小孩":"小孩主新生与希望：抱小孩主新计划有着落；小儿哭主小事烦心。此梦多报喜讯将近。",
+ "房子":"房子主身心与家运：新房主新阶段；老房漏雨主家中有事待修补；盖房主根基在立，宜耐心。",
+ "车":"车主行程与掌控：开车顺畅主诸事在握；刹车失灵主节奏失控，宜减速；错过车主错失机会，下次请早。",
+ "船":"船主渡险与远行：船行平稳主远行顺利、有贵人同舟；船翻主计划有变，宜备后手。",
+ "鱼":"鱼主年年有余：捉鱼得鱼主得财；鱼跃水面主有喜讯；鱼死主机会流失，宜抓紧手边的事。",
+ "鸟":"鸟主消息与自由：鸟飞入室主有远方消息；鸟鸣主喜事临门；笼中鸟主心里向往自由，宜安排一次出行。",
+ "下雨":"雨主润泽与情绪：细雨主小财润物；暴雨主情绪宣泄或变动将至；雨过天晴主困局将解。",
+ "雪":"雪主洁净与冷局：大雪封路主暂时受阻；雪地行走主清白自守，终得人知。",
+ "火":"火主旺与急：灶火旺主家运兴隆；大火烧身主防急躁与炎症；灭火主能控制局面。",
+ "山":"山主靠山与阻力：登山到顶主目标达成；山挡路主有大阻力，宜绕行借力，不必硬攀。",
+ "路":"路主方向：大路通畅主前途明朗；迷路主当下方向未定，宜停下来想清楚再走。",
+ "血":"血主财与伤：见血多主财（血即财星），亦提醒注意身体小伤；献血主付出有回报。",
+ "哭":"哭主极悲反喜：梦中大哭醒来心松，主压抑释放、好事将近；与人对哭主有口角要解开。",
+ "笑":"笑主乐极须防：大笑主得意，但防乐极生悲；对人笑主人际和气，宜谈合作。",
+ "头发":"头发主烦恼丝：剪发主了断旧事、重新开始；长发乱主心事多，宜梳理优先级。",
+ "鞋":"鞋主伴侣与立足：新鞋合脚主觅得良伴或新岗位合心；丢鞋主立足不稳，合同住处先落实。",
+ "钥匙":"钥匙主解法与门路：得钥匙主难题有解、贵人指路；钥匙断主方法不对，换个思路。",
+ "镜子":"镜主自省：照镜清晰主看清自己；镜碎主防形象受损，言行留三分。",
+ "棺材":"棺材谐音升官发财：见棺多主官运财运将动，是传统大吉梦象；抬棺主担起重任而得利。",
+ "怀孕":"怀孕主孕育：新计划、新作品正在成形，未到收获时，宜安胎般耐心养护。",
+ "婴儿":"婴儿主纯真开端：主有全新开始，小而珍贵，宜细心照料眼下的小机会。",
+ "坟墓":"坟墓主收藏与终结：一段关系或工作将收尾；亦主祖荫，宜祭扫问安，心安即是吉。",
+ "雷电":"雷电主惊变与威权：有突发消息将至，先惊后定；行事宜避与权威正面冲突。",
+ "太阳":"太阳主贵人与光明：日出主时运大开，宜办大事、见贵人；烈日主防过刚与上火。",
+ "月亮":"月亮主阴柔与思念：满月主团圆有望；月蚀主情绪低潮，宜静养几日。",
+ "星星":"星主希望与名声：星光灿烂主小愿望将成；流星主机会稍纵即逝，想做就立刻动手。",
+ "桥":"桥主连接与过渡：过桥顺利主跨过难关；桥断主合作或行程中断，宜改期。",
+ "门":"门主机会：开门主新机会入门；门关着主时机未到，叩门须有耐心与礼数。",
+ "梯子":"梯主进阶：上梯主步步高升；梯摇晃主根基不稳，升职升学之外先固本。",
+ "龙":"龙主腾达与权威：见龙主大贵之兆、事业有大转机；龙飞天主名扬，龙入水主潜伏待时。此梦多在人生关口出现，是心里那股不甘平庸的劲在放电。",
+ "凤凰":"凤主祥瑞与重生：见凤主将有喜庆大事或脱胎换骨的机会；凤落架上主时运暂低，收起光芒待来年。",
+ "老虎":"虎主威势与压力：虎温顺主有强援；虎扑人主有强势人物压你或大压力临门，先避锋。骑虎主位高责任大，进退两难。",
+ "牛":"牛主勤劳与家产：牛壮主家业稳、耕耘有获；牛病弱主身体或家计要留意；骑牛主慢而稳的进益。",
+ "羊":"羊主祥和温顺：群羊主家宅安宁、口福不缺；丢羊主小财有失，看紧随身物。",
+ "猪":"猪主福气与财富：肥猪主进财安逸；猪跑主财要溜走，合同账目看紧。此梦也提醒享受生活过头要生惰性。",
+ "鸡":"鸡主守时与消息：鸡鸣主有信儿到、新一天的开始；鸡飞主家事纷扰，少掺和闲事。",
+ "兔子":"兔主温和机敏：兔安静主平安顺遂；兔受惊逃窜主有小变故，反应快就能避开。",
+ "乌龟":"龟主长寿与稳固：见龟主根基稳、有长寿之福；龟慢主事情进度慢但结果实，急不得。",
+ "蜘蛛":"蛛主网罗与等待：结网主布局将成、坐等收获；蛛缠身主被人情网、债务网缠住，宜理清关系。",
+ "蚂蚁":"蚁主积累与团队：群蚁搬物主小钱成堆、靠团队成事；蚁上身主琐事缠身，宜排优先级。",
+ "蜜蜂":"蜂主勤劳与收获：采蜜主辛苦有甜头；蜂蜇主甜头带刺，防合作中的小摩擦。",
+ "蝴蝶":"蝶主变化与浪漫：蝶舞主心情与桃花皆美；蝶破茧主正经历蜕变，难受是暂时的。",
+ "老鼠":"鼠主暗耗与机警：鼠多主有暗处损耗，查账目、防小偷小摸；鼠窜主小人退散。",
+ "青蛙":"蛙主跳跃与水财：蛙鸣主有消息或小财；蛙跳走主机会一闪而过，手要快。",
+ "螃蟹":"蟹主横行与收获：捉蟹主能拿到棘手的好处；蟹夹手主得利的同时要防被小事伤着。",
+ "虾":"虾主弯曲与退让：虾活跳主小利不断；此梦多提醒：有些场合弯一弯腰，事反而成。",
+ "鸡蛋":"蛋主希望与脆弱：完好主新计划在孕育，要小心呵护；蛋碎主计划有破，及早补救。",
+ "米饭":"米主衣食根本：米饭充足主衣食无忧、家道平顺；米缸空主近期开支大，宜节流。",
+ "酒":"酒主交情与失控：共饮主交情深、合作成；醉酒主防失言失态，重要场合管住杯和嘴。",
+ "茶":"茶主清醒与人情：敬茶待客主人际有喜；茶凉主人情转淡，主动联络补温。",
+ "衣服":"衣主身份与体面：新衣合身主新角色新气象将至；衣破主防体面受损，言行留分寸。",
+ "头发白":"白发主操劳与资历：多主近期劳心过度，也主经验值在涨；提醒你：该歇就歇，事缓则圆。",
+ "指甲":"指甲主细微之处：指甲长主小事积累成患；断甲主防小破财与磕碰，细节处留神。",
+ "耳朵":"耳主消息渠道：耳痒耳鸣式入梦，多主将有小道消息，真假参半，听完要核实。",
+ "眼睛":"眼主洞察与心明：眼亮主看清了局势；眼蒙主有事被蒙在鼓里，多方打听再下结论。",
+ "洗澡":"沐浴主除旧布新：洗去污垢主放下旧包袱、新阶段将开；水凉水浊主环境将变，先备衣衫（后手）。",
+ "游泳":"游泳主在情绪与财源里自如：游得顺主掌控力强；呛水主近期压力大，宜求助别硬撑。",
+ "爬山":"登山主攻坚：登顶主成，半途主还在爬坡期——此梦多是白天目标感的回声，节奏别乱。",
+ "走路":"行路主进程：路平主稳进；泥泞主阻力在脚下（执行层），换双鞋（换方法）再走。",
+ "跑步":"奔跑主追赶目标：跑得快主状态正佳；跑不动主目标定高了或体力透支，调配速。",
+ "坐船":"已在船上主已入局：船稳主局势在握；晕船主还没适应新环境，给自己两周磨合期。",
+ "飞机":"飞机主高升与远行：起飞主事业或眼界要上台阶；延误主计划被外部卡住，备选方案先行。",
+ "火车":"火车主既定轨道：上车主进入正轨、按部就班；误车主错过一班机会，下一班要提前到站。",
+ "自行车":"骑车主靠自己：蹬得稳主自给自足节奏好；掉链主工具或流程出小故障，修好再上路。",
+ "电梯":"电梯主升降捷径：上升主有贵人电梯可搭；下坠主防依赖捷径，根基要自己打。",
+ "迷路":"迷路主方向未定：多主现实中正站在岔路口——此梦不主凶，主提醒：停下来看地图（复盘）比乱走强。",
+ "战争":"战象主内心的冲突与外部竞争：多主工作上正打硬仗；赢主能扛过去，伤主已透支，宜休整求援。",
+ "打架":"打架主积压的怒气：打赢主能出这口气；打输主现实中正被压制——梦里打完，白天要找正当出口，别憋。",
+ "唱歌":"歌唱主抒发与被听见：唱得好主才华将被认可；忘词主表达机会临门但准备不足，赶紧练。",
+ "跳舞":"舞主协调与喜悦：独舞主自我状态好；共舞主合作或感情进入合拍期，顺势推进。",
+ "读书":"读书主进修与考试：读得进主学运佳；读不懂主方法不对，换老师换教材比硬啃强。",
+ "写字":"写字主立约与表达：字清主心意已定，可落笔签约；字乱主心绪未定，大事先别落字。",
+ "故人":"梦见故人主旧情怀未了：故人安好多主怀念；故人托言主有旧事未结——醒后能联系就联系，不能就放心里祭一祭。",
+ "婴儿哭":"婴啼主新事需要照料：多主新项目、新关系在「喊饿」，及时喂资源；也主心里有委屈要出口。",
+ "盖房":"盖房主立业：地基主根基在打，宜慢；上梁主将成，关键节点别省料（别省关键投入）。",
+ "搬家":"搬家主变动将临：搬得顺心主变动是好事；舍不得搬主心里还没准备好，先处理情绪再处理行李。",
+ "下雨打伞":"雨中打伞主有备无患：风雨（麻烦）在路上，但你有遮挡——把「伞」（保险、备用金、人脉）提前备好就行。",
+ "彩虹":"虹主苦尽甘来：见彩虹主困局将解、有惊喜在后头；此梦多出现在低谷末尾，撑住最后一程。",
+ "地震":"地震主根基动摇：多主工作、住处、关系有大变动前兆——先查自己的「地基」：合同、存款、健康，哪项虚先补哪项。",
+ "洪水":"洪水主情绪与财势的大涨大落：水清主大财动、水浊主麻烦涌——站在高处（留现金、稳情绪）就是解法。",
+ "悬崖":"崖边主险境与抉择：多主一件事已逼到非选不可；退一步有路，梦里没掉下去，就是提醒你别赌那一步。",
+ "黑夜":"夜行主前路不明：摸黑走主在信息不足时硬撑，宜先停、先打听、先点灯（找明白人问清）。",
+ "天亮":"破晓主转机：黑夜将尽、光将至，多主熬了很久的事要见亮——再坚持一段，别在黎明前弃局。"};
+$("jmChips").innerHTML=Object.keys(DREAMS).slice(0,16).map(function(k){return '<button class="chip" data-k="'+k+'">梦'+k+'</button>';}).join("");
+$("jmChips").addEventListener("click",function(e){
+  var b=e.target.closest("[data-k]"); if(!b)return;
+  $("jmKey").value=b.getAttribute("data-k"); dreamGo();
+});
+function dreamGo(){
+  var key=$("jmKey").value.trim(); if(!key){show("jmResult","<p>先写下梦里最记得清的东西，一个词就够。</p>");return;}
+  var hit=null,hk="";
+  for(var k in DREAMS){if(key.indexOf(k)>=0||k.indexOf(key)>=0){hit=DREAMS[k];hk=k;break;}}
+  if(hit){var mood=$("jmMood").value;
+   var moodTxt={"害怕惊醒":"<p><b>梦里是吓醒的：</b>这类梦九成是压力在夜里泄洪——梦象本身未必凶，是你白天绷太紧了。先处理睡眠和那件最压着你的事，梦自然就软下来。</p>","开心舒畅":"<p><b>梦里是开心的：</b>吉象配好心情，是双倍的好信号——说明你潜意识里已经准备好接住这件好事了，白天大胆往前推一步。</p>","平静如常":"<p><b>梦里很平静：</b>平静的梦最「实」——它多半不是情绪发泄，而是日常心事的平直反映，断语里点到的那件事，八九不离十就是你眼下该办的。</p>","焦虑着急":"<p><b>梦里很焦虑：</b>焦虑感说明这件事在你心里的权重比嘴上承认的大。别光解梦，今天就把那件事列个清单、拆出第一步，焦虑多半当场降一半。</p>"}[mood]||"";
+   show("jmResult",'<p><span class="big">梦「'+hk+'」</span></p><p>'+hit+'</p>'+moodTxt+'<p class="muted">解梦取传统大意，梦境终究是白天心事的回声：若连着三晚做同一个梦，那件事就该白天处理了。</p>'+
+   jiedu('梦见「'+hk+'」，说白了不是老天给你托梦预言，是你白天的心事在夜里放电影——传统解法给它安了个寓意，真正要你办的，是梦背后那件没处理完的事。',
+    '<p><b>怎么理解这个梦？</b>把上面的断语拆成两半看：前半是老辈传下来的寓意（图个心安、图个提醒），后半多半已经点到了你现实里的对应事——钱、家、人、压力，总有一件对得上号。对得上号的那件，就是这个梦真正在催你处理的事。</p>'+
+    '<p><b>醒来该做什么？</b>别急着到处问吉凶。先想三秒：最近哪件事最让我惦记？如果和断语说的对上了，今天就把那件事往前推一小步——打个电话、列个清单、约个检查，比再解十个梦都管用。连着三晚做同一个梦，更说明它在催你，别拖了。</p>'+
+    jdDeep('梦好比大脑夜里给你留的一张字条：白天太忙没顾上想的事，夜里它替你写下来贴在门上。字条上的画（梦象）是密码，真正的内容永远是那件白天没处理完的事——解梦就是把密码翻成「明天要办的那件小事」。',
+     ['醒后五分钟内，把梦里最清楚的一个画面和当时的心情各记一句——超过五分钟，细节就跑光了，只剩情绪。',
+      '把断语里点到的现实事项（钱、家、人、健康、压力）逐个对号：对得上号的那件，就是这张字条的正文。',
+      '今天就为那件事做一个最小动作：一个电话、一次预约、一个清单——做了，今晚的梦多半就换片了。'],
+     '到处找人把梦解成「大富大贵」或「大祸临头」来吓自己或哄自己——梦没有那么大的权力，它只是你自己的心事在敲门，听懂了、办了，它就不敲了。'),'解梦 · '+hk));}
+  else{show("jmResult",'<p>「'+esc(key)+'」不在常见梦象库里。换个更核心的词试试——比如梦里的人（死人、小孩）、物（蛇、水、钱、车）、动作（飞、追赶、掉牙），或点上方常见梦象。</p>');}
+}
+$("jmBtn").addEventListener("click",dreamGo);
+
+/* ================= 八宅风水 ================= */
+var FS_TABLE={ /* 命卦 -> {吉方..., 凶方...} 方向键: 北 东北 东 东南 南 西南 西 西北 */
+ "坎":{生气:"东南",天医:"东",延年:"南",伏位:"北",绝命:"西南",五鬼:"西北",六煞:"西",祸害:"东北"},
+ "离":{生气:"东",天医:"东南",延年:"北",伏位:"南",绝命:"西北",五鬼:"东北",六煞:"西南",祸害:"西"},
+ "震":{生气:"南",天医:"北",延年:"东南",伏位:"东",绝命:"西",五鬼:"西南",六煞:"西北",祸害:"东北"},
+ "巽":{生气:"北",天医:"南",延年:"东",伏位:"东南",绝命:"东北",五鬼:"西",六煞:"西南",祸害:"西北"},
+ "乾":{生气:"西南",天医:"东北",延年:"西",伏位:"西北",绝命:"南",五鬼:"东南",六煞:"东",祸害:"北"},
+ "坤":{生气:"西北",天医:"西",延年:"东北",伏位:"西南",绝命:"北",五鬼:"东",六煞:"东南",祸害:"南"},
+ "艮":{生气:"西",天医:"西北",延年:"西南",伏位:"东北",绝命:"东南",五鬼:"南",六煞:"北",祸害:"东"},
+ "兑":{生气:"东北",天医:"西南",延年:"西北",伏位:"西",绝命:"东",五鬼:"北",六煞:"南",祸害:"东南"}};
+var FS_FLY=(function(){
+  var stars={9:["九紫右弼","吉 · 喜庆、桃花、添丁、名声",1],5:["五黄廉贞","大凶 · 灾病、意外、破财",-2],7:["七赤破军","凶 · 破财、盗失、口舌手术",-1],8:["八白左辅","大吉 · 正财、地产、家业",2],1:["一白贪狼","吉 · 人缘、桃花、偏财、智慧",1],3:["三碧禄存","凶 · 是非、官非、争吵",-1],4:["四绿文曲","半吉 · 文昌、考试、桃花",1],6:["六白武曲","吉 · 官运、偏财、贵人",1],2:["二黑巨门","凶 · 病符、肠胃、妇科",-1]};
+  var layout=[[4,9,2],[3,5,7],[8,1,6]]; /* 飞星盘格位 -> 星数：用九宫格位映射方位 */
+  var posStar={0:9,1:5,2:7,3:8,4:1,5:3,6:4,7:6,8:2};
+  var posDir=["东南","正南","西南","正东","中央","正西","东北","正北","西北"];
+  var cells="";
+  for(var i=0;i<9;i++){
+    var sn=posStar[i], st=stars[sn];
+    var col=st[2]>=1?"var(--pine)":st[2]<=-1?"var(--cinnabar)":"var(--ink2)";
+    cells+='<div class="qm-cell" style="min-height:86px"><div class="xing" style="color:'+col+'">'+st[0]+'</div><div style="font-size:12.5px;color:var(--ink2)">'+st[1]+'</div><span class="gong">'+posDir[i]+'</span></div>';
+  }
+  return '<div class="qimen-grid">'+cells+'</div>'+
+  '<p><b>2026 年（一白入中）这样用：</b><span class="good">东南九紫</span>主喜庆桃花——想催婚、添丁、增人气，在东南角放红色、绿色植物与喜庆物；<span class="good">正东八白</span>是今年正财位——保持明亮整洁，放保险柜、聚宝盆类物件最合；<span class="hl">正南五黄</span>是今年最凶的方位——忌动土、忌红色火物、忌久坐久睡在此，挂铜铃或放铜器静化；<span class="hl">西北二黑</span>主病符——老人卧室、病人房间避开此方，葫芦与安静素色可缓；正北六白主官运偏财，利书房与办公位朝北取用。</p>'+
+  '<p class="muted">飞星每年一换（立春为界）：这是 2026 丙午年的全屋图，人人通用；和你上面的命卦吉凶方叠加看——两边都吉的方位优先用，两边都凶的方位能避则避，一吉一凶时以命卦（跟人走一辈子）为主、飞星（一年天气）为辅。</p>';
+})();
+$("fsBtn").addEventListener("click",function(){
+  var year=parseInt($("fsYear").value,10), sex=$("fsSex").value;
+  if(!year){show("fsResult","<p>先填出生年份。</p>");return;}
+  var s=String(year).split("").reduce(function(a,c){return a+ +c;},0);
+  while(s>9)s=String(s).split("").reduce(function(a,c){return a+ +c;},0);
+  var num;
+  if(sex==="男") num=year<2000?mod(11-s,9):mod(9-s,9);
+  else num=year<2000?mod(s+4,9):mod(s+6,9);
+  if(num===0)num=9;
+  var guaName={1:"坎",2:"坤",3:"震",4:"巽",6:"乾",7:"兑",8:"艮",9:"离"}[num===5?(sex==="男"?2:8):num];
+  var east4=["坎","离","震","巽"].indexOf(guaName)>=0;
+  var t=FS_TABLE[guaName];
+  var dirs=["北","东北","东","东南","南","西南","西","西北"];
+  var rev={}; for(var k in t) rev[t[k]]=k;
+  var cells=dirs.map(function(dn){
+    var kind=rev[dn], good=["生气","天医","延年","伏位"].indexOf(kind)>=0;
+    return '<div class="cell"><div class="k">'+dn+'方</div><div class="v" style="color:var(--'+(good?"pine":"cinnabar")+')">'+kind+'</div></div>';
+  }).join("");
+  show("fsResult",
+   '<p><span class="big">'+guaName+'命</span> · '+(east4?"东四命":"西四命")+'　（'+year+' 年生，'+sex+'命）</p>'+
+   '<div class="kv">'+cells+'</div>'+
+   '<p><b>这样摆最旺你：</b>床头、书桌朝向优先选 <span class="good">生气方（'+t["生气"]+'，主活力财运）</span> 与 <span class="good">延年方（'+t["延年"]+'，主人际感情）</span>；久坐办公朝 <span class="good">天医方（'+t["天医"]+'，主健康贵人）</span>；大门、灶口、卫生间尽量别压在 <span class="hl">绝命方（'+t["绝命"]+'）</span> 与 <span class="hl">五鬼方（'+t["五鬼"]+'）</span>，压不住时以整洁、明亮、常通风化解。</p>'+
+   '<p class="muted">'+(east4?"东四命宜居东四宅：大门朝北、东、南、东南的房子更合。":"西四命宜居西四宅：大门朝西、西北、西南、东北的房子更合。")+'命卦以人论吉凶，同一屋里人各有命，取舍先紧着常住者与户主。</p>'+
+   jiedu('你属'+guaName+'命（'+(east4?"东四命":"西四命")+'），说白了就是：你这个人有四个「充电方向」和四个「漏电方向」——常待在充电方向，你就顺；久压在漏电方向，就容易累、容易不顺。',
+    '<div class="howto"><b>八个词一次讲清：</b><b>生气</b>=最旺你的方向，管活力和财运；<b>天医</b>=养你的方向，管健康和贵人；<b>延年</b>=和气方向，管人际和感情；<b>伏位</b>=本位方向，管稳定和守成。这四个是吉方。<b>绝命</b>=最冲你的方向，<b>五鬼</b>=易招是非破财，<b>六煞</b>=易生口舌桃花纠纷，<b>祸害</b>=易生小病小灾。这四个是凶方，能避则避。</div>'+
+    '<ul><li><b>睡觉：</b>床头朝生气方（'+t["生气"]+'）或延年方（'+t["延年"]+'），睡醒最解乏。</li><li><b>办公学习：</b>书桌朝天医方（'+t["天医"]+'），久坐不累、思路清。</li><li><b>没法改的：</b>大门、灶、卫生间要是正压在绝命（'+t["绝命"]+'）或五鬼（'+t["五鬼"]+'）上，搬不动就保持那块干净、明亮、常通风，老辈说的「化解」多半就是这个理——别让凶方再添乱（杂物、阴暗、异味）。</li><li><b>一家人命卦不同怎么办？</b>先紧户主和常住的人，卧室各按各的命摆，客厅取大家的交集吉方，不必全家统一。</li></ul>','风水 · '+guaName+'命')+'<h3>附：2026 流年九宫飞星（全屋通用）</h3>'+FS_FLY);
+});
+
+/* ================= 面相 手相 ================= */
+var FACE_TXT={
+ fore:{"宽阔饱满":"天庭饱满，早年运佳、得长辈缘，思虑有格局。","窄而低平":"额窄主早年辛苦，靠后天努力补，多在三十后发力。","高耸突出":"主见极强、少年得志，防固执碰壁。","有川字纹":"思虑重、操心命，劳心者多成事，注意舒压。"},
+ brow:{"浓而顺长":"眉顺主兄弟朋友缘厚，性情稳重。","淡而稀疏":"眉淡主人情淡泊，独立自给，财宜守。","眉尾下垂":"性温和、好说话，防被人情拖累钱财。","一字粗眉":"性格刚硬、重义气，合伙做事宜先小人后君子。"},
+ eye:{"细长凤眼":"眼细长主深谋远虑，贵气内藏，中年后发力。","圆大明亮":"眼大主坦率热情，人缘佳，防冲动消费。","眼尾上扬":"有野心与魄力，事业心强，感情上占主导。","目光沉静内敛":"心性沉稳、藏得住事，是能成大事的定力。"},
+ nose:{"高挺鼻头有肉":"鼻为财帛宫：挺而肉厚主财库充实，四十前后财运最旺。","低平小巧":"财来平缓，宜积少成多，投资忌跟风。","鼻翼宽厚":"能挣也能容，财散人聚，适合做生意聚人气。","鹰钩鼻":"精明算计、嗅觉灵敏，商场是好手，人情上宜厚道三分。"},
+ mouth:{"唇厚有棱角":"重情守信，口福佳，说话算数。","薄唇":"反应快、善辩，防言多招失，签约场合多留神。","嘴角上扬":"天生笑面，人缘财缘俱佳，晚运尤好。","唇色红润饱满":"气血足、福气厚，衣食无忧之相。"},
+ chin:{"圆润宽厚":"地阁方圆，晚运隆昌、家宅安稳。","尖细":"晚年宜防孤，年轻时就培养长久的兴趣和朋友。","方正有力":"意志坚定，扛得住事，晚景有权威感。","双下巴":"福相，能享口福与子孙福，体重顺带管一管更好。"}};
+var HAND_TXT={
+ life:{"长而深，弧度大":"生命线长深：体力充沛、精力旺，弧度大主活动范围广、爱折腾。","短而浅":"线短不等于寿短，主这段时期体质偏弱，作息补上就是。","中途有断纹":"断处主一段变动（迁徙、转行、休整），断而续接主能衔接上。","环绕拇指根部紧":"活动圈偏小、恋家，宜主动扩大交际与视野。"},
+ wisdom:{"长直伸向小指下方":"智慧线长直：理性务实、逻辑强，宜理工财经。","向下弯向手腕":"线下弯：感性想象力丰富，宜文艺创意，心思细腻易多虑。","短，只到中指下方":"反应快、决断速，宜快节奏行业，防耐心不足。","与生命线起点分开":"大胆独立、离乡发展之相，少年即有主见。"},
+ heart:{"止于食指与中指之间":"感情线落点最佳：感情理性与感性平衡，婚姻多稳。","止于中指下方":"重欲重实际，爱要落实到行动，防忽略对方感受。","止于食指下方":"理想主义、重精神共鸣，择偶标准高，宁缺毋滥。","链状多碎纹":"感情多波折、心软易感，宜晚婚、宜先立业。"}};
+$("xsBtn").addEventListener("click",function(){
+  var parts=[];
+  parts.push("<p><b>额头（官禄宫）：</b>"+FACE_TXT.fore[$("xsFore").value]+"</p>");
+  parts.push("<p><b>眉（兄弟宫）：</b>"+FACE_TXT.brow[$("xsBrow").value]+"</p>");
+  parts.push("<p><b>眼（监察宫）：</b>"+FACE_TXT.eye[$("xsEye").value]+"</p>");
+  parts.push("<p><b>鼻（财帛宫）：</b>"+FACE_TXT.nose[$("xsNose").value]+"</p>");
+  parts.push("<p><b>嘴（出纳宫）：</b>"+FACE_TXT.mouth[$("xsMouth").value]+"</p>");
+  parts.push("<p><b>下巴（奴仆宫/晚运）：</b>"+FACE_TXT.chin[$("xsChin").value]+"</p>");
+  parts.push("<h3>手相三线</h3>");
+  parts.push("<p><b>生命线：</b>"+HAND_TXT.life[$("xsLife").value]+"</p>");
+  parts.push("<p><b>智慧线：</b>"+HAND_TXT.wisdom[$("xsWisdom").value]+"</p>");
+  parts.push("<p><b>感情线：</b>"+HAND_TXT.heart[$("xsHeart").value]+"</p>");
+  var QS={"宽阔饱满":9,"窄而低平":5,"高耸突出":7,"有川字纹":6,"浓而顺长":8,"淡而稀疏":5,"眉尾下垂":6,"一字粗眉":7,"细长凤眼":9,"圆大明亮":8,"眼尾上扬":8,"目光沉静内敛":9,"高挺鼻头有肉":9,"低平小巧":5,"鼻翼宽厚":8,"鹰钩鼻":7,"唇厚有棱角":8,"薄唇":6,"嘴角上扬":9,"唇色红润饱满":9,"圆润宽厚":9,"尖细":4,"方正有力":8,"双下巴":8,"长而深，弧度大":9,"短而浅":5,"中途有断纹":6,"环绕拇指根部紧":6,"长直伸向小指下方":8,"向下弯向手腕":7,"短，只到中指下方":6,"与生命线起点分开":8,"止于食指与中指之间":9,"止于中指下方":6,"止于食指下方":7,"链状多碎纹":4};
+  function qs(v){return QS[v]||6;}
+  var dims=[["事业运",Math.round((qs($("xsFore").value)+qs($("xsBrow").value)+qs($("xsEye").value))/3)],
+   ["财运",Math.round((qs($("xsNose").value)+qs($("xsMouth").value))/2)],
+   ["感情运",Math.round((qs($("xsHeart").value)+qs($("xsMouth").value))/2)],
+   ["健康运",Math.round((qs($("xsLife").value)+qs($("xsChin").value))/2)],
+   ["福气晚运",Math.round((qs($("xsChin").value)+qs($("xsFore").value)+qs($("xsWisdom").value))/3)]];
+  parts.push("<h3>五维评分（按你选的形态综合）</h3>"+dims.map(function(dm){return '<div class="wxbar"><span style="width:auto">'+dm[0]+'</span><div class="bar"><div class="fill" style="width:'+(dm[1]*10)+'%;background:var(--gold)"></div></div><span>'+dm[1]+' / 10</span></div>';}).join("")+
+   '<p>最高的一项是你天生的长板，最低的一项是你最该留心的短板——'+dims.slice().sort(function(a,b){return b[1]-a[1];})[0][0]+'最强，'+dims.slice().sort(function(a,b){return a[1]-b[1];})[0][0]+'最弱。相术的用法从来不是认命：长板往死里用，短板提前防。</p>');
+  parts.push('<p class="muted">相不独论：五官要互相照应，三线要合看。此断按你所选单项直断，供自己照镜子时参详，相由心生，境随心转。</p>');
+  parts.push(jiedu('把你选的这些拼起来看，说白了你给人的整体印象是：'+FACE_TXT.eye[$("xsEye").value]+'再配上这副鼻相——'+FACE_TXT.nose[$("xsNose").value],
+   '<div class="howto"><b>面相的「宫」到底是什么？</b>就是脸上分工不同的地盘：<b>额头管早年和事业运</b>（官禄宫），<b>眉毛管朋友兄弟缘</b>，<b>眼睛管心性和监察力</b>，<b>鼻子管钱财</b>（财帛宫，所以鼻子有肉常说有财），<b>嘴管说话和福气出口</b>，<b>下巴管晚年和家宅</b>。年轻看额头，中年看鼻子，晚年看下巴，大致就是这个顺序。</div>'+
+   '<p><b>手相三线再说人话一遍：</b>生命线不是看寿命长短，是看你的<b>体力和折腾劲儿</b>——'+HAND_TXT.life[$("xsLife").value]+'智慧线看你<b>是理性脑还是感性脑</b>——'+HAND_TXT.wisdom[$("xsWisdom").value]+'感情线看你<b>谈感情的方式</b>——'+HAND_TXT.heart[$("xsHeart").value]+'</p>'+
+   '<p><b>最后一句最要紧：</b>相由心生不是鸡汤——一个人常年想什么、做什么，肌肉走向和精气神真的会变，十年前后的照片就是证据。所以这份断语当性格说明书看最准：长处照着发挥，短处（每条断语后半句多半就是）留个心眼去改，改着改着，相也就跟着变了。</p>','面相手相 · 综合'));
+  show("xsResult",parts.join(""));
+});
+</script>
+<script>
+"use strict";
+/* ================= 黄帝内经 · 五运六气推算 ================= */
+var NJ_WUYUN={0:["土","太过"],1:["金","不及"],2:["水","太过"],3:["木","不及"],4:["火","太过"],5:["土","不及"],6:["金","太过"],7:["水","不及"],8:["木","太过"],9:["火","不及"]};
+var NJ_SITIAN={0:["少阴君火","火","阳明燥金","金"],1:["太阴湿土","土","太阳寒水","水"],2:["少阳相火","火","厥阴风木","木"],3:["阳明燥金","金","少阴君火","火"],4:["太阳寒水","水","太阴湿土","土"],5:["厥阴风木","木","少阳相火","火"],6:["少阴君火","火","阳明燥金","金"],7:["太阴湿土","土","太阳寒水","水"],8:["少阳相火","火","厥阴风木","木"],9:["阳明燥金","金","少阴君火","火"],10:["太阳寒水","水","太阴湿土","土"],11:["厥阴风木","木","少阳相火","火"]};
+var NJ_ORGAN={"木":["肝","胆","筋、眼、怒"],"火":["心","小肠","血脉、舌、喜"],"土":["脾","胃","肌肉、口、思"],"金":["肺","大肠","皮毛、鼻、悲"],"水":["肾","膀胱","骨、耳、恐"]};
+var NJ_MERIDIAN=["胆经","肝经","肺经","大肠经","胃经","脾经","心经","小肠经","膀胱经","肾经","心包经","三焦经"];
+var NJ_MERIDIAN_WX={"胆经":"木","肝经":"木","肺经":"金","大肠经":"金","胃经":"土","脾经":"土","心经":"火","小肠经":"火","膀胱经":"水","肾经":"水","心包经":"火","三焦经":"火"};
+var NJ_SEASON_BY_MD=[[1,1,"冬"],[2,4,"春"],[5,5,"夏"],[6,6,"夏"],[7,15,"长夏"],[8,7,"秋"],[11,7,"冬"]];
+function njSeasonOf(date){
+  var m=date.getMonth()+1,d=date.getDate(),s="冬";
+  var cuts=[[2,4,"春"],[5,5,"夏"],[7,15,"长夏"],[8,7,"秋"],[11,7,"冬"],[12,31,"冬"]];
+  for(var i=0;i<cuts.length;i++){if(m>cuts[i][0]||(m===cuts[i][0]&&d>=cuts[i][1]))s=cuts[i][2];}
+  if(m===1)s="冬";
+  return s;
+}
+var NJ_SEASON_WX={"春":"木","夏":"火","长夏":"土","秋":"金","冬":"水"};
+var NJ_SEASON_TXT={
+ "春":{classic:"春三月，此谓发陈，天地俱生，万物以荣。夜卧早起，广步于庭，被发缓形，以使志生。——《素问·四气调神大论》",plain:"春天是往外生发的季节：晚点睡、早点起，多出门走走，心情和志向都要舒展，别闷着、别压抑。",eat:"多吃芽菜、韭菜、香椿等带生发之气的青菜，少酸多甘护脾。",sleep:"可比冬天晚睡一点，早起迎阳气，别睡懒觉睡过头。",move:"多散步、拉伸、郊游，让筋骨像树枝一样舒展开。",mind:"少生怒气，怒伤肝；多给人赞许，自己也别较劲。"},
+ "夏":{classic:"夏三月，此谓蕃秀，天地气交，万物华实。夜卧早起，无厌于日，使志无怒，使华英成秀。——《素问·四气调神大论》",plain:"夏天是生长最旺的季节：天长，可以晚睡早起，适当晒太阳、出出汗，把能量释放出来，但别暴怒、别贪凉。",eat:"清淡为主，苦瓜、绿豆、莲子清心火；冷饮适可而止，贪凉最伤脾胃阳气。",sleep:"晚睡早起，中午小睡二十分钟补心，是内经最推崇的夏日睡法。",move:"清晨或傍晚运动，微微出汗即可，大汗淋漓反而耗气伤津。",mind:"忌暴怒与烦躁，心火旺时先喝水、慢呼吸，再开口。"},
+ "长夏":{classic:"脾者土也，治中央。长夏善病洞泄寒中。湿伤肉，风胜湿。——《素问·阴阳应象大论》节意",plain:"夏秋之交湿气最重，管事的是脾：最容易没胃口、肚子胀、身体沉。这一季的功课就四个字：祛湿健脾。",eat:"山药、薏米、茯苓、白扁豆、陈皮轮着吃；忌生冷、油腻、甜腻，那些最生湿。",sleep:"别睡在潮湿的地面和风口，午睡别太久，越睡越沉就是湿困脾。",move:"坚持动起来微微出汗，湿随汗出；久坐一小时起身三分钟。",mind:"少思虑，思伤脾；事情列成清单一件件办，别在脑子里反复盘。"},
+ "秋":{classic:"秋三月，此谓容平，天气以急，地气以明。早卧早起，与鸡俱兴，使志安宁，以缓秋刑，收敛神气。——《素问·四气调神大论》",plain:"秋天是往回收的季节：早睡早起，把夏天外放的精气神收回来，情绪放平，别悲秋、别折腾。",eat:"多吃梨、百合、银耳、芝麻等润燥之物，辛辣烧烤收一收，燥上加燥最伤肺。",sleep:"早睡是秋天第一要务，睡早了，肺气才养得住。",move:"运动量比夏天收一点，以舒缓为主，大汗之后避风，秋风最易袭肺。",mind:"忌悲忧，悲伤肺；多晒太阳、多和老友聊天，把心气提起来。"},
+ "冬":{classic:"冬三月，此谓闭藏，水冰地坼，无扰乎阳。早卧晚起，必待日光，使志若伏若匿，去寒就温，无泄皮肤。——《素问·四气调神大论》",plain:"冬天是闭藏的季节：早睡晚起、等太阳出来再活动，保暖藏精，别大汗、别熬夜、别把阳气往外泄。",eat:"适当吃羊肉、核桃、黑芝麻、桂圆等温补之物，但别补过头上火；萝卜顺气可配着吃。",sleep:"早睡晚起是正经养生，冬天多睡不是懒，是顺应闭藏。",move:"运动避开清晨严寒，等日出后；以不出大汗为度，藏比练重要。",mind:"情绪内收，少做大决定、少起大波澜，把计划留到春天再发。"}};
+function njQiStep(date){
+  var m=date.getMonth()+1,d=date.getDate();
+  var md=m*100+d;
+  var steps=[[120,"初之气","厥阴风木","木"],[321,"二之气","少阴君火","火"],[522,"三之气","少阳相火","火"],[723,"四之气","太阴湿土","土"],[923,"五之气","阳明燥金","金"],[1122,"终之气","太阳寒水","水"]];
+  var cur=steps[5];
+  for(var i=0;i<steps.length;i++){if(md>=steps[i][0])cur=steps[i];}
+  if(md<120)cur=steps[5];
+  var idx=steps.indexOf(cur);
+  return {name:cur[1],zhu:cur[2],wx:cur[3],idx:idx};
+}
+var NJ_WEAK_FIX={"木":"木弱（肝胆、筋骨偏弱）：多吃绿色蔬菜与酸味适度的食物，早睡养肝血，少熬夜，遇事少憋气。","火":"火弱（心阳、气色偏弱）：多晒太阳，适当吃红豆、红枣、桂圆，心情放开朗，运动以微微发热为好。","土":"土弱（脾胃偏弱）：这是最常见的短板——山药、小米、南瓜、茯苓轮着吃，饭吃七分饱，少生冷甜腻，思虑别过头。","金":"金弱（肺与皮毛偏弱）：多吃梨、白萝卜、百合、银耳，深呼吸练肺活量，秋冬护住脖子和后背别受风。","水":"水弱（肾与精力偏弱）：早睡是第一补药，再加黑芝麻、黑豆、核桃，节制熬夜与纵欲，腰腿注意保暖。"};
+var NJ_STRONG_WARN={"木":"木太旺：肝气容易过盛——脾气急、胁胀、睡不沉。要点是疏泄：多运动出汗、少饮酒、睡前别刷手机动肝火。","火":"火太旺：心火容易过盛——心烦、口疮、失眠。要点是清降：苦瓜莲子绿豆适度，别大补，别熬夜赶工。","土":"土太旺：湿气容易困脾——身体沉、胃口呆、痰多。要点是运化：少甜腻生冷，多走路出汗，把湿排出去。","金":"金太旺：燥气容易过盛——干咳、皮肤干、便秘。要点是润养：多喝水吃润燥之物，少辛辣燥热。","水":"水太旺：寒湿容易偏盛——怕冷、腰酸、水肿。要点是温通：保暖、晒背、适当温补，别贪凉。"};
+var NJ_KEQI_ORDER=["厥阴风木","少阴君火","太阴湿土","少阳相火","阳明燥金","太阳寒水"];
+var NJ_KEQI_WX={"厥阴风木":"木","少阴君火":"火","太阴湿土":"土","少阳相火":"火","阳明燥金":"金","太阳寒水":"水"};
+var NJ_FOOD={
+ "木":{eat:"菠菜、芹菜、韭菜、枸杞、酸枣仁、桑葚",avoid:"过量饮酒、熬夜、生闷气憋着不说",move:"清晨拉伸、八段锦、快走——肝主筋，动则筋柔气顺"},
+ "火":{eat:"红豆、红枣、桂圆、莲子（带芯更清心）、苦瓜（清多余的火）",avoid:"大寒大凉猛压心阳、长期情绪压抑不表达",move:"晒太阳、太极、慢跑微微发热——心阳要靠动和光养"},
+ "土":{eat:"山药、小米、南瓜、茯苓、薏米、白扁豆、陈皮",avoid:"生冷、甜腻、油腻、暴饮暴食、边吃边想事",move:"饭后百步走、揉腹、八段锦「调理脾胃须单举」"},
+ "金":{eat:"梨、白萝卜、百合、银耳、杏仁、蜂蜜",avoid:"辛辣燥热、烟酒、干燥环境久待不喝水",move:"深呼吸、扩胸、登高望远——肺主气，气展则金强"},
+ "水":{eat:"黑芝麻、黑豆、核桃、桑葚、山药、枸杞",avoid:"熬夜、纵欲、久坐伤腰、贪凉饮冷",move:"站桩、踮脚、腰部保暖——肾气靠藏，冬天尤其要藏"}};
+function njCalc(){
+  var bDate=parseDate($("njBirthDate").value);
+  var qDate=parseDate($("njQueryDate").value)||new Date();
+  if(!bDate){show("njResult","<p>先填出生日期，内经推体质全靠它起盘。</p>");return;}
+  var bt=parseTime($("njBirthTime").value), qt=parseTime($("njQueryTime").value);
+  var bHB=hourBranch(bt[0]), qHB=hourBranch(qt[0]);
+  var byp=yearPillar(bDate), qyp=yearPillar(qDate);
+  var bGan=byp.idx%10, bZhi=byp.idx%12, qGan=qyp.idx%10, qZhi=qyp.idx%12;
+  var wuyun=NJ_WUYUN[bGan], sitian=NJ_SITIAN[bZhi];
+  var bSeason=njSeasonOf(bDate), bSeasonWx=NJ_SEASON_WX[bSeason];
+  var bMeridian=NJ_MERIDIAN[bHB], bMeridianWx=NJ_MERIDIAN_WX[bMeridian];
+  var score={"木":0,"火":0,"土":0,"金":0,"水":0};
+  score[wuyun[0]]+=3; score[sitian[1]]+=2; score[sitian[3]]+=1; score[bSeasonWx]+=2; score[bMeridianWx]+=1; score[DZ_WX[bZhi]]+=1;
+  var sorted=WXN.slice().sort(function(a,b){return score[b]-score[a];});
+  var strong=sorted[0], weak=sorted[sorted.length-1];
+  var strong2=sorted[1];
+  var qwuyun=NJ_WUYUN[qGan], qSitian=NJ_SITIAN[qZhi], qStep=njQiStep(qDate);
+  var seasonSel=$("njSeason").value;
+  var season=seasonSel==="auto"?njSeasonOf(qDate):seasonSel;
+  var seasonWx=NJ_SEASON_WX[season], sTxt=NJ_SEASON_TXT[season];
+  var qMeridian=NJ_MERIDIAN[qHB];
+  /* 客气：以查询年司天定三之气，六气循环推当前步 */
+  var sitianIdx=NJ_KEQI_ORDER.indexOf(qSitian[0]);
+  var keqiName=NJ_KEQI_ORDER[mod(sitianIdx+(qStep.idx-2),6)], keqiWx=NJ_KEQI_WX[keqiName];
+  var keqiRel=keqiWx===qStep.wx?"客主同气：这一段气候纯粹、特征鲜明，该季的养生要点照着做最见效。":mod(wxIdx(keqiWx)+1,5)===wxIdx(qStep.wx)?"客气生主气：天帮忙——这一段外界气候在给当令之气送力，身体顺应起来不费劲，宜趁这段把调养习惯立住。":mod(wxIdx(qStep.wx)+1,5)===wxIdx(keqiWx)?"主气生客气：身体要多耗一点去适应气候，宜减负、早休息，别在这段硬上强度。":mod(wxIdx(keqiWx)+2,5)===wxIdx(qStep.wx)?"客气克主气（不相得）：这一段气候和时令「打架」，天气易反常、身体易不适——感冒、过敏、旧疾波动多在这时，提前防护。":"主气克客气：时令占上风，气候大体正常，偶有小反复，按季节常规养生即可。";
+  /* 当下运气与体质的关系 */
+  var relTxt="";
+  if(qwuyun[0]===strong) relTxt="今年岁运「"+qwuyun[0]+"运"+qwuyun[1]+"」正撞上你最旺的"+strong+"——旺上加旺，今年最要防的是"+strong+"过头（看下面「太旺提醒」），顺势做事可以，但别把油门踩到底。";
+  else if(mod(wxIdx(qwuyun[0])+1,5)===wxIdx(strong)) relTxt="今年岁运「"+qwuyun[0]+"运」生你最旺的"+strong+"——外面的大气候在给你输血，今年是你发力做事的好年份，计划可以往大里排。";
+  else if(mod(wxIdx(strong)+1,5)===wxIdx(qwuyun[0])) relTxt="今年岁运「"+qwuyun[0]+"运」被你的"+strong+"所生——今年是你往外输出、帮人、做事的年份，付出多，量力而行，别把自己掏空。";
+  else if(mod(wxIdx(qwuyun[0])+2,5)===wxIdx(strong)) relTxt="今年岁运「"+qwuyun[0]+"运」克你的"+strong+"——你最强的那块今年被大气候压着，做事阻力偏大，宜守成、宜体检，别在今年硬上最大的项目。";
+  else relTxt="你最旺的"+strong+"克今年岁运「"+qwuyun[0]+"运」——今年你相对主动、能拿捏局面，但忌仗着主动欺人太甚，顺势收分寸最稳。";
+  var bars=WXN.map(function(w){
+    var pct=Math.round(score[w]/10*100);
+    var col={"木":"#4a7c59","火":"#b03a2e","土":"#a87b23","金":"#8a8f6a","水":"#31586e"}[w];
+    return '<div class="wxbar"><span>'+w+'</span><div class="bar"><div class="fill" style="width:'+pct+'%;background:'+col+'"></div></div><span>'+score[w]+' 分</span></div>';
+  }).join("");
+  var stepsHtml='<h3>推算过程 · 一步一步算给你看</h3><div class="steps">'+
+   '<div class="step"><span class="n">1</span><div><span class="t">出生年干 → 定岁运（先天大气候）。</span><div class="formula">出生年干支 '+fmtGZ(bGan,bZhi)+' → 天干「'+TG[bGan]+'」查五运配法（甲己土、乙庚金、丙辛水、丁壬木、戊癸火）</div><span class="f">得：</span><span class="r">'+wuyun[0]+'运 · '+wuyun[1]+'</span><span class="f">。阳干为太过（这股气偏强）、阴干为不及（偏弱）。这是你出生那年天地的「主旋律」，给你体质记 +3 分到'+wuyun[0]+'。</span></div></div>'+
+   '<div class="step"><span class="n">2</span><div><span class="t">出生年支 → 定司天、在泉（先天上下半场）。</span><div class="formula">年支「'+DZ[bZhi]+'」查司天表 → 司天：'+sitian[0]+'（'+sitian[1]+'）；在泉：'+sitian[2]+'（'+sitian[3]+'）</div><span class="f">司天管上半年之气、在泉管下半年，出生时这两股气最盛：司天给'+sitian[1]+'记 +2 分，在泉给'+sitian[3]+'记 +1 分。</span></div></div>'+
+   '<div class="step"><span class="n">3</span><div><span class="t">出生季节 → 定先天最受滋养的脏腑。</span><div class="formula">出生在 '+bSeason+'季 → '+bSeason+'气通于'+NJ_ORGAN[bSeasonWx][0]+'（'+bSeasonWx+'）</div><span class="f">春养肝、夏养心、长夏养脾、秋养肺、冬养肾。你在'+bSeason+'季出生，'+NJ_ORGAN[bSeasonWx][0]+'这一系从小最得天时，给'+bSeasonWx+'记 +2 分。</span></div></div>'+
+   '<div class="step"><span class="n">4</span><div><span class="t">出生时辰 → 定经络根基（子午流注）。</span><div class="formula">出生 '+SHICHEN[bHB]+' → 此时 '+bMeridian+' 气血最旺</div><span class="f">十二时辰轮着养十二经：你出生时正赶上 '+bMeridian+' 当值，这条经是你先天的「强项经络」，给'+bMeridianWx+'记 +1 分；出生年支本气再给'+DZ_WX[bZhi]+'记 +1 分。</span></div></div>'+
+   '<div class="step"><span class="n">5</span><div><span class="t">五项分数相加 → 定体质偏向。</span><div class="formula">岁运(+3)＋司天(+2)＋在泉(+1)＋季节(+2)＋时辰经络(+1)＋年支本气(+1)，满分 10 分摊在五行上</div><span class="f">得分最高的是 </span><span class="r">'+strong+'（'+score[strong]+' 分）</span><span class="f">，其次 '+strong2+'（'+score[strong2]+' 分）；最低的是 </span><span class="r">'+weak+'（'+score[weak]+' 分）</span><span class="f">。最高定「偏旺的脏腑」，最低定「要补的短板」。</span></div></div>'+
+   '<div class="step"><span class="n">6</span><div><span class="t">合当下运气与季节 → 出建议。</span><div class="formula">查询年 '+fmtGZ(qGan,qZhi)+' → 岁运 '+qwuyun[0]+'运'+qwuyun[1]+' · 司天 '+qSitian[0]+'；查询日处 '+qStep.name+'，主气为 '+qStep.zhu+'；所查季节为 '+season+'季</div><span class="f">先天体质（不变）撞上当下运气（年年变），生克关系决定今年是顺风还是逆风；再按 '+season+'季的调神法给出吃、睡、动、情志四条建议。现在这个时辰（'+SHICHEN[qHB]+'）是 '+NJ_MERIDIAN[qHB]+' 当值，适合顺着它保养。</span></div></div></div>';
+  show("njResult",
+   '<p>你的体质底子：<span class="big hl">'+strong+'偏旺 · '+NJ_ORGAN[strong][0]+'强</span>，短板在 <span class="big">'+weak+' · '+NJ_ORGAN[weak][0]+'</span></p>'+bars+
+   '<div class="kv"><div class="cell"><div class="k">偏旺系统（'+strong+'）</div><div class="v">'+NJ_ORGAN[strong][0]+' / '+NJ_ORGAN[strong][1]+'</div></div>'+
+   '<div class="cell"><div class="k">偏弱系统（'+weak+'）</div><div class="v">'+NJ_ORGAN[weak][0]+' / '+NJ_ORGAN[weak][1]+'</div></div>'+
+   '<div class="cell"><div class="k">先天岁运</div><div class="v">'+wuyun[0]+'运'+wuyun[1]+'</div></div>'+
+   '<div class="cell"><div class="k">当下主气</div><div class="v">'+qStep.zhu+'</div></div></div>'+
+   stepsHtml+
+   '<h3>今年的大气候撞上你的体质</h3><p>'+relTxt+'</p>'+
+   '<p><b>客气加临（眼下这一段的实际气候）：</b>查询日处 '+qStep.name+'，主气是 '+qStep.zhu+'，今年的客气轮到 <b>'+keqiName+'</b>（'+keqiWx+'）压在上面。'+keqiRel+'</p>'+
+   '<p><b>太旺提醒（'+strong+'）：</b>'+NJ_STRONG_WARN[strong]+'</p>'+
+   '<p><b>补短板（'+weak+'）：</b>'+NJ_WEAK_FIX[weak]+'</p>'+
+   '<div class="season-grid"><div class="cell"><div class="k">弱脏（'+NJ_ORGAN[weak][0]+'）宜吃</div><div class="v" style="font-size:14.5px;font-weight:400">'+NJ_FOOD[weak].eat+'</div></div>'+
+   '<div class="cell"><div class="k">弱脏要避</div><div class="v" style="font-size:14.5px;font-weight:400">'+NJ_FOOD[weak].avoid+'</div></div>'+
+   '<div class="cell"><div class="k">弱脏宜动</div><div class="v" style="font-size:14.5px;font-weight:400">'+NJ_FOOD[weak].move+'</div></div></div>'+
+   '<h3>'+season+'季养生 · 按《四气调神大论》</h3>'+
+   '<div class="classic"><span class="src">内经原文</span><br/>'+sTxt.classic+'</div>'+
+   '<div class="season-grid">'+
+   '<div class="cell"><div class="k">吃</div><div class="v" style="font-size:14.5px;font-weight:400">'+sTxt.eat+'</div></div>'+
+   '<div class="cell"><div class="k">睡</div><div class="v" style="font-size:14.5px;font-weight:400">'+sTxt.sleep+'</div></div>'+
+   '<div class="cell"><div class="k">动</div><div class="v" style="font-size:14.5px;font-weight:400">'+sTxt.move+'</div></div>'+
+   '<div class="cell"><div class="k">情志</div><div class="v" style="font-size:14.5px;font-weight:400">'+sTxt.mind+'</div></div></div>'+
+   '<h3>此刻时辰 · 子午流注</h3><p>现在查的时辰是 <b>'+SHICHEN[qHB]+'</b>，气血正走到 <b>'+qMeridian+'</b>（属'+NJ_MERIDIAN_WX[qMeridian]+'，连着'+NJ_ORGAN[NJ_MERIDIAN_WX[qMeridian]][0]+'）。'+({"胆经":"适合收尾、做决定，别在此时纠结反复。","肝经":"肝经当值宜藏血——这个时辰最忌熬夜刷手机，睡着了肝才养得好。","肺经":"适合深呼吸、静坐，凌晨易醒多与肺气有关。","大肠经":"起床先喝温水、顺时排便，是这个时辰的正经事。","胃经":"早餐要吃好，胃经当值时吃进去的最养人。","脾经":"适合吃上午的正餐、动脑做事，思虑别过头。","心经":"午时养心，宜小睡片刻，忌剧烈运动和暴怒。","小肠经":"午后宜清淡、多喝水，帮助吸收分清浊。","膀胱经":"适合运动拉伸、多喝水排浊，后背晒晒太阳更好。","肾经":"傍晚养肾，宜收工、吃晚餐，别再透支。","心包经":"晚间宜放松娱乐、和家人聊天，忌再谈压力大的正事。","三焦经":"宜准备入睡，全身气机收拢，热水泡脚正合时。"})[qMeridian]+'</p>'+
+   '<p class="muted">说明：五运六气按通行配表推算（岁运以出生年干、司天在泉以年支、主气以节气分步），体质分数是本页把五项先天因素按权重相加的可解释算法，不是医院的体质辨识量表；身体真有不适，请就医，别拿养生建议当诊断。</p>'+
+   jiedu('你的体质，说白了就是：'+strong+'这一套（'+NJ_ORGAN[strong][0]+'、'+NJ_ORGAN[strong][1]+'）天生比较强，'+weak+'这一套（'+NJ_ORGAN[weak][0]+'）天生比较弱——养生不用面面俱到，盯住两件事就行：别让强的过头，常给弱的补课。',
+    '<p><b>为什么生日能算体质？</b>内经的逻辑是：人出生那一刻，天地间正流行一股「气」（哪年、哪季、哪个时辰，气都不同），这股气给你打了个底色，就像出生地的口音——后天能改，但底子一直在。上面六步就是把底色一层层拆开算：年管大气候，季管脏腑，时辰管经络。</p>'+
+    '<p><b>'+season+'季具体怎么过？</b>'+sTxt.plain+'</p>'+
+    '<p><b>今年顺不顺？</b>'+relTxt+'</p>'+
+    jdDoDont('按'+season+'季四条（吃、睡、动、情志）先做到两条，再针对'+weak+'（'+NJ_ORGAN[weak][0]+'）补短板；顺着时辰表，在 '+NJ_MERIDIAN[qHB]+' 当值时做对应的事。','旺季里把'+strong+'往过头催（大补、暴练、熬夜），或拿养生食疗代替看病——不舒服超过两周，先去医院。')+
+    jdDeep('内经讲体质，好比看一棵树的「土质报告」：'+strong+'旺是这块土里某种营养过剩，'+weak+'弱是某种营养缺货。养生不是把土全换掉，是缺的施肥、多的排水——动作不大，但要对着报告来，别听风就是雨地乱补一气。',
+     ['第一件事：把弱脏（'+NJ_ORGAN[weak][0]+'）的宜吃清单贴在冰箱上，本周先落地三样——吃对了，补短板就完成了一半。',
+      '第二件事：按'+season+'季的睡法调整作息一周（就一周，先试出感觉），睡眠是内经所有养生的地基，地基不对，食补都打折。',
+      '第三件事：盯住当下客气——现在是'+keqiName+'当令，'+(keqiWx===weak?'正压在你的弱脏上，这一段对弱脏格外留心：早防、早查、别硬扛。':'和你的弱脏不直接相冲，正常调养即可，把精力放在季节功课上。')],
+     '拿体质报告当诊断书、拿食疗单当药方——内经算的是倾向和节奏，身体真出了症状（持续两周以上、或来势急），第一站永远是医院，养生是给健康人调方向的，不是给病人治病的。'),'黄帝内经 · '+strong+'旺'+weak+'弱 · '+season+'季'));
+}
+$("njBtn").addEventListener("click",njCalc);
+$("njNowBtn").addEventListener("click",function(){
+  var now=new Date();
+  $("njQueryDate").value=now.toISOString().slice(0,10);
+  $("njQueryTime").value=("0"+now.getHours()).slice(-2)+":"+("0"+now.getMinutes()).slice(-2);
+  $("njSeason").value="auto";
+  njCalc();
+});
+(function(){var now=new Date();$("njQueryDate").value=now.toISOString().slice(0,10);$("njQueryTime").value=("0"+now.getHours()).slice(-2)+":"+("0"+now.getMinutes()).slice(-2);})();
+
+/* ================= 道德经 · 81 章 ================= */
+var DD_TEXT=[
+"道可道，非常道；名可名，非常名。无名，天地之始；有名，万物之母。故常无欲，以观其妙；常有欲，以观其徼。此两者同出而异名，同谓之玄。玄之又玄，众妙之门。",
+"天下皆知美之为美，斯恶已；皆知善之为善，斯不善已。故有无相生，难易相成，长短相形，高下相倾，音声相和，前后相随。是以圣人处无为之事，行不言之教；万物作焉而不辞，生而不有，为而不恃，功成而弗居。夫唯弗居，是以不去。",
+"不尚贤，使民不争；不贵难得之货，使民不为盗；不见可欲，使民心不乱。是以圣人之治，虚其心，实其腹，弱其志，强其骨。常使民无知无欲，使夫智者不敢为也。为无为，则无不治。",
+"道冲，而用之或不盈。渊兮，似万物之宗；挫其锐，解其纷，和其光，同其尘。湛兮，似或存。吾不知谁之子，象帝之先。",
+"天地不仁，以万物为刍狗；圣人不仁，以百姓为刍狗。天地之间，其犹橐龠乎？虚而不屈，动而愈出。多言数穷，不如守中。",
+"谷神不死，是谓玄牝。玄牝之门，是谓天地根。绵绵若存，用之不勤。",
+"天长地久。天地所以能长且久者，以其不自生，故能长生。是以圣人后其身而身先，外其身而身存。非以其无私邪？故能成其私。",
+"上善若水。水善利万物而不争，处众人之所恶，故几于道。居善地，心善渊，与善仁，言善信，政善治，事善能，动善时。夫唯不争，故无尤。",
+"持而盈之，不如其已；揣而锐之，不可长保。金玉满堂，莫之能守；富贵而骄，自遗其咎。功遂身退，天之道也。",
+"载营魄抱一，能无离乎？专气致柔，能如婴儿乎？涤除玄鉴，能无疵乎？爱国治民，能无为乎？天门开阖，能为雌乎？明白四达，能无知乎？生之畜之，生而不有，为而不恃，长而不宰，是谓玄德。",
+"三十辐共一毂，当其无，有车之用。埏埴以为器，当其无，有器之用。凿户牖以为室，当其无，有室之用。故有之以为利，无之以为用。",
+"五色令人目盲；五音令人耳聋；五味令人口爽；驰骋畋猎令人心发狂；难得之货令人行妨。是以圣人为腹不为目，故去彼取此。",
+"宠辱若惊，贵大患若身。何谓宠辱若惊？宠为下，得之若惊，失之若惊，是谓宠辱若惊。何谓贵大患若身？吾所以有大患者，为吾有身，及吾无身，吾有何患？故贵以身为天下，若可寄天下；爱以身为天下，若可托天下。",
+"视之不见，名曰夷；听之不闻，名曰希；搏之不得，名曰微。此三者不可致诘，故混而为一。其上不皦，其下不昧，绳绳兮不可名，复归于无物。是谓无状之状，无物之象，是谓惚恍。迎之不见其首，随之不见其后。执古之道，以御今之有。能知古始，是谓道纪。",
+"古之善为士者，微妙玄通，深不可识。夫唯不可识，故强为之容：豫兮若冬涉川；犹兮若畏四邻；俨兮其若客；涣兮其若冰之将释；敦兮其若朴；旷兮其若谷；混兮其若浊。谁能浊以静之徐清？谁能安以动之徐生？保此道者，不欲盈。夫唯不盈，故能蔽而新成。",
+"致虚极，守静笃。万物并作，吾以观复。夫物芸芸，各复归其根。归根曰静，静曰复命。复命曰常，知常曰明。不知常，妄作凶。知常容，容乃公，公乃王，王乃天，天乃道，道乃久，没身不殆。",
+"太上，不知有之；其次，亲而誉之；其次，畏之；其次，侮之。信不足焉，有不信焉。悠兮其贵言。功成事遂，百姓皆谓：我自然。",
+"大道废，有仁义；智慧出，有大伪；六亲不和，有孝慈；国家昏乱，有忠臣。",
+"绝圣弃智，民利百倍；绝仁弃义，民复孝慈；绝巧弃利，盗贼无有。此三者以为文不足，故令有所属：见素抱朴，少私寡欲，绝学无忧。",
+"唯之与阿，相去几何？美之与恶，相去若何？人之所畏，不可不畏。荒兮其未央哉！众人熙熙，如享太牢，如春登台。我独泊兮其未兆，如婴儿之未孩；儽儽兮若无所归。众人皆有余，而我独若遗。我愚人之心也哉！沌沌兮。俗人昭昭，我独昏昏；俗人察察，我独闷闷。澹兮其若海，飂兮若无止。众人皆有以，而我独顽似鄙。我独异于人，而贵食母。",
+"孔德之容，惟道是从。道之为物，惟恍惟惚。惚兮恍兮，其中有象；恍兮惚兮，其中有物。窈兮冥兮，其中有精；其精甚真，其中有信。自今及古，其名不去，以阅众甫。吾何以知众甫之状哉？以此。",
+"曲则全，枉则直，洼则盈，敝则新，少则得，多则惑。是以圣人抱一为天下式。不自见，故明；不自是，故彰；不自伐，故有功；不自矜，故长。夫唯不争，故天下莫能与之争。古之所谓曲则全者，岂虚言哉！诚全而归之。",
+"希言自然。故飘风不终朝，骤雨不终日。孰为此者？天地。天地尚不能久，而况于人乎？故从事于道者，同于道；德者，同于德；失者，同于失。同于道者，道亦乐得之；同于德者，德亦乐得之；同于失者，失亦乐得之。信不足焉，有不信焉。",
+"企者不立；跨者不行；自见者不明；自是者不彰；自伐者无功；自矜者不长。其在道也，曰：余食赘行。物或恶之，故有道者不居。",
+"有物混成，先天地生。寂兮寥兮，独立而不改，周行而不殆，可以为天下母。吾不知其名，字之曰道，强为之名曰大。大曰逝，逝曰远，远曰反。故道大，天大，地大，王亦大。域中有四大，而王居其一焉。人法地，地法天，天法道，道法自然。",
+"重为轻根，静为躁君。是以圣人终日行不离辎重。虽有荣观，燕处超然。奈何万乘之主，而以身轻天下？轻则失根，躁则失君。",
+"善行无辙迹，善言无瑕谪；善数不用筹策；善闭无关楗而不可开，善结无绳约而不可解。是以圣人常善救人，故无弃人；常善救物，故无弃物。是谓袭明。故善人者，不善人之师；不善人者，善人之资。不贵其师，不爱其资，虽智大迷，是谓要妙。",
+"知其雄，守其雌，为天下谿。为天下谿，常德不离，复归于婴儿。知其白，守其黑，为天下式。为天下式，常德不忒，复归于无极。知其荣，守其辱，为天下谷。为天下谷，常德乃足，复归于朴。朴散则为器，圣人用之，则为官长，故大制不割。",
+"将欲取天下而为之，吾见其不得已。天下神器，不可为也，不可执也。为者败之，执者失之。是以圣人无为，故无败；无执，故无失。夫物或行或随，或歔或吹，或强或羸，或载或隳。是以圣人去甚，去奢，去泰。",
+"以道佐人主者，不以兵强天下，其事好还。师之所处，荆棘生焉；大军之后，必有凶年。善有果而已，不敢以取强。果而勿矜，果而勿伐，果而勿骄，果而不得已，果而勿强。物壮则老，是谓不道，不道早已。",
+"夫兵者，不祥之器，物或恶之，故有道者不处。君子居则贵左，用兵则贵右。兵者不祥之器，非君子之器，不得已而用之，恬淡为上。胜而不美，而美之者，是乐杀人。夫乐杀人者，则不可得志于天下矣。吉事尚左，凶事尚右。偏将军居左，上将军居右，言以丧礼处之。杀人之众，以哀悲泣之，战胜以丧礼处之。",
+"道常无名，朴虽小，天下莫能臣也。侯王若能守之，万物将自宾。天地相合，以降甘露，民莫之令而自均。始制有名，名亦既有，夫亦将知止。知止可以不殆。譬道之在天下，犹川谷之于江海。",
+"知人者智，自知者明。胜人者有力，自胜者强。知足者富，强行者有志，不失其所者久，死而不亡者寿。",
+"大道泛兮，其可左右。万物恃之以生而不辞，功成而不有。衣养万物而不为主，可名于小；万物归焉而不为主，可名为大。以其终不自为大，故能成其大。",
+"执大象，天下往。往而不害，安平太。乐与饵，过客止。道之出口，淡乎其无味，视之不足见，听之不足闻，用之不足既。",
+"将欲歙之，必故张之；将欲弱之，必故强之；将欲废之，必故兴之；将欲夺之，必故与之。是谓微明。柔弱胜刚强。鱼不可脱于渊，国之利器不可以示人。",
+"道常无为而无不为。侯王若能守之，万物将自化。化而欲作，吾将镇之以无名之朴。镇之以无名之朴，夫亦将不欲。不欲以静，天下将自正。",
+"上德不德，是以有德；下德不失德，是以无德。上德无为而无以为；下德无为而有以为。上仁为之而无以为；上义为之而有以为；上礼为之而莫之应，则攘臂而扔之。故失道而后德，失德而后仁，失仁而后义，失义而后礼。夫礼者，忠信之薄，而乱之首。前识者，道之华，而愚之始。是以大丈夫处其厚，不居其薄；处其实，不居其华。故去彼取此。",
+"昔之得一者：天得一以清；地得一以宁；神得一以灵；谷得一以盈；万物得一以生；侯王得一以为天下贞。其致之也，谓天无以清，将恐裂；地无以宁，将恐废；神无以灵，将恐歇；谷无以盈，将恐竭；万物无以生，将恐灭；侯王无以贞，将恐蹶。故贵以贱为本，高以下为基。是以侯王自称孤、寡、不谷。此非以贱为本邪？非乎？故至誉无誉。是故不欲琭琭如玉，珞珞如石。",
+"反者道之动；弱者道之用。天下万物生于有，有生于无。",
+"上士闻道，勤而行之；中士闻道，若存若亡；下士闻道，大笑之。不笑不足以为道。故建言有之：明道若昧，进道若退，夷道若颣，上德若谷，大白若辱，广德若不足，建德若偷，质真若渝，大方无隅，大器晚成，大音希声，大象无形。道隐无名。夫唯道，善贷且成。",
+"道生一，一生二，二生三，三生万物。万物负阴而抱阳，冲气以为和。人之所恶，唯孤、寡、不谷，而王公以为称。故物或损之而益，或益之而损。人之所教，我亦教之：强梁者不得其死，吾将以为教父。",
+"天下之至柔，驰骋天下之至坚。无有入无间，吾是以知无为之有益。不言之教，无为之益，天下希及之。",
+"名与身孰亲？身与货孰多？得与亡孰病？甚爱必大费，多藏必厚亡。知足不辱，知止不殆，可以长久。",
+"大成若缺，其用不弊。大盈若冲，其用不穷。大直若屈，大巧若拙，大辩若讷。躁胜寒，静胜热。清静为天下正。",
+"天下有道，却走马以粪。天下无道，戎马生于郊。祸莫大于不知足；咎莫大于欲得。故知足之足，常足矣。",
+"不出户，知天下；不窥牖，见天道。其出弥远，其知弥少。是以圣人不行而知，不见而明，不为而成。",
+"为学日益，为道日损。损之又损，以至于无为。无为而无不为。取天下常以无事，及其有事，不足以取天下。",
+"圣人无常心，以百姓心为心。善者，吾善之；不善者，吾亦善之，德善。信者，吾信之；不信者，吾亦信之，德信。圣人在天下，歙歙焉，为天下浑其心。百姓皆注其耳目，圣人皆孩之。",
+"出生入死。生之徒十有三；死之徒十有三；人之生，动之于死地，亦十有三。夫何故？以其生生之厚。盖闻善摄生者，陆行不遇兕虎，入军不被甲兵；兕无所投其角，虎无所用其爪，兵无所容其刃。夫何故？以其无死地。",
+"道生之，德畜之，物形之，势成之。是以万物莫不尊道而贵德。道之尊，德之贵，夫莫之命而常自然。故道生之，德畜之，长之育之，成之熟之，养之覆之。生而不有，为而不恃，长而不宰，是谓玄德。",
+"天下有始，以为天下母。既得其母，以知其子；既知其子，复守其母，没身不殆。塞其兑，闭其门，终身不勤。开其兑，济其事，终身不救。见小曰明，守柔曰强。用其光，复归其明，无遗身殃，是为习常。",
+"使我介然有知，行于大道，唯施是畏。大道甚夷，而人好径。朝甚除，田甚芜，仓甚虚；服文采，带利剑，厌饮食，财货有余；是为盗夸。非道也哉！",
+"善建者不拔，善抱者不脱，子孙以祭祀不辍。修之于身，其德乃真；修之于家，其德乃余；修之于乡，其德乃长；修之于邦，其德乃丰；修之于天下，其德乃普。故以身观身，以家观家，以乡观乡，以邦观邦，以天下观天下。吾何以知天下然哉？以此。",
+"含德之厚，比于赤子。毒虫不螫，猛兽不据，攫鸟不搏。骨弱筋柔而握固，未知牝牡之合而朘作，精之至也。终日号而不嗄，和之至也。知和曰常，知常曰明。益生曰祥，心使气曰强。物壮则老，谓之不道，不道早已。",
+"知者不言，言者不知。塞其兑，闭其门，挫其锐，解其纷，和其光，同其尘，是谓玄同。故不可得而亲，不可得而疏；不可得而利，不可得而害；不可得而贵，不可得而贱。故为天下贵。",
+"以正治国，以奇用兵，以无事取天下。吾何以知其然哉？以此：天下多忌讳，而民弥贫；民多利器，国家滋昏；人多伎巧，奇物滋起；法令滋彰，盗贼多有。故圣人云：我无为，而民自化；我好静，而民自正；我无事，而民自富；我无欲，而民自朴。",
+"其政闷闷，其民淳淳；其政察察，其民缺缺。祸兮，福之所倚；福兮，祸之所伏。孰知其极？其无正也。正复为奇，善复为妖。人之迷，其日固久。是以圣人方而不割，廉而不刿，直而不肆，光而不耀。",
+"治人、事天，莫若啬。夫唯啬，是谓早服；早服谓之重积德；重积德则无不克；无不克则莫知其极；莫知其极，可以有国；有国之母，可以长久。是谓深根固柢，长生久视之道。",
+"治大国，若烹小鲜。以道莅天下，其鬼不神；非其鬼不神，其神不伤人；非其神不伤人，圣人亦不伤人。夫两不相伤，故德交归焉。",
+"大国者下流，天下之交，天下之牝。牝常以静胜牡，以静为下。故大国以下小国，则取小国；小国以下大国，则取大国。故或下以取，或下而取。大国不过欲兼畜人，小国不过欲入事人。夫两者各得所欲，大者宜为下。",
+"道者万物之奥，善人之宝，不善人之所保。美言可以市尊，美行可以加人。人之不善，何弃之有？故立天子，置三公，虽有拱璧以先驷马，不如坐进此道。古之所以贵此道者何？不曰：求以得，有罪以免邪？故为天下贵。",
+"为无为，事无事，味无味。大小多少，报怨以德。图难于其易，为大于其细；天下难事，必作于易；天下大事，必作于细。是以圣人终不为大，故能成其大。夫轻诺必寡信，多易必多难。是以圣人犹难之，故终无难矣。",
+"其安易持，其未兆易谋。其脆易泮，其微易散。为之于未有，治之于未乱。合抱之木，生于毫末；九层之台，起于累土；千里之行，始于足下。为者败之，执者失之。是以圣人无为故无败，无执故无失。民之从事，常于几成而败之。慎终如始，则无败事。是以圣人欲不欲，不贵难得之货；学不学，复众人之所过。以辅万物之自然，而不敢为。",
+"古之善为道者，非以明民，将以愚之。民之难治，以其智多。故以智治国，国之贼；不以智治国，国之福。知此两者亦稽式。常知稽式，是谓玄德。玄德深矣，远矣，与物反矣，然后乃至大顺。",
+"江海之所以能为百谷王者，以其善下之，故能为百谷王。是以圣人欲上民，必以言下之；欲先民，必以身后之。是以圣人处上而民不重，处前而民不害。是以天下乐推而不厌。以其不争，故天下莫能与之争。",
+"天下皆谓我道大，似不肖。夫唯大，故似不肖。若肖，久矣其细也夫！我有三宝，持而保之：一曰慈，二曰俭，三曰不敢为天下先。慈故能勇；俭故能广；不敢为天下先，故能成器长。今舍慈且勇，舍俭且广，舍后且先，死矣！夫慈，以战则胜，以守则固。天将救之，以慈卫之。",
+"善为士者不武；善战者不怒；善胜敌者不与；善用人者为之下。是谓不争之德，是谓用人之力，是谓配天古之极。",
+"用兵有言：吾不敢为主，而为客；不敢进寸，而退尺。是谓行无行，攘无臂，扔无敌，执无兵。祸莫大于轻敌，轻敌几丧吾宝。故抗兵相若，哀者胜矣。",
+"吾言甚易知，甚易行。天下莫能知，莫能行。言有宗，事有君。夫唯无知，是以不我知。知我者希，则我者贵。是以圣人被褐而怀玉。",
+"知不知，尚矣；不知知，病也。圣人不病，以其病病。夫唯病病，是以不病。",
+"民不畏威，则大威至。无狎其所居，无厌其所生。夫唯不厌，是以不厌。是以圣人自知不自见，自爱不自贵。故去彼取此。",
+"勇于敢则杀，勇于不敢则活。此两者，或利或害。天之所恶，孰知其故？是以圣人犹难之。天之道，不争而善胜，不言而善应，不召而自来，繟然而善谋。天网恢恢，疏而不失。",
+"民不畏死，奈何以死惧之？若使民常畏死，而为奇者，吾得执而杀之，孰敢？常有司杀者杀。夫代司杀者杀，是谓代大匠斫；夫代大匠斫者，希有不伤其手矣。",
+"民之饥，以其上食税之多，是以饥。民之难治，以其上之有为，是以难治。民之轻死，以其上求生之厚，是以轻死。夫唯无以生为者，是贤于贵生。",
+"人之生也柔弱，其死也坚强。草木之生也柔脆，其死也枯槁。故坚强者死之徒，柔弱者生之徒。是以兵强则灭，木强则折。强大处下，柔弱处上。",
+"天之道，其犹张弓与？高者抑之，下者举之；有余者损之，不足者补之。天之道，损有余而补不足。人之道则不然，损不足以奉有余。孰能有余以奉天下，唯有道者。是以圣人有为而不恃，功成而不处，其不欲见贤。",
+"天下莫柔弱于水，而攻坚强者莫之能胜，以其无以易之。弱之胜强，柔之胜刚，天下莫不知，莫能行。是以圣人云：受国之垢，是谓社稷主；受国不祥，是为天下王。正言若反。",
+"和大怨，必有余怨，报怨以德，安可以为善？是以圣人执左契，而不责于人。有德司契，无德司彻。天道无亲，常与善人。",
+"小国寡民。使有什伯之器而不用；使民重死而不远徙；虽有舟舆，无所乘之；虽有甲兵，无所陈之。使人复结绳而用之。甘其食，美其服，安其居，乐其俗。邻国相望，鸡犬之声相闻，民至老死，不相往来。",
+"信言不美，美言不信。善者不辩，辩者不善。知者不博，博者不知。圣人不积，既以为人，己愈有；既以与人，己愈多。天之道，利而不害；圣人之道，为而不争。"];
+var DD_PLAIN=["真正的大道理，说出来就变味了——这一章先给你打预防针：别迷信口号和标签，事物的真相要靠自己去体会。","美丑善恶都是比出来的，没有绝对。聪明的做法是把事做成、把功劳让出去，功成身退的人，功劳反而丢不了。","越是天天评先进、晒奢侈品，人心越爱攀比和投机。管人管事，少立刺激攀比的规矩，多让人吃饱、踏实，心自然定。","道像一个空碗，越空越能装。跟人相处把锋芒磨圆一点、把光收一收，和光同尘，才走得长久。","天地对谁都一视同仁，没有偏爱。话说得越多越容易穷尽道理，不如守住中间，安静观察。","像山谷一样空、像源头一样活，谦下虚心的人，能量反而源源不断、用不完。","天地长久是因为不只为自己。做人把自己放后面、把别人放前面，最后被推到前面的反而是你——无私反而成全自己。","最好的品格像水：帮所有人、从不争，还待在大家都不愿意待的低处。你能不争，天下就没有对手能跟你争，麻烦自然少。","端得太满会洒，磨得太尖易断。有钱有名了还骄傲，是给自己埋雷。该收手时收手、功成身退，才是天道。","把心神抱成一团、气息放柔、杂念洗净；管人做事顺其自然，生养万物却不占有、不主宰，这叫深厚的德。","车轮、杯子、房子，真正起作用的都是中间的「空」。看事情别只盯着看得见的部分，留白和空间才是用处所在。","感官的刺激追多了，人就被掏空了：颜色晃眼、声音震耳、味道过重。过日子为肚子（实在）不为面子（虚荣）。","受宠和受辱都会心惊，最大的祸患是太看重自己这副身子。把自己看得比事还重，就会患得患失；放轻自己，反而无患。","道看不见摸不着，却自古就在管着万物。遇事抓住那条古老的规律来处理今天的新问题，这叫摸到了门道。","老练的人做事不慌：像冬天过河一样谨慎，像怕惊动四邻一样小心。浑水要静下来才清，事情要动起来才有生机；不求满，才常新。","把心放到最虚、最静，看万物怎么兜兜转转回到根上。回到根就是静，静就是规律；不懂规律乱动手，就要出凶事。","最好的领导，群众几乎感觉不到他在管；差一等的是被夸的，再差的是被怕的，最差的是被骂的。事办成了，老百姓说：本来就该这样。","大道不行了，才天天讲仁义；小聪明多了，虚伪就多。家里不和才显出孝子，国家乱了才显出忠臣——标榜什么，往往正缺什么。","少耍小聪明、少搞虚头巴脑，人反而得实惠。回到朴素：见素抱朴，少一点私心和欲望，很多忧愁自然没了。","是与非、美与恶，差距哪有那么大？众人都热闹着，只有我安安静静。别人都觉得自己有餘，我甘心像个愚人——守住根本，才是我的不同。","德的样子全看道怎么走。道恍恍惚惚，里面却有象、有物、有最真实的精华。抓住这个源头，就能看懂万物的来历。","弯着反而能保全，低洼反而能装满，旧的反而能出新。不自以为是才明智，不争，天下就没人能跟你争到底。","狂风刮不了一早上，暴雨下不了一整天，天地都不能持久，何况人造的声势？顺道走的，道自会接住他；跑偏的，也会自食其果。","踮着脚站不稳，跨大步走不远。自以为是、自夸、自负，在道看来都是多余的赘肉，有道的人不干这些。","道在天地之前就存在，独立运行、生生不息，是万物的源头。人学地、地学天、天学道、道学它自己本来的样子——自然，就是最大的法则。","重是轻的根，静是躁的主人。家底（辎重）不能离身，心浮气躁就丢了根。越有分量的人，越不能轻飘。","高手做事不留痕迹，关门不用锁却打不开，绑东西不用绳却解不开。看人看事学会看长处：善人是老师，不善的人是教材。","知道自己强，却甘愿站在柔弱的位置；知道自己清白，却能忍受委屈。回到像婴儿一样纯粹、像原木一样朴素，德才足。","想硬夺天下的，我看不行。天下这件神器，越抓越丢、越管越乱。聪明人去掉过分、奢侈和过头这三样。","带兵的人说：打仗会招报应，军队过后必有荒年。不得已打赢了也别炫耀别骄傲。东西壮到了极点就开始衰老，逞强就是早衰。","兵器是不祥的东西，万不得已才用，而且赢了也不值得高兴——喜欢杀人的人，成不了大事。对胜仗，要像办丧事一样收敛。","道没有名字、朴素得不起眼，却没人能小看它。守住它，万物自会归顺。名分制度立起来后，更要知道停在哪里——知止，就不会有危险。","懂别人是聪明，懂自己才是明白。赢别人是有力气，赢自己才是真强。知足的人最富，肯坚持的人有志向，不丢根本的人走得久。","大道到处都是，左右逢源。它养万物却不居功，从不自称伟大，正因为不自大，才真正伟大。","守住大道这个大象，天下人都会来投奔，而且相安无事。道理说出口淡而无味，看不见听不着，却用也用不完。","想让它收缩，先让它扩张；想削弱它，先让它强一阵——事物都往反面走。柔弱最终胜刚强，就像鱼离不开水，深藏的东西别轻易亮出来。","道什么都不强行干预，却什么都成了。守住它的人，让万物自己变化；欲望冒头时，用朴素把它镇住，心静了，天下自会正。","最高的德不显摆自己有德，才是真的有德。层层往下：讲仁、讲义、讲礼，礼是忠信薄了之后的产物，是乱的开头。大丈夫取厚不取薄，取实不取华。","天、地、神、谷、万物、侯王，都因为守住「一」才正常运转。贵以贱为本，高以下为基——身份越高，越要把自己放在低处，别学玉一样自贵，要像石头一样实在。","万物向相反的方向运动，这是道的规律；柔弱，是道起作用的方式。天下万物生于有，有生于无——别小看空和弱。","听了道，上等人立刻去做，中等人半信半疑，下等人哈哈大笑——不被笑，就不配叫道。明亮的道看起来暗，前进的道看起来退，最好的德看起来像低谷。","道生一，一生二，二生三，三生万物。万物都背阴抱阳，阴阳调和。损了反而得益，益了反而受损，是常有的事；逞强的人不会有好下场，这句话要当戒尺。","最柔的东西能穿透最硬的东西，无形的力量无处不入。不说话的教化、无为的好处，天下少有东西比得上。","名声和身体哪个亲？身体和钱财哪个重？得到和失去哪个是病？太爱必费大代价，藏太多必丢得多。知足不受辱，知止没危险，才能长久。","看起来圆满的其实有缺，充盈的像空的，直的像弯的，巧的像笨的，会说的像不会说的。躁能胜寒，静能胜热，清静才是天下的正道。","天下太平时，马都回去耕田；不太平时，战马在郊外生崽。全因为不知足和贪得。知足的富足，才是长久的富足。","不出门能知天下，不看窗外能懂天道——走得越远，未必懂得越多。真正的高手，不用四处奔波也能明白事理。","求学问要天天加，求道要天天减：减欲望、减执着，减到无为，反而无不为。治理天下靠的是不搅扰，天天折腾，就治不好了。","圣人没有固定成见，拿百姓的心当自己的心。好人我善待，坏人我也善待，德就善了；可信的人我信，不可信的我也先信，德就信了。","人从出生就走向死亡，贪生怕死的各有其类，但拼命厚养自己、把自己往死路上送的也不少。真正会保命的人，走在路上连猛兽都伤不到他——因为他不往死地里钻。","道生万物，德养万物，环境成万物。道最可贵在：生养却不占有，做了却不居功，当首领却不主宰。这就是深厚的德。","天下有个源头，像母亲。找到源头就懂了枝叶，懂了枝叶再回头守住源头，一辈子没危险。堵住欲望的口、关上欲望的门，终身不劳累；放开欲望去逐事，终身没救。","我要是有一点小聪明走上大道，最怕走偏。大道平平坦坦，人偏爱走小路捷径。朝廷很干净、田地却荒了、仓库空了，有人还穿华服佩利剑吃喝玩乐，这是强盗头子，不是道。","善于建树的拔不动根，善于抱持的丢不了。用这个道修身，德才真；推到家、乡、国、天下，德就余、长、丰、普。看天下，用看自己的眼光去看。","德深厚的人像婴儿：毒虫不蜇、猛兽不伤，一天哭喊嗓子不哑，因为精气和气都足。硬催着生长是凶兆，心浮气躁逞强，壮到极点就衰老，不合道，早衰。","懂的人不多说，多说的未必懂。堵住欲望口、磨圆锋芒、和光同尘，做到这一步，谁也分不清亲疏利害贵贱，反而成了天下最贵的。","正道治国，奇招用兵，无事治天下。管得越细、禁忌越多，百姓越穷；法令越密，盗贼越多。我无为百姓自化，我好静百姓自正，我无欲百姓自朴。","政策宽松，百姓淳朴；政策严苛，百姓狡猾。祸里藏着福，福里伏着祸，谁能知道尽头？做人方正却不割伤人，锋利却不刺人，正直不放肆，明亮不耀眼。","治人养身，没有比爱惜精力（啬）更好的了。早早收心积德，德积厚了就没有攻不克的，根扎得深，才能长生久视。","治大国像煎小鱼，不能勤翻动。以道临天下，鬼神都不伤人，何况圣人？互不伤害，德就汇到一处了。","大国要像大河的下游，甘居低处，才能汇聚天下。以静处下，大国谦下小国服气，小国谦下大国收容。各得其所，大的一方更要主动放低。","道是万物的宝库，好人的宝贝，也是坏人的庇护。好话能赢得尊重，好行为能感化人。不善的人为什么要抛弃他呢？坐着进献这个道，比献宝玉名马强。","做无为的事，尝无味的味。把怨恨用德来回报。难事从容易处下手，大事从细微处做起。轻易许诺的人必少信用，把事看得太容易，必定到处遇难。","安定的局面容易守，没露苗头的事容易谋。脆的容易碎，微小的容易散。在事情没发生时就处理，在乱子没起时就治理。合抱大树生于小芽，千里之行始于足下。临近成功时最容易失败，慎终如始，才不会败事。","古人治国，不是让百姓耍小聪明，而是让他们回到淳朴。百姓难治就因为小聪明太多。用智巧治国是祸，用朴实治国是福。守住这个模式，德深远了，万物就顺了。","江海能当百川之王，是因为它甘居下游。想站在人上，先把话放低；想走在人前，先把身放后。这样处上人不觉重，处前人不觉害，大家乐意推举他——因为他不争。","天下都说我的道太大、不像样。正因为大才不像样。我有三宝：慈爱、节俭、不敢争先。慈爱才能勇，节俭才能广，不争先才能成大器。舍了慈爱去逞勇，是死路。","会带兵的不逞武，会打仗的不动怒，会胜敌的不硬碰，会用人的甘居人下。这叫不争之德、用人的力，是配合天道的最高法则。","用兵的人说：我不敢主动挑事，只被动应招；不敢进一寸，宁可退一尺。最大的祸是轻敌，轻敌会丢掉我的三宝。两军相遇，心怀哀悯的一方胜。","我的话很好懂也很好做，天下却没人懂、没人做。话有宗旨、事有主心。知道我的人少，正显得我贵——圣人穿粗布衣，怀里揣着玉。","知道自己不知道，是高明；不知道却装知道，是毛病。圣人没毛病，因为他把毛病当毛病防着。把病当病，才不会真病。","百姓不怕威压，更大的威压就会到来。别逼得人没活路，别断了人的生机。圣人有自知之明却不自我表现，爱惜自己却不自抬身价。","勇敢到敢逞强就会死，勇敢到敢收敛就能活。天道不争却总赢，不说话却回应得好，不召唤万物自来，谋划从容。天网恢恢，疏而不漏。","百姓都不怕死了，还拿死吓唬他们有什么用？真让百姓常怕死、谁捣乱就杀谁，那是替刽子手干活——替大匠砍木头的人，很少不砍伤自己的手。","百姓饿，是因为上面收税太多；百姓难治，是因为上面折腾太多；百姓轻死，是因为上面贪生太过。只有不把养生看得太重的人，才比拼命贵生的人高明。","人活着柔弱，死了坚硬；草木活着柔脆，死了枯槁。所以坚强是死的一派，柔弱是生的一派。兵强会被灭，木强会被折。强大反居下，柔弱反居上——别迷信硬。","天道像拉弓：高的压低，低的抬高，有余的减掉，不足的补上。天道是损有余补不足；人道却相反，专拿穷人的去供富人。圣人做了不居功，成了不占有，不显摆自己贤。","天下最软的是水，攻最硬的东西却没有能胜过它的。弱胜强、柔胜刚，人人都知道却做不到。能替国家承受屈辱和灾祸的，才配当主人。正面话听起来像反话，要细品。","了结大怨必留余怨，拿德报怨也未必是善。圣人拿着借据却不逼人还债。有德的人像守约者只认契约，无德的人只会苛查。天道没偏私，永远站在善人一边。","理想的小国寡民：工具闲置不用，百姓珍惜生命不乱迁徙，有船有车没处用，有兵器没处摆，回到结绳记事。吃得香甜、穿得称心、住得安稳、习俗快乐，邻国鸡犬相闻，老死不相往来。","真话不好听，好听的未必真。善人不多辩，多辩的未必善。真知不靠博览。圣人不囤积，越给别人自己越有，越付出自己越多。天之道利物不害人，圣人之道做事不相争。"];
+var DD_APPLY=["别迷信标签和定义，事得自己去经历、去体会才算懂。","别跟人比长短——比出来的焦虑，多半是自找的。","少立刺激攀比的规矩：家里、公司都一样，人心定了，事才顺。","把锋芒磨圆、把姿态放低，路反而走得长久。","话别说满、事别做绝：天地都不偏心，你也守住中间。","保持空杯和谦下：能一直装新东西的人，能量用不完。","帮人时别先算回报——把自己放后面，最后被推到前面的往往是你。","学水：帮人、不争、往低处走。你不争，麻烦就没法跟你争。","见好就收、功成身退：端太满会洒，贪最后一口最危险。","把事做成却不邀功、不占有——这种人最得人心，也最走得远。","给生活留白：日程、房间、钱包都别塞满，空的地方才是用处。","少追晃眼的刺激（刷不完的短视频、买不完的热闹），多顾实在的肚子。","得宠失宠都别太当真：心不被得失牵着走，人就自由了。","新问题先翻翻老答案：古老的规律，常常正管今天的事。","做事留三分余地，别把自己逼到满格——不盈，才常新。","累了、乱了，就回到原点歇一歇：静下来，才看得清来路和去路。","管人少干预：规矩定好就让人自己发挥，事成了大家都觉得是自然。","哪里天天喊口号，哪里往往正缺那样东西——听其言，更要观其行。","把生活简化：少一点私心、欲望、花架子，很多忧愁自己就没了。","众人都追热闹时，你守住根本的那份安静——守得住，才异于人。","看问题抓源头：枝叶再乱，回到根上就清楚了。","不自夸、不抢功、不争一时长短——你不争，天下没人能跟你争到底。","狂风暴雨都长久不了：声势再大的事也会过去，别被一时的风浪吓住手脚。","踮脚尖站不久、跨大步走不远：踏实一步步来，才是真功夫。","顺规律办事，别跟自然对着干——道法自然，自然就是最大的法则。","越大的事越要先静下来：重是轻的根，静是躁的主，慌里慌张必失根。","看人看长处、用物用其长：善人是老师，不善的人是教材，谁都不必嫌弃。","明明有实力，也甘愿站在低位说话——知雄守雌，德才不离身。","天下这件神器抓不得、管不得：去掉过分、奢侈、过头这三样，就少了大半麻烦。","赢了就收手，别逞强扩大战果——物壮则老，逞强就是早衰的开始。","冲突是下下策：不得已用了，赢了也别炫耀，杀伐之气最伤自己的福分。","有名分、有目标之后，更要知道停在哪里——知止，就不会把自己搭进去。","赢别人是有力气，赢自己（懒、贪、怒）才是真强；知足的人才是真富。","不端着、不自大：大道养万物从不居功，你越不自称大，格局反而越大。","守住大方向就别慌：道理常常淡而无味，却用也用不完，急着找捷径的人最容易丢它。","想收先放、想赢先让：柔弱的一手常是真正的杀招，深藏的本事别轻易全亮出来。","少折腾、多立好规矩：让事情自己往正里走——无为不是不干，是不乱干。","做人取厚道、取实在，别取表面的华丽：礼数越繁文缛节，离真心往往越远。","地位越高，越要把自己放低：贵以贱为本，高以下为基，根扎在低处才稳。","物极必反是铁律：站在高点要想退路，跌到低点要看到转机，柔弱不是弱，是活法。","好东西都慢：大器晚成、大音希声，被人笑一阵子没关系，认准了就勤而行之。","有时先让一步、先吃点亏，反而是得益的开始；逞强硬上，往往不得好收场。","软办法常比硬办法管用：最柔的水能穿最硬的石，不言之教最服人。","钱和欲望要有闸：太爱必大费、多藏必厚亡，知足不受辱、知止不危险。","看起来圆满的其实有缺：别求十全十美。躁胜寒、静胜热，先静下来，天下自正。","不知足是最大的祸：跟昨天的自己比富足，你就常足；跟所有人比，永远缺。","有些事不用亲身试错：不出门知天下，靠的是看懂规律，不是走得多远。","求学问做加法，求道做减法：减欲望、减执着，轻装的人才走得远、办得成。","待人先换位：好人坏人都先以善意和信任相待，德就落在你身上了。","保命的诀窍是不往死地里钻：远离高危的人、局和习惯，比事后补救强一万倍。","养孩子、带团队都一样：生养扶持，却不占有、不主宰——扶上马，就要学着松缰绳。","看清了枝叶，要回头守住根：堵住欲望的口、关上欲望的门，根本稳，一辈子不劳累。","路越宽越怕走偏：大道平坦，人偏爱走捷径——繁华热闹里，先问一句这是不是道。","把功夫修在自己身上：修身的德才真，推到家里、乡里、天下，自然余、长、丰、普。","别硬催成长：精足气和的人不怕慢慢来，心浮气躁地拔苗，壮到极点就是早衰。","少说多听、磨圆棱角、和光同尘：跟谁都处得来、谁也拿你没办法，是真本事。","管得越细人越穷、法令越密贼越多：领导者最大的修养，是忍住不伸手——我无为，民自化。","祸里藏福、福里伏祸：顺时别飘、逆时别垮，做人方正不割人、锋利不刺人，就是过关法。","省着用精力、钱和情分：啬不是抠，是早早积德扎根——根深了，才没有攻不克的事。","管大事像煎小鱼：别勤翻动。越折腾越碎，互不伤害，德自归来。","越大的那一方越要先放低：大国如大河下游，甘居低处，天下才往你这里汇。","遇事先讲道、摆事实：坐着进献一个「理」，比送礼求人、拱璧驷马都管用。","难事从易处下手，大事从细处做起：别轻易许诺，轻诺必寡信；把事看难一点，反而终无难。","越到收尾越当心：合抱之木生于毫末，多数失败都败在最后一步松了劲——慎终如始。","别用小聪明治人理事：百姓难治，多因上面太爱耍智巧；回到朴实，才是长久之福。","想站在人上，先把话放低、把身放后：大家乐意推举你，正因为你不争。","守住三宝：慈、俭、不敢争先。舍慈逞勇、舍俭求广、舍后争先，都是把自己往死路上推。","高手不硬碰：不逞武、不动怒、不正面抢人——不争之德，才是配天的赢法。","冲突里先退一尺、存一分悲悯：轻敌是最大的祸，心怀哀悯的一方最后胜。","你的话再对，没人懂也白搭：本事揣在怀里就行，别穿在身上招摇——被褐怀玉。","知道自己有毛病、并且防着它，这个毛病就成不了大病；装没病，才真病。","别把人逼到没活路：爱惜自己但不自抬身价，自知而不自见，分寸感就是修养。","别存侥幸：天道不争而善胜，天网恢恢疏而不漏——账，迟早是要算的。","别替行家操刀、替别人做主：越位代杀、代斫，十个有九个伤自己的手。","上面折腾、贪得太多，下面就饥、就乱、就轻死：不把养生面子看得比命重的，才是高明人。","记住活物都是柔的，死物都是硬的：兵强则灭、木强则折——强大处下，柔弱处上。","天道损有余补不足：你有余力，就去补一补不足的人和事；功成不居，才是圣人之道。","最软的水能攻最硬的石：能受下委屈、担下责任的人，才配当主人——正言若反，要细品。","有理也别逼人太甚：拿着契约不催债的人有德；了结恩怨留余地，你的路会越走越宽。","日子可以过得简单：吃得香、穿得称心、住得安稳、邻里和气——这就是老子眼里的好生活。","真话不花哨、善者不多辩：把事做完就放下、不争功——越给人，自己越有，天之道利而不害。"];
+var DD_CAT_POOL={
+ "争强好胜 · 人际冲突":[8,22,68,69,81,3,66],
+ "焦虑急躁 · 想静下来":[16,37,15,26,48,63,52],
+ "事业进退 · 要不要争":[9,22,29,44,68,28,36],
+ "钱财得失 · 知足知止":[44,46,12,9,33,79,67],
+ "感情关系 · 柔弱处下":[8,78,43,49,55,28,13],
+ "领导管理 · 无为而治":[17,57,60,66,37,3,75],
+ "低谷受挫 · 反者道之动":[40,42,23,58,64,36,39],
+ "健康养生 · 守柔保身":[50,55,76,52,10,6,59],
+ "auto":[1,8,16,22,33,40,44,67,76,81]};
+var DD_CAT_KEYS=[["争强好胜 · 人际冲突",["争","吵","冲突","同事","对手","不服","争强","打架","抢"]],["焦虑急躁 · 想静下来",["焦虑","急","烦","累","睡不着","压力","慌","静"]],["事业进退 · 要不要争",["事业","工作","升职","辞职","创业","老板","项目","进退"]],["钱财得失 · 知足知止",["钱","财","亏","赚","买","投资","债","得失"]],["感情关系 · 柔弱处下",["感情","对象","分手","结婚","喜欢","爱","吵架"]],["健康养生 · 守柔保身",["病","健康","身体","养生","累垮","失眠"]],["领导管理 · 无为而治",["领导","管理","团队","员工","管人","下属"]],["低谷受挫 · 反者道之动",["失败","低谷","倒霉","受挫","输","难关","熬"]]];
+function ddRender(num,howHtml){
+  var plain=DD_PLAIN[num-1]||"";
+  show("ddResult",
+   '<p style="text-align:center"><span class="big">道德经 · 第 <span class="hl">'+num+'</span> 章</span></p>'+
+   (howHtml||"")+
+   '<div class="classic"><span class="src">原文（王弼本通行文字）</span><br/>'+DD_TEXT[num-1]+'</div>'+
+   '<h3>白话解读</h3><p>'+plain+'</p>'+
+   '<div class="btnrow"><button class="btn small ghost" id="ddPrev">← 上一章</button><button class="btn small ghost" id="ddNext">下一章 →</button></div>'+
+   jiedu('第 '+num+' 章给你的话，说白了就是：'+plain, '<p><b>放到今天的生活里，就是这一句：</b>'+(DD_APPLY[num-1]||'')+'</p>'+jdDoDont('把这一章的话落到你手头最近的那件小事上，先做一步看得见的改变。','只读不动、或拿这一章给自己的冲动和贪心找借口——老子的话是用来收心的，不是用来壮胆乱来的。'),'道德经 · 第'+num+'章'));
+  var pv=$("ddPrev"), nx=$("ddNext");
+  if(pv)pv.addEventListener("click",function(){ddRender(num===1?81:num-1,"");});
+  if(nx)nx.addEventListener("click",function(){ddRender(num===81?1:num+1,"");});
+  var grid=$("ddGrid"); if(grid){Array.prototype.forEach.call(grid.children,function(b){b.classList.toggle("on",+b.textContent===num);});}
+}
+$("ddGrid").innerHTML=Array.from({length:81},function(_,i){return '<button data-n="'+(i+1)+'">'+(i+1)+'</button>';}).join("");
+$("ddGrid").addEventListener("click",function(e){var b=e.target.closest("[data-n]");if(!b)return;ddRender(+b.getAttribute("data-n"),'<p class="muted">查经方式：目录点选第 '+b.getAttribute("data-n")+' 章。</p>');});
+$("ddLookupBtn").addEventListener("click",function(){
+  var n=parseInt($("ddChapter").value,10);
+  if(!n||n<1||n>81){show("ddResult","<p>章号要在 1 到 81 之间。</p>");return;}
+  ddRender(n,'<div class="formula">查经算法：第 1 步，你输入章号 '+n+'；第 2 步，直接定位到 81 章全文数组的第 '+n+' 条——查经不靠抽，输几就是几。</div>');
+});
+$("ddSearchBtn").addEventListener("click",function(){
+  var kw=$("ddKeyword").value.trim();
+  if(!kw){show("ddResult","<p>先写一个关键词，比如「水」「不争」「知足」。</p>");return;}
+  var hits=[];
+  DD_TEXT.forEach(function(txt,i){if(txt.indexOf(kw)>=0)hits.push(i+1);});
+  DD_PLAIN.forEach(function(txt,i){if(txt.indexOf(kw)>=0&&hits.indexOf(i+1)<0)hits.push(i+1);});
+  if(!hits.length){show("ddResult","<p>全文和白话里都没搜到「"+esc(kw)+"」。换个词试试：水、柔、不争、足、静、朴、婴儿、谷。</p>");return;}
+  var first=hits[0];
+  ddRender(first,'<div class="formula">搜索算法：第 1 步，拿「'+esc(kw)+'」逐章扫 81 章原文；第 2 步，再扫 81 章白话；共命中 '+hits.length+' 章：'+hits.map(function(h){return "第"+h+"章";}).join("、")+'。下面先打开第一章命中的第 '+first+' 章，其余章号可点目录或输章号继续看。</div>');
+});
+$("ddDateBtn").addEventListener("click",function(){
+  var date=parseDate($("ddDate").value)||new Date();
+  var days=Math.floor(Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())/86400000);
+  var num=mod(days,81)+1;
+  ddRender(num,'<div class="steps"><div class="step"><span class="n">1</span><div><span class="t">日期换成天数。</span> <span class="f">'+date.getFullYear()+' 年 '+(date.getMonth()+1)+' 月 '+date.getDate()+' 日，距 1970 年 1 月 1 日共</span> <span class="r">'+days+' 天</span><span class="f">。</span></div></div><div class="step"><span class="n">2</span><div><span class="t">天数对 81 取余。</span> <span class="f">'+days+' ÷ 81，余数是</span> <span class="r">'+mod(days,81)+'</span><span class="f">，余数 +1 就是章号。</span></div></div><div class="step"><span class="n">3</span><div><span class="t">得今日一章：第 '+num+' 章。</span> <span class="f">同一天谁来抽都是这一章，明天自动换下一轮——这就是「按日期抽章」。</span></div></div></div>');
+});
+$("ddRandomBtn").addEventListener("click",function(){
+  var num=1+Math.floor(Math.random()*81);
+  ddRender(num,'<div class="formula">随机算法：在 1–81 之间等概率取一个整数，这次取到 '+num+'。随机抽章图的是个「不期而遇」，同一问题别连抽，抽到哪章先读完哪章。</div>');
+});
+$("ddAskBtn").addEventListener("click",function(){
+  var qtxt=$("ddQuestion").value.trim();
+  var catSel=$("ddCat").value;
+  var cat=catSel, matched=[];
+  if(catSel==="auto"){
+    cat="auto"; var best=0;
+    DD_CAT_KEYS.forEach(function(pair){
+      var hit=pair[1].filter(function(k){return qtxt.indexOf(k)>=0;});
+      if(hit.length>best){best=hit.length;cat=pair[0];matched=hit;}
+    });
+  }
+  var pool=DD_CAT_POOL[cat]||DD_CAT_POOL["auto"];
+  var seed=0; for(var i=0;i<qtxt.length;i++){seed+=qtxt.charCodeAt(i)*(i+1);}
+  var now=new Date(); var daySeed=now.getFullYear()*372+(now.getMonth()+1)*31+now.getDate();
+  var total=seed+daySeed;
+  var num=pool[mod(total,pool.length)];
+  var steps='<div class="steps">'+
+   '<div class="step"><span class="n">1</span><div><span class="t">先给问题归类。</span> <span class="f">'+(catSel!=="auto"?'你手动选了「'+esc(catSel)+'」，就按这一类走。':(cat==="auto"?'你的问题里没扫到明显的类别关键词（争、钱、累、病……），归到「综合」池。':'你的问题里扫到关键词「'+matched.join("、")+'」，归到')+'「'+(cat==="auto"?"综合":cat)+'」类。')+'</span></div></div>'+
+   '<div class="step"><span class="n">2</span><div><span class="t">取出这一类的候选章池。</span> <span class="f">每一类都预先配了最对症的几章，这一类的池子是：</span> <span class="r">'+pool.map(function(n){return "第"+n+"章";}).join("、")+'</span><span class="f">。不是全 81 章乱抽——先对症，再抽签。</span></div></div>'+
+   '<div class="step"><span class="n">3</span><div><span class="t">把问题变成一个数（种子）。</span> <span class="f">问题每个字的字码 × 它排第几位，逐个相加，得 '+(seed)+'；再加上今天的日期数 '+daySeed+'，种子共</span> <span class="r">'+total+'</span><span class="f">。所以同一天写下同一个问题，种子永远一样。</span></div></div>'+
+   '<div class="step"><span class="n">4</span><div><span class="t">种子在池子里定位。</span> <span class="f">'+total+' ÷ '+pool.length+'，余数 '+mod(total,pool.length)+'，取池子里第 '+(mod(total,pool.length)+1)+' 个，就是</span> <span class="r">第 '+num+' 章</span><span class="f">。</span></div></div></div>';
+  if(!qtxt&&catSel==="auto"){show("ddResult","<p>先把问题写下来，或者在右边选一类，再抽章。</p>");return;}
+  ddRender(num,steps+(qtxt?'<p>你问的是：「'+esc(qtxt)+'」</p>':""));
+});
+(function(){$("ddDate").value=new Date().toISOString().slice(0,10);})();
+
+</script>
+
+<script>
+"use strict";
+/* ================= 六十四卦数据库（六爻、梅花共用） ================= */
+var TRI_ORDER=["乾","兑","离","震","巽","坎","艮","坤"];
+var TRI_INFO={
+ "乾":{num:1,wx:"金",lines:[1,1,1],nature:"天",xiang:"天、君长、父亲、圆满之物、金玉、马、头"},
+ "兑":{num:2,wx:"金",lines:[1,1,0],nature:"泽",xiang:"泽水、少女、口舌、歌舞、羊、残缺之物"},
+ "离":{num:3,wx:"火",lines:[1,0,1],nature:"火",xiang:"火、太阳、文书、眼睛、光明、甲胄兵戈"},
+ "震":{num:4,wx:"木",lines:[1,0,0],nature:"雷",xiang:"雷、震动、长男、龙、足、竹木、突发之事"},
+ "巽":{num:5,wx:"木",lines:[0,1,1],nature:"风",xiang:"风、长女、绳索、草木、进退不定、消息"},
+ "坎":{num:6,wx:"水",lines:[0,1,0],nature:"水",xiang:"水、江河、中男、陷阱、耳朵、暗中之事"},
+ "艮":{num:7,wx:"土",lines:[0,0,1],nature:"山",xiang:"山、少男、门户、手、狗、静止与阻隔"},
+ "坤":{num:8,wx:"土",lines:[0,0,0],nature:"地",xiang:"地、母亲、众人、布帛、牛、方形之物、腹"}};
+var NUM2TRI={1:"乾",2:"兑",3:"离",4:"震",5:"巽",6:"坎",7:"艮",0:"坤"};
+var HEX_NAMES={
+ "乾":["乾为天","天泽履","天火同人","天雷无妄","天风姤","天水讼","天山遁","天地否"],
+ "兑":["泽天夬","兑为泽","泽火革","泽雷随","泽风大过","泽水困","泽山咸","泽地萃"],
+ "离":["火天大有","火泽睽","离为火","火雷噬嗑","火风鼎","火水未济","火山旅","火地晋"],
+ "震":["雷天大壮","雷泽归妹","雷火丰","震为雷","雷风恒","雷水解","雷山小过","雷地豫"],
+ "巽":["风天小畜","风泽中孚","风火家人","风雷益","巽为风","风水涣","风山渐","风地观"],
+ "坎":["水天需","水泽节","水火既济","水雷屯","水风井","坎为水","水山蹇","水地比"],
+ "艮":["山天大畜","山泽损","山火贲","山雷颐","山风蛊","山水蒙","艮为山","山地剥"],
+ "坤":["地天泰","地泽临","地火明夷","地雷复","地风升","地水师","地山谦","坤为地"]};
+/* [吉凶分 -2..2, 大白话] */
+var HEX_DATA={
+ "乾为天":[2,"纯阳刚健，像龙升天：运势强劲，宜自强进取、主动开局；但亢龙有悔，事到顶峰忌贪满、忌独断。"],
+ "天泽履":[0,"像踩着虎尾巴走路：处境看着险，其实守规矩、讲礼数、步步小心，就能平安过关。"],
+ "天火同人":[1,"同人于野：和人同心同德运就开，利合作、结盟、把事摆到明面上办，忌关起门来单干。"],
+ "天雷无妄":[0,"无妄就是不妄动、不存侥幸：守正道、按规矩来没事，一旦想走捷径、动歪心思，灾就跟着来。"],
+ "天风姤":[-1,"不期而遇，阴气初长：防突如其来的诱惑、艳遇和暗处的小人，送上门的好事先验明真假。"],
+ "天水讼":[-1,"争讼之象：口舌、纠纷、官司的信号。宜和解、宜退让，真打起官司，赢了也伤神伤财。"],
+ "天山遁":[-1,"遁是退避保身：现在不是进攻的时候，明着退一步不是输，是把自己从烂局里摘出来。"],
+ "天地否":[-2,"天地不交，闭塞不通：事推不动、人说不通，是典型的熬冬期，宜守不宜进，保存实力等通气。"],
+ "泽天夬":[1,"决断之时：该断不断反受其乱。但决断要光明正大地来，暗斗、私斗会反噬。"],
+ "兑为泽":[1,"喜悦和顺：利交际、谈判、靠嘴吃饭的事。以诚相悦人心就通，忌光说漂亮话不兑现。"],
+ "泽火革":[1,"变革之时：旧的必须改，改革合了时宜就吉；但忌为变而变、把根基一起掀了。"],
+ "泽雷随":[1,"随顺时势：跟着对的人、对的势走就顺，逆着潮流硬撑最吃亏；随也要随正道。"],
+ "泽风大过":[-1,"栋梁被重压：负担已经超载，非常时期先减负、找支撑，硬扛会断。"],
+ "泽水困":[-2,"困境之象：资源见底、说话没人信。宜守口守身、少辩解，把力气攒着等转机。"],
+ "泽山咸":[1,"感应交融：双方容易来电、有共鸣，感情与合作都利以诚相感，忌套路。"],
+ "泽地萃":[1,"聚集之象：人气、财气往一处聚，利聚会、集资、请高人坐镇，聚则成势。"],
+ "火天大有":[2,"大丰收之象：所有、所获都大，正是好时候；唯一忌讳是富而骄、满而溢。"],
+ "火泽睽":[-1,"意见相背、貌合神离：别指望全合拍，求大同存小异，小事上反而能意外办成。"],
+ "离为火":[1,"光明依附之象：找对平台、靠山、舞台才能发光；利文书、名声、考试之事。"],
+ "火雷噬嗑":[0,"像嘴里有个硬东西要咬断：有梗阻、积案、烂账要处理，宜雷厉风行、按规矩清掉。"],
+ "火风鼎":[1,"鼎是立国之器：利开创新局、立规矩、纳人才，是能成格局的一卦。"],
+ "火水未济":[-1,"事未成，只差最后一步：越到收尾越危险，别在九十九步上松劲、庆功。"],
+ "火山旅":[-1,"旅人无依：在外奔波、归属未定，宜谨慎谦下、少置气，财物行程多留心。"],
+ "火地晋":[1,"晋升之象：如太阳初升出地面，利升职、进取、见贵人，光明正大往上走。"],
+ "雷天大壮":[1,"声势壮大：实力正强，可以推进大事；但忌恃强妄进，壮而守礼才长久。"],
+ "雷泽归妹":[-1,"名分不正的结合：急就章、凑合局多后患，感情与合作都忌先上车后补票。"],
+ "雷火丰":[1,"丰盛如日中天：收获期到了，宜把握；但盛极易衰，别被繁华遮住眼忘了风险。"],
+ "震为雷":[0,"震动惊醒之象：会有惊，但多是虚惊，笑谈中就能定心；利在动中立威、破旧局。"],
+ "雷风恒":[0,"恒久之道：贵在坚持有常、守住节奏，朝三暮四最忌，守常者终吉。"],
+ "雷水解":[1,"困境正在解开：宜趁热了结麻烦、翻篇小过，解完就走，别再纠缠。"],
+ "雷山小过":[-1,"小事可为、大事不宜：宜低调、做小步改进，防过分之举和好高骛远。"],
+ "雷地豫":[1,"顺动愉悦：士气可用、人心向一处，利动员、出征、办喜事；忌乐而忘备。"],
+ "风天小畜":[0,"云聚还没下雨：积蓄未足、时机未到，先攒实力、攒人脉、攒口碑，密云不雨是常事。"],
+ "风泽中孚":[1,"诚信感孚：诚意到了，硬骨头都能化，利签约、谈判、交心；忌耍小聪明。"],
+ "风火家人":[1,"治家之象：内务先整肃、各守本分，家里（团队里）稳了，外面的事自顺。"],
+ "风雷益":[1,"受益增益：利有所往、利迁徙进取；肯先让利吃亏的人，最后得人心也得利。"],
+ "巽为风":[0,"顺入无形：以柔克刚、潜移默化最有效；但忌随风倒没主见，该定的章程要定。"],
+ "风水涣":[-1,"涣散之象：人心、财气都在散，必须立个中心、聚起人心来收拾局面。"],
+ "风山渐":[1,"循序渐进：像办婚事按礼一步步来，慢就是快，跳步必乱，渐进者终成。"],
+ "风地观":[-1,"观察省视之时：先看清形势、看清人心再动；同时你也正被人观察，言行要经得起看。"],
+ "水天需":[0,"等待之象：云在天上等成雨，实力备好、静等时机，有诚信有耐心则吉，忌抢跑。"],
+ "水泽节":[0,"节制有度：立规矩、控开支、管节奏则吉；但节过头也会苦，苦节不可长守。"],
+ "水火既济":[1,"事已成之象：成功在望，但初吉终乱是它的脾气，守成比打下来更难，别松警惕。"],
+ "水雷屯":[-1,"初生艰难：万事开头难，草创期宜建根基、找帮手、立名分，忌盲目冒进。"],
+ "水风井":[0,"井养不穷：守着本业深耕、供养他人，成就反而大；忌这山望着那山高频频改行。"],
+ "坎为水":[-2,"重重险阻：像陷在深水里，一步错步步错。宜守诚信、练内功、小步脱险，忌慌乱乱扑腾。"],
+ "水山蹇":[-1,"行路难：前面有阻，硬闯伤脚；宜停下找帮手、绕道而行，见险能止就是智慧。"],
+ "水地比":[1,"亲比团结：利结盟、抱团、投靠明主；但要趁早，迟到的只能居下风。"],
+ "山天大畜":[1,"厚积薄发：正是攒学问、攒本钱、攒德行的时候，畜满了自然发，利外出闯荡见世面。"],
+ "山泽损":[-1,"减损之象：眼前吃亏、让利、减负，是为长远；损要有诚心，过度牺牲自己也不必。"],
+ "山火贲":[0,"文饰之象：利形象、包装、文化、仪式感；但华美之外必须有实质，空壳撑不久。"],
+ "山雷颐":[0,"颐养之道：管住嘴——吃对东西、说对话。靠自养立身、靠养人聚德，忌祸从口出。"],
+ "山风蛊":[-1,"积弊生虫：旧问题已经烂在里面，必须下决心整治；整治得当，反而是转机。"],
+ "山水蒙":[0,"启蒙之时：不懂就问、宜拜师求学；教人的人要有耐心，学的人要有一颗诚心。"],
+ "艮为山":[0,"止之象：该停就停、知止不殆。宜收心、静养、守住边界，动不如静的时刻。"],
+ "山地剥":[-2,"剥落之象：根基被层层削弱，不宜对抗、不宜投资，顺势静守，等剥极而复。"],
+ "地天泰":[1,"通泰之象：天地交泰、上下通气，诸事顺遂，正是推行大事的好窗口。"],
+ "地泽临":[1,"好运临门、亲临督导：以宽厚待人、亲自到场最有力；盛时有期限，宜趁早进取。"],
+ "地火明夷":[-2,"光明受伤：才华被压、环境黑暗。宜韬光养晦、守正待时，别在黑夜里硬发光。"],
+ "地雷复":[1,"一阳来复：转机初现，旧错可改、旧路可回，利回归正道、重新开始，七日来复不算晚。"],
+ "地风升":[1,"上升之象：如树木破土而上，步步高升；利见大人、稳步积累，忌拔苗助长。"],
+ "地水师":[0,"带兵之象：兴师动众要有纪律、有正当名义，利组织团队作战；无纪律的乌合之众必败。"],
+ "地山谦":[2,"谦逊受益：满招损、谦受益，越低调越得人助，是六十四卦里少有的爻爻皆吉之卦。"],
+ "坤为地":[1,"厚德载物：以柔顺、包容、持久取胜，利随顺大势、甘当绿叶深耕，做配角也能成事。"]};
+function triFromLines(lines){for(var n in TRI_INFO){var L=TRI_INFO[n].lines;if(L[0]===lines[0]&&L[1]===lines[1]&&L[2]===lines[2])return n;}return "坤";}
+function hexNameOf(bits){var lo=triFromLines(bits.slice(0,3)),up=triFromLines(bits.slice(3,6));return HEX_NAMES[up][TRI_ORDER.indexOf(lo)];}
+function hexInfoOf(bits){var nm=hexNameOf(bits);return {name:nm,score:HEX_DATA[nm][0],plain:HEX_DATA[nm][1],lo:triFromLines(bits.slice(0,3)),up:triFromLines(bits.slice(3,6))};}
+function bitsBar(b){return b?'<div class="yang"></div>':'<div class="yin"><i></i><i></i></div>';}
+/* 爻位大白话 */
+var YAO_POS_TXT=["初爻（最底下）：事情的开头、地基——动在这里，是根子上在变，宜早察觉早应对。","二爻：内部、执行层、家里人——动在这里，是做事的人和内部环节在变。","三爻：内外交界的关口——动在这里，事情到了转折点，最易反复，进退都要留神。","四爻：外部环境、门口——动在这里，是外面的局势、政策、对方在变。","五爻：核心位置、主事的人——动在这里，是关键人物和大局在变，影响最大。","上爻（最顶上）：事情的结局、到顶了——动在这里，是盛极而变，宜收尾、宜功成身退。"];
+</script>
+
+<script>
+"use strict";
+/* ================= 六爻 · 完整装卦（卦宫 / 世应 / 纳甲 / 六亲 / 六神 / 用神） ================= */
+var NAJIA={
+"乾":{inS:"甲",outS:"壬",inB:["子","寅","辰"],outB:["午","申","戌"]},
+"坤":{inS:"乙",outS:"癸",inB:["未","巳","卯"],outB:["丑","亥","酉"]},
+"震":{inS:"庚",outS:"庚",inB:["子","寅","辰"],outB:["午","申","戌"]},
+"巽":{inS:"辛",outS:"辛",inB:["丑","亥","酉"],outB:["未","巳","卯"]},
+"坎":{inS:"戊",outS:"戊",inB:["寅","辰","午"],outB:["申","戌","子"]},
+"离":{inS:"己",outS:"己",inB:["卯","丑","亥"],outB:["酉","未","巳"]},
+"艮":{inS:"丙",outS:"丙",inB:["辰","午","申"],outB:["戌","子","寅"]},
+"兑":{inS:"丁",outS:"丁",inB:["巳","卯","丑"],outB:["亥","酉","未"]}};
+var GEN_PATTERNS=[
+{d:[0,0,0,0,0,0],gen:"八纯卦",shi:6},{d:[1,0,0,0,0,0],gen:"一世卦",shi:1},
+{d:[1,1,0,0,0,0],gen:"二世卦",shi:2},{d:[1,1,1,0,0,0],gen:"三世卦",shi:3},
+{d:[1,1,1,1,0,0],gen:"四世卦",shi:4},{d:[1,1,1,1,1,0],gen:"五世卦",shi:5},
+{d:[1,1,1,0,1,0],gen:"游魂卦",shi:4},{d:[0,0,0,0,1,0],gen:"归魂卦",shi:3}];
+function palaceOf(bits){
+for(var p=0;p<8;p++){
+var P=TRI_ORDER[p], pl=TRI_INFO[P].lines, pure=[pl[0],pl[1],pl[2],pl[0],pl[1],pl[2]];
+var diff=bits.map(function(b,i){return b^pure[i];});
+for(var k=0;k<GEN_PATTERNS.length;k++){
+var g=GEN_PATTERNS[k], ok=true;
+for(var j=0;j<6;j++){if(g.d[j]!==diff[j]){ok=false;break;}}
+if(ok)return {palace:P,gen:g.gen,shi:g.shi,ying:g.shi+3>6?g.shi-3:g.shi+3};
+}
+}
+return {palace:"乾",gen:"",shi:6,ying:3};
+}
+function najiaOf(bits){
+var lo=triFromLines(bits.slice(0,3)), up=triFromLines(bits.slice(3,6));
+var res=[];
+for(var i=0;i<6;i++){
+var src=i<3?NAJIA[lo]:NAJIA[up];
+var stem=i<3?src.inS:src.outS, br=i<3?src.inB[i]:src.outB[i-3];
+res.push({stem:stem,branch:br,wx:DZ_WX[DZ.indexOf(br)]});
+}
+return res;
+}
+function liuqinOf(palWx,lineWx){
+var p=wxIdx(palWx), l=wxIdx(lineWx);
+if(l===p)return "兄弟";
+if(mod(p+1,5)===l)return "子孙";
+if(mod(l+1,5)===p)return "父母";
+if(mod(p+2,5)===l)return "妻财";
+return "官鬼";
+}
+var QQ_PLAIN={"父母":"父母爻管文书、合同、消息、长辈、房子车子——问考试文凭、签约消息，看它。","兄弟":"兄弟爻管同辈、朋友、合伙人，也管劫财——问合伙、竞争、借钱，看它。","子孙":"子孙爻管子女、医药、下属、福气，是克官鬼的『解忧神』——问病、问孩子、求平安，看它。","妻财":"妻财爻管钱财、货物、收入，男问婚也看它——问赚钱、问生意、问货款，看它。","官鬼":"官鬼爻管工作、官位、压力、疾病、丈夫——问事业升迁、问病、女问婚，看它。"};
+var SHEN_PLAIN={"青龙":"青龙：喜庆、贵人、正大光明——临用神多主有喜事、有人正经帮忙。","朱雀":"朱雀：口舌、文书、消息——临用神多主有信儿到，也防吵嘴和文件出错。","勾陈":"勾陈：田土、纠缠、迟滞——临用神多主事被拖住、牵扯不清，宜快刀斩乱麻。","腾蛇":"腾蛇：虚惊、缠绕、怪梦——临用神多主心里发毛、被假象绕住，先核实再行动。","白虎":"白虎：凶险、伤灾、果断——临用神要防意外磕碰，也主事情来得猛、断得快。","玄武":"玄武：盗失、暧昧、暗昧——临用神防丢东西、防被人暗算，财物和人心都留个心眼。"};
+var LY_USEMAP={"综合运程":"世爻","求财赚钱":"妻财","事业仕途":"官鬼","感情婚姻":null,"健康疾病":"官鬼","学业考试":"父母","出行远行":"世爻","官司诉讼":"官鬼"};
+var lyLines=[];
+function lyResetFn(){lyLines=[];$("lyStack").innerHTML="";$("lyResult").classList.remove("show");$("lyResult").innerHTML="";$("lyBtn").textContent="掷铜钱（第 1 爻）";}
+$("lyReset").addEventListener("click",lyResetFn);
+$("lyBtn").addEventListener("click",function(){
+if(lyLines.length>=6)lyResetFn();
+var coins=[0,0,0].map(function(){return Math.random()<0.5?3:2;}); /* 字=3 花=2 */
+var sum=coins[0]+coins[1]+coins[2];
+lyLines.push({sum:sum,coins:coins});
+var coinEls=$("lyCoins").children;
+for(var i=0;i<3;i++){coinEls[i].textContent=coins[i]===3?"字":"花";coinEls[i].classList.toggle("back",coins[i]===2);}
+var kind={6:"老阴（动）",7:"少阳",8:"少阴",9:"老阳（动）"}[sum];
+var bit=(sum===7||sum===9)?1:0;
+var row=document.createElement("div");
+row.className="yao";
+row.innerHTML='<span style="width:86px;text-align:right">第 '+(lyLines.length)+' 爻</span><span class="line">'+bitsBar(bit)+'</span><span class="chg">'+(sum===6?"✕":sum===9?"○":"")+'</span><span>'+kind+' · '+sum+' 点</span>';
+var stack=$("lyStack");
+stack.insertBefore(row,stack.firstChild);
+if(lyLines.length<6){$("lyBtn").textContent="掷铜钱（第 "+(lyLines.length+1)+" 爻）";}
+else{$("lyBtn").textContent="装卦断卦";lyRender();}
+});
+function lyRender(){
+var bits=lyLines.map(function(l){return (l.sum===7||l.sum===9)?1:0;});
+var changing=lyLines.map(function(l){return l.sum===6||l.sum===9;});
+var hasChange=changing.some(Boolean);
+var bits2=bits.map(function(b,i){return changing[i]?1-b:b;});
+var ben=hexInfoOf(bits), bian=hasChange?hexInfoOf(bits2):null;
+var pal=palaceOf(bits), palWx=TRI_INFO[pal.palace].wx;
+var nj=najiaOf(bits);
+var now=new Date(), di=dayIndex(now,now.getHours()), dayGan=di%10;
+var shenStart=[0,0,1,1,2,3,4,4,5,5][dayGan];
+var SHEN_ORDER=["青龙","朱雀","勾陈","腾蛇","白虎","玄武"];
+var monP=monthPillar(now,yearPillar(now).idx%10), monWx=DZ_WX[monP.branch];
+var cat=$("lyCat").value, sex=$("lySex").value;
+var useQQ=LY_USEMAP[cat];
+if(cat==="感情婚姻")useQQ=(sex==="男")?"妻财":"官鬼";
+var lines=[];
+for(var i=0;i<6;i++){
+var qq=liuqinOf(palWx,nj[i].wx);
+var wang=(nj[i].wx===monWx||mod(wxIdx(monWx)+1,5)===wxIdx(nj[i].wx))?"旺相":"休囚";
+lines.push({i:i,stem:nj[i].stem,branch:nj[i].branch,wx:nj[i].wx,qq:qq,shen:SHEN_ORDER[mod(shenStart+i,6)],wang:wang,dong:changing[i],isShi:i===pal.shi-1,isYing:i===pal.ying-1});
+}
+function isUse(l){return useQQ==="世爻"?l.isShi:(l.qq===useQQ);}
+var useLines=lines.filter(isUse);
+/* 伏神：用神不上卦时，从本宫八纯卦里找 */
+var fuTxt="";
+if(!useLines.length&&useQQ!=="世爻"){
+var pl=TRI_INFO[pal.palace].lines, pure=[pl[0],pl[1],pl[2],pl[0],pl[1],pl[2]];
+var pnj=najiaOf(pure), fuPos=-1;
+for(var j=0;j<6;j++){if(liuqinOf(palWx,pnj[j].wx)===useQQ){fuPos=j;break;}}
+if(fuPos>=0)fuTxt='<p><b>用神不上卦（伏神）：</b>这一卦里没直接出现'+useQQ+'爻，它「伏」在第 '+(fuPos+1)+' 爻（'+lines[fuPos].qq+'爻）底下，底下是 '+pnj[fuPos].stem+pnj[fuPos].branch+'（'+useQQ+'）。说白了：你问的那个关键要素现在藏着、没露头——事还没到明面上，急也急不来，先等它透出来，或先办压着它的那件表面事。</p>';
+}
+var rows="";
+for(var r=5;r>=0;r--){
+var l=lines[r];
+rows+='<div class="yao-row'+(isUse(l)?" use":l.dong?" dong":"")+'"><span class="shen">'+l.shen+'</span>'+
+'<span><span class="qq">'+l.qq+'</span> '+l.stem+l.branch+'（'+l.wx+'）'+(l.dong?' <b style="color:var(--cinnabar)">→ 变 '+(1-bits[r]?'阳':'阴')+'</b>':'')+'</span>'+
+'<span>'+l.wang+'</span><span class="bar">'+bitsBar(bits[r])+'</span>'+
+'<span class="mark">'+(l.isShi?"世":l.isYing?"应":l.dong?(bits[r]?"○":"✕"):"")+'</span></div>';
+}
+var dongIdx=lines.filter(function(l){return l.dong;});
+var score=ben.score+(bian?bian.score*0.6:0);
+var useAvg=useLines.length?useLines.reduce(function(a,l){return a+(l.wang==="旺相"?1:-0.6)+(l.dong?0.2:0);},0)/useLines.length:0;
+score+=useAvg;
+if(pal.gen==="游魂卦")score-=0.4; if(pal.gen==="归魂卦")score+=0.2;
+var verdict=score>=2?"大吉":score>=0.8?"吉":score>=-0.8?"平 · 吉凶参半":-1.8<score?"偏凶":"凶";
+var useName=useQQ==="世爻"?"世爻（你自己）":useQQ+"爻";
+var dongTxt=dongIdx.length?dongIdx.map(function(l){return '<p><b>第 '+(l.i+1)+' 爻发动（'+l.qq+' '+l.stem+l.branch+'）：</b>'+YAO_POS_TXT[l.i]+'这一爻临'+l.shen+'——'+SHEN_PLAIN[l.shen]+'</p>';}).join(""):'<p><b>六爻安静，无动爻：</b>事情暂时没有变量，按本卦的象直接断——局面是稳的（或僵的），短期内不会自己变，要变只能靠你主动去动。</p>';
+var bianTxt=bian?'<p><b>变卦「'+bian.name+'」——事情最后会变成什么样：</b>'+bian.plain+'</p>':'<p><b>没有变卦：</b>六爻都不动，这件事没有「之后变成什么样」的下文，眼前什么样，接下来一段还是什么样。</p>';
+var useTxt=useLines.length?useLines.map(function(l){return '第 '+(l.i+1)+' 爻 '+l.stem+l.branch+l.qq+'，'+l.wang+'，临'+l.shen+(l.isShi?"，又恰好是世爻——这事和你本人绑得特别紧":l.isYing?"，又是应爻——正应着对方/对面那件事":"")+(l.dong?"，而且它正在发动——这是全卦最活跃的信号":"，安静不动——力量在，但还没动起来");}).join("；"):"";
+show("lyResult",
+'<p>本卦 <span class="big hl">'+ben.name+'</span>　属<b>'+pal.palace+'宫</b>（'+palWx+'）· '+pal.gen+' · 世在 '+pal.shi+' 爻、应在 '+pal.ying+' 爻'+(bian?'　→ 变卦 <span class="big">'+bian.name+'</span>':"")+'</p>'+
+'<div style="margin:10px 0">'+rows+'</div>'+
+'<p class="muted">今日 '+fmtGZ(di%10,di%12)+' 日起六神（自初爻青龙顺排）。金色行是为「'+esc(cat)+'」取的用神——'+useName+'；绿色行是动爻。</p>'+
+'<h3>卦象总论</h3><p><b>本卦「'+ben.name+'」（'+ben.up+'上'+ben.lo+'下，问的是现在）：</b>'+ben.plain+'</p>'+bianTxt+
+'<h3>用神细断 · '+useName+'</h3>'+(useTxt?'<p>'+useTxt+'。</p>':"")+fuTxt+
+'<p>'+QQ_PLAIN[useQQ==="世爻"?"兄弟":useQQ]+'</p>'+
+'<h3>动爻细断</h3>'+dongTxt+
+'<p><b>世应关系：</b>世爻是第 '+pal.shi+' 爻（'+lines[pal.shi-1].stem+lines[pal.shi-1].branch+lines[pal.shi-1].qq+'），代表你自己；应爻是第 '+pal.ying+' 爻（'+lines[pal.ying-1].stem+lines[pal.ying-1].branch+lines[pal.ying-1].qq+'），代表对方/对面那件事。'+(lines[pal.shi-1].wx===lines[pal.ying-1].wx?"世应同五行：你和对方路数相同、好沟通，也容易各不相让。":mod(wxIdx(lines[pal.ying-1].wx)+1,5)===wxIdx(lines[pal.shi-1].wx)?"应生世：对方在给你输送好处、托着你走，这局你占便宜。":mod(wxIdx(lines[pal.shi-1].wx)+1,5)===wxIdx(lines[pal.ying-1].wx)?"世生应：你在给对方输血、托着对方走，付出多，量力而行。":mod(wxIdx(lines[pal.ying-1].wx)+2,5)===wxIdx(lines[pal.shi-1].wx)?"应克世：对方压着你，这局你被动，先避锋再谈条件。":"世克应：你压着对方，这局你主动，但忌把对方逼到墙角。")+'</p>'+
+jiedu('你问的「'+esc($("lyQuestion").value.trim()||cat)+'」，这一卦总的说是：本卦是'+ben.name+'——'+ben.plain+(bian?' 最后变成'+bian.name+'，'+(bian.score>=ben.score?'走向是往好的方向变的，放心推进。':'走向是往下走的，好局面要趁早落袋、坏苗头要趁早掐。'):' 局势暂时不会自己变，好坏都在你手上。'),
+'<div class="gua-legend"><span>一长横 = 阳爻（实线，主动、明面）</span><span>两短横 = 阴爻（断线，被动、暗面）</span><span>○ = 老阳要变阴</span><span>✕ = 老阴要变阳</span><span>世 = 你自己</span><span>应 = 对方/那件事</span></div>'+
+'<div class="howto"><b>教你 30 秒看懂这张装卦表：</b>从下往上数六行，最底下是初爻（事情的开头），最上面是上爻（结局）。每行从左到右：<b>六神</b>是这爻的「天气」（青龙主喜、朱雀主口舌、白虎主凶险……）；<b>六亲</b>是这爻在你这件事里的「角色」（财、官、父母、子孙、兄弟）；<b>干支</b>是它的「身份证」；<b>旺相</b>是它现在有没有力气；<b>世/应</b>标着你和对方的位置。你只要盯住金色那一行（用神）看：它旺不旺、动不动，基本就断了这件事的七分。</div>'+
+'<p><b>为什么盯着'+useName+'看？</b>六爻断事不看全卦热闹，只认一个主角：问财就看妻财、问事业看官鬼、问考试看父母、问病看官鬼（病）配子孙（药）。主角旺相又发动，事就有力可成；主角休囚又安静，事就缺力、要等；主角干脆不上卦（伏神），说明关键要素还没露头，急也没用。</p>'+
+dongTxt+
+jdDeep(verdict==="大吉"||verdict==="吉"?'这卦好比天气预报说「明天晴天，风还顺着你的方向吹」：不是保证你躺赢，是告诉你出门办事的外部条件站在你这边，窗口期别浪费。':verdict==="平 · 吉凶参半"?'这卦好比天气预报说「多云，局部有雨」：不是不能出门，是伞要带上、行程留备份，好坏全看你准备得细不细。':'这卦好比天气预报说「明天有暴雨预警」：不是世界末日，是提醒你明天的行程要改期或改方案，硬顶着出门，淋湿的只会是自己。',
+[useLines.length?('先办用神那一行指的事：'+useName+'现在'+(useLines[0].wang==="旺相"?'正有力气，趁这一两周把关键动作落地':'力量不足，先给它「充电」——找能生扶它的人和资源，别单枪匹马硬推')):'先把表面那件事办了：用神伏着，关键要素没露头，先处理压在它上面的事，等它透出来再发力。',
+dongIdx.length?('顺着动爻走：第 '+(dongIdx[0].i+1)+' 爻在动，那里就是这件事的「开关」，你的精力优先投到那个环节。'):'六爻都不动，开关在你手里：挑一个最小、最容易见效的动作先做起来，局面才会跟着变。',
+bian?(bian.score>=0?'变卦是往好里变的：把现在的做法坚持住，别中途换赛道。':'变卦是往坏里变的：现在就给最坏的情况留后手——钱、时间、退路，各留一份。'):'没有变卦托底：定好的节奏就别频繁改，稳住就是赢。'],
+'同一件事，一天之内反复摇、摇到吉卦为止——这是六爻最大的忌讳，叫「不诚不占」。这一卦已经把话说完了，先按它办，办出结果了再问下一件。'),'六爻 · '+ben.name+(bian?' 之 '+bian.name:"")+' · '+verdict));
+}
+</script>
+
+<script>
+"use strict";
+/* ================= 梅花易数 · 完整断法（体用 / 互卦 / 变卦 / 生克） ================= */
+function wxRel(a,b){ /* 返回 a 对 b 的关系与分数（从 a=体 看） */
+if(a===b)return {t:"比和",s:1,txt:"体用同气：你和这件事路数相同、气味相投，不费劲就能合拍。"};
+var ai=wxIdx(a), bi=wxIdx(b);
+if(mod(bi+1,5)===ai)return {t:"用生体",s:2,txt:"用生体：外面的局势、对方、环境都在给你输送好处，这件事是托着你往前走的。"};
+if(mod(ai+1,5)===bi)return {t:"体生用",s:-1,txt:"体生用：你在给这件事输血，付出多、耗神耗钱，能成也要先算好自己的本钱。"};
+if(mod(ai+2,5)===bi)return {t:"体克用",s:0.5,txt:"体克用：你能拿捏住这件事、压得住局面，可成，但过程要费些手腕，别把对方逼太狠。"};
+return {t:"用克体",s:-2,txt:"用克体：局势和对方在压着你，这件事眼下对你不利，硬上要吃亏，先避其锋、等其变。"};
+}
+function mhRender(up,lo,dong,srcTxt,q){
+var bits=TRI_INFO[lo].lines.concat(TRI_INFO[up].lines);
+var ben=hexInfoOf(bits);
+var huBits=[bits[1],bits[2],bits[3],bits[2],bits[3],bits[4]];
+var hu=hexInfoOf(huBits);
+var bits2=bits.slice(); bits2[dong-1]=1-bits2[dong-1];
+var bian=hexInfoOf(bits2);
+var tiName=dong<=3?up:lo, yongName=dong<=3?lo:up;
+var tiWx=TRI_INFO[tiName].wx, yongWx=TRI_INFO[yongName].wx;
+var rel=wxRel(tiWx,yongWx);
+var ti2Name=dong<=3?bian.up:bian.lo;
+var rel2=wxRel(tiWx,TRI_INFO[ti2Name].wx);
+var score=rel.s*1.6+rel2.s*0.9+ben.score*0.5+(bian.score-ben.score)*0.4;
+var verdict=score>=2.2?"大吉":score>=0.9?"吉":score>=-0.9?"平 · 看人为":"偏凶";
+show("mhResult",
+'<p>起卦来源：'+srcTxt+'</p>'+
+'<div class="pillars" style="grid-template-columns:repeat(3,1fr)">'+
+'<div class="pillar"><div class="cap">本卦 · 现在</div><div class="gz" style="font-size:22px;letter-spacing:0">'+ben.name+'</div><div class="meta">'+ben.up+'（'+TRI_INFO[ben.up].wx+'）上 · '+ben.lo+'（'+TRI_INFO[ben.lo].wx+'）下<br/>动爻在第 '+dong+' 爻</div></div>'+
+'<div class="pillar"><div class="cap">互卦 · 中间过程</div><div class="gz" style="font-size:22px;letter-spacing:0">'+hu.name+'</div><div class="meta">'+hu.up+'上 · '+hu.lo+'下<br/>取本卦二三四、三四五爻</div></div>'+
+'<div class="pillar"><div class="cap">变卦 · 最终结局</div><div class="gz" style="font-size:22px;letter-spacing:0">'+bian.name+'</div><div class="meta">'+bian.up+'上 · '+bian.lo+'下<br/>第 '+dong+' 爻阴阳翻转</div></div></div>'+
+'<div style="max-width:340px;margin:0 auto 8px">'+[5,4,3,2,1,0].map(function(r){return '<div class="yao" style="justify-content:space-between"><span style="width:52px;text-align:right">'+(r+1)+'爻</span><span class="line">'+bitsBar(bits[r])+'</span><span class="chg">'+(r===dong-1?"●动":"")+'</span></div>';}).join("")+'</div>'+
+'<h3>体用生克 · 断成败的核心</h3>'+
+'<p><b>体卦（你自己）= '+tiName+'（'+tiWx+'）</b>，<b>用卦（这件事/对方）= '+yongName+'（'+yongWx+'）</b>，关系是 <span class="hl">'+rel.t+'</span>。'+rel.txt+'</p>'+
+'<p><b>变卦再验一遍：</b>事情变到最后，用卦变成 '+ti2Name+'（'+TRI_INFO[ti2Name].wx+'），和你的关系是 <b>'+rel2.t+'</b>——'+rel2.txt+'开头好还是结尾好，两个合起来看才准。</p>'+
+'<h3>三卦连起来读（现在 → 过程 → 结局）</h3>'+
+'<p><b>本卦（现在）：</b>'+ben.plain+'</p><p><b>互卦（中间过程）：</b>'+hu.plain+'</p><p><b>变卦（最终结局）：</b>'+bian.plain+'</p>'+
+'<p><b>动爻（第 '+dong+' 爻）：</b>'+YAO_POS_TXT[dong-1]+'</p>'+
+'<p><b>卦象类象参看：</b>体卦'+tiName+'象'+TRI_INFO[tiName].xiang+'；用卦'+yongName+'象'+TRI_INFO[yongName].xiang+'。问事时把这些象往你问的人和物上套，常有意外对得上号的地方。</p>'+
+(q?'<p>所问：「'+esc(q)+'」</p>':"")+
+jiedu('你问的这件事，梅花断下来是，核心就一句：'+rel.txt+(Math.abs(rel2.s-rel.s)>=2?' 而且要注意——开头和结尾的风向不一样：'+(rel.s>rel2.s?'现在顺、后面要收着点，别把好局拖垮。':'现在难、后面转顺，扛过开头这一段就好了。'):' 从头到尾风向基本一致，按这个势走就行。'),
+'<div class="howto"><b>教你看懂梅花这三卦：</b>梅花易数不看爻辞，看的是「能量的流向」。<b>体卦</b>永远是你自己，<b>用卦</b>是你要办的事（动爻在哪个卦，哪个卦就是用，另一个就是体）。用生体=有人托你，比和=合拍，体克用=你拿捏得住，体生用=你在倒贴，用克体=对方压你——五种关系分清，本卦互卦变卦再连成一条「现在→过程→结局」的线，整卦就读完了。</div>'+
+'<p><b>三卦这条线在说什么？</b>现在是「'+ben.name+'」，中间会经历「'+hu.name+'」，最后落到「'+bian.name+'」。'+(bian.score>ben.score?'结局分比现在高：这条线是越走越亮的，前面的难是铺垫。':bian.score<ben.score?'结局分比现在低：这条线是前高后低的，好局面要趁早落袋为安。':'首尾分数差不多：这条线走的是平稳路，拼的是执行和耐心。')+'</p>'+
+jdDeep(rel.s>=1?'这卦好比你要过一条河，河水正顺着你的方向流：你不用逆水行舟，顺势划桨就能到对岸，力气要花在掌舵、别偏航上。':rel.s<=-1?'这卦好比你要过一条河，水正顶着你流：不是过不去，是现在硬划最费力，还可能被冲偏。聪明的做法是等水势缓一缓，或换个渡口（换方法、换时间、换合作方）。':'这卦好比河水基本是平的：能不能过河，全看你的桨法和耐心——没有外力帮你，也没有外力拦你，纯拼基本功。',
+['第一步先认风向：你和这件事的关系是「'+rel.t+'」，按上面那句断语定基调——该进的大胆进，该等的一天都别抢。',
+'第二步盯住动爻：第 '+dong+' 爻是全卦唯一的变量，'+YAO_POS_TXT[dong-1].split("——")[0]+'，你的注意力先投到这个环节。',
+'第三步按变卦收尾：结局是「'+bian.name+'」，倒推现在该留什么后手——'+(bian.score>=0?'结局向好，后手留个保险即可，重心放在推进上。':'结局偏弱，后手要留足：钱、时间、退路各留一份再动手。')],
+'拿梅花连环起卦套问同一件事、或者专挑「好数字」报数起卦——报数那一瞬间的随口数才带信息，刻意挑的数只剩自我安慰，这卦就废了。'),'梅花 · '+ben.name+' 之 '+bian.name+' · '+verdict));
+}
+$("mhBtn").addEventListener("click",function(){
+var a=parseInt($("mhA").value,10), b=parseInt($("mhB").value,10), q=$("mhQ").value.trim();
+if(isNaN(a)||isNaN(b)){show("mhResult","<p>先随口报两个数——别想，脱口而出的最准。</p>");return;}
+var up=NUM2TRI[mod(a,8)], lo=NUM2TRI[mod(b,8)], dong=mod(a+b,6)||6;
+mhRender(up,lo,dong,'你报的两个数：'+a+' 和 '+b+'。算法三步：① '+a+' ÷ 8 余 '+mod(a,8)+' → 先天数定上卦为 '+up+'；② '+b+' ÷ 8 余 '+mod(b,8)+' → 定下卦为 '+lo+'；③ 两数之和 '+(a+b)+' ÷ 6 余 '+mod(a+b,6)+' → '+(mod(a+b,6)===0?'余 0 取第 6 爻':'取第 '+dong+' 爻')+'为动爻。',q);
+});
+$("mhTimeBtn").addEventListener("click",function(){
+var now=new Date(), q=$("mhQ").value.trim();
+var lun=getLunar(now)||{month:now.getMonth()+1,day:now.getDate()};
+var yp=yearPillar(now), yb=yp.idx%12, hb=hourBranch(now.getHours());
+var sum1=(yb+1)+lun.month+lun.day, sum2=sum1+(hb+1);
+var up=NUM2TRI[mod(sum1,8)], lo=NUM2TRI[mod(sum2,8)], dong=mod(sum2,6)||6;
+mhRender(up,lo,dong,'以当下时间起卦（'+now.getFullYear()+' 年 '+(now.getMonth()+1)+' 月 '+now.getDate()+' 日 '+SHICHEN[hb]+'）：① 年支 '+DZ[yb]+' 数 '+(yb+1)+' ＋ 农历月 '+lun.month+' ＋ 农历日 '+lun.day+' ＝ '+sum1+'，÷8 余 '+mod(sum1,8)+' → 上卦 '+up+'；② 再加时支数 '+(hb+1)+' ＝ '+sum2+'，÷8 余 '+mod(sum2,8)+' → 下卦 '+lo+'；③ '+sum2+' ÷6 余 '+mod(sum2,6)+' → 动爻第 '+dong+' 爻。',q);
+});
+</script>
+
+</body>
+</html>
